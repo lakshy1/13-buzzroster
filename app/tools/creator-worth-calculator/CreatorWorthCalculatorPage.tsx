@@ -948,9 +948,6 @@ export default function CreatorWorthCalculatorPage() {
                   {[
                     { label: "Instagram", color: "#ef7f58" },
                     { label: "YouTube", color: "#e34d4d" },
-                    { label: "TikTok", color: "#17162b" },
-                    { label: "LinkedIn", color: "#4d7bd6" },
-                    { label: "X", color: "#17162b" },
                   ].map((item) => (
                     <div
                       key={item.label}
@@ -960,11 +957,6 @@ export default function CreatorWorthCalculatorPage() {
                       {item.label}
                     </div>
                   ))}
-                </div>
-                <div className="mt-4 flex flex-wrap items-center gap-3 text-[0.92rem] text-[#6b6880]">
-                  <span>No signup required for a basic estimate.</span>
-                  <span className="hidden h-1 w-1 rounded-full bg-[#c8bce8] sm:inline-flex" />
-                  <span>Supported: Instagram, YouTube, TikTok, LinkedIn and X/Twitter.</span>
                 </div>
                 {error ? (
                   <div className="mt-4 rounded-[1rem] border border-[#f2d6d8] bg-[#fff5f5] px-4 py-3 text-[0.95rem] text-[#b14d57]">
