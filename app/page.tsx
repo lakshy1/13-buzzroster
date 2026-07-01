@@ -654,6 +654,10 @@ export default function Home() {
   const testimonialPageCount = Math.ceil(
     activeTestimonials.length / visibleTestimonialCards,
   );
+  const mobileStepsLastIndex = Math.max(0, activeSteps.length - 1);
+  const mobilePricingLastIndex = Math.max(0, pricingPlans.length - 1);
+  const mobileTestimonialLastIndex = Math.max(0, activeTestimonials.length - 1);
+  const testimonialLastPageIndex = Math.max(0, testimonialPageCount - 1);
 
   useEffect(() => {
     const updateVisibleCards = () => {
@@ -686,9 +690,17 @@ export default function Home() {
   const setActiveAudience = (nextAudience: "creators" | "brands") => {
     setAudience(nextAudience);
     setTestimonialPage(0);
+    setMobileStepsPage(0);
+    setMobilePricingPage(0);
 
     if (testimonialViewportRef.current) {
       testimonialViewportRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+    if (mobileStepsViewportRef.current) {
+      mobileStepsViewportRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+    if (mobilePricingViewportRef.current) {
+      mobilePricingViewportRef.current.scrollTo({ left: 0, behavior: "smooth" });
     }
   };
 
@@ -1018,15 +1030,6 @@ export default function Home() {
             <div className="absolute left-[5%] right-[5%] top-[58px] hidden h-px bg-[#eef0f5] lg:block" />
 
             <div className="relative lg:hidden">
-              <button
-                type="button"
-                onClick={() => scrollMobileSteps("prev")}
-                className="absolute left-1 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
-                aria-label="Previous steps"
-              >
-                <span className="text-[1.25rem] leading-none">‹</span>
-              </button>
-
               <div
                 key={`${audience}-mobile-steps`}
                 ref={mobileStepsViewportRef}
@@ -1054,24 +1057,25 @@ export default function Home() {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={() => scrollMobileSteps("next")}
-                className="absolute right-1 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
-                aria-label="Next steps"
-              >
-                <span className="text-[1.25rem] leading-none">›</span>
-              </button>
-
-              <div className="mt-2 flex justify-center gap-1.5">
-                {activeSteps.map((step, index) => (
-                  <span
-                    key={step.number}
-                    className={`h-1.5 rounded-full transition-all ${
-                      index === mobileStepsPage ? "w-5 bg-[#6d44ec]" : "w-1.5 bg-[#dcd4ef]"
-                    }`}
-                  />
-                ))}
+              <div className="mt-3 flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => scrollMobileSteps("prev")}
+                  disabled={mobileStepsPage <= 0}
+                  className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  aria-label="Previous steps"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollMobileSteps("next")}
+                  disabled={mobileStepsPage >= mobileStepsLastIndex}
+                  className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  aria-label="Next steps"
+                >
+                  →
+                </button>
               </div>
             </div>
 
@@ -1166,7 +1170,28 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="mt-5 flex justify-center gap-2">
+          <div className="mt-4 flex items-center justify-center gap-4 md:hidden">
+            <button
+              type="button"
+              onClick={() => scrollTestimonials("prev")}
+              disabled={testimonialPage <= 0}
+              className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+              aria-label="Previous testimonials"
+            >
+              ←
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollTestimonials("next")}
+              disabled={testimonialPage >= mobileTestimonialLastIndex}
+              className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+              aria-label="Next testimonials"
+            >
+              →
+            </button>
+          </div>
+
+          <div className="mt-5 hidden justify-center gap-2 md:flex">
             {Array.from({ length: testimonialPageCount }).map((_, index) => (
               <span
                 key={index}
@@ -1191,15 +1216,6 @@ export default function Home() {
             </p>
 
             <div className="relative mt-10 lg:hidden">
-              <button
-                type="button"
-                onClick={() => scrollMobilePricing("prev")}
-                className="absolute left-1 top-[42%] z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
-                aria-label="Previous pricing plan"
-              >
-                <span className="text-[1.25rem] leading-none">‹</span>
-              </button>
-
               <div
                 ref={mobilePricingViewportRef}
                 onScroll={handleMobilePricingScroll}
@@ -1288,24 +1304,25 @@ export default function Home() {
                 ))}
               </div>
 
-              <button
-                type="button"
-                onClick={() => scrollMobilePricing("next")}
-                className="absolute right-1 top-[42%] z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
-                aria-label="Next pricing plan"
-              >
-                <span className="text-[1.25rem] leading-none">›</span>
-              </button>
-
-              <div className="mt-2 flex justify-center gap-1.5">
-                {pricingPlans.map((plan, index) => (
-                  <span
-                    key={plan.name}
-                    className={`h-1.5 rounded-full transition-all ${
-                      index === mobilePricingPage ? "w-5 bg-[#6d44ec]" : "w-1.5 bg-[#dcd4ef]"
-                    }`}
-                  />
-                ))}
+              <div className="mt-3 flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => scrollMobilePricing("prev")}
+                  disabled={mobilePricingPage <= 0}
+                  className="text-[1.6rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  aria-label="Previous pricing plan"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollMobilePricing("next")}
+                  disabled={mobilePricingPage >= mobilePricingLastIndex}
+                  className="text-[1.6rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  aria-label="Next pricing plan"
+                >
+                  →
+                </button>
               </div>
             </div>
 
