@@ -790,9 +790,21 @@ export default function Home() {
             >
               <span className="sr-only">{mobileNavOpen ? "Close menu" : "Open menu"}</span>
               <span className="relative flex h-4 w-4 flex-col justify-center">
-                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "translate-y-1 rotate-45" : "-translate-y-1"}`} />
-                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "opacity-0" : "opacity-100"}`} />
-                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "-translate-y-1 -rotate-45" : "translate-y-1"}`} />
+                <span
+                  className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${
+                    mobileNavOpen ? "translate-y-1 rotate-45" : "-translate-y-1"
+                  }`}
+                />
+                <span
+                  className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${
+                    mobileNavOpen ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${
+                    mobileNavOpen ? "-translate-y-1 -rotate-45" : "translate-y-1"
+                  }`}
+                />
               </span>
             </button>
           </div>
@@ -804,17 +816,37 @@ export default function Home() {
           >
             <div className="flex flex-col gap-4 p-4">
               <nav className="grid gap-2 text-[1rem] font-medium text-[#1a1731]">
-                {navItems.map((item) => (
-                  <a
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setMobileNavOpen(false)}
-                    className="rounded-2xl px-4 py-3 transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
-                  >
-                    {item.label}
-                  </a>
-                ))}
+                {navItems
+                  .filter((item) => item.label !== "Tools")
+                  .map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMobileNavOpen(false)}
+                      className="rounded-2xl px-4 py-3 transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
               </nav>
+
+              <div className="rounded-[1.4rem] border border-[#efe7ff] bg-[#faf7ff] p-4">
+                <p className="text-[0.84rem] font-semibold uppercase tracking-[0.18em] text-[#6d44ec]">
+                  Tools
+                </p>
+                <div className="mt-3 grid gap-2">
+                  {toolsMenuItems.map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      onClick={() => setMobileNavOpen(false)}
+                      className="rounded-2xl bg-white px-4 py-3 text-[0.98rem] text-[#302d47] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:bg-[#f4edff] hover:text-[#5c36d6]"
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
 
               <div className="grid gap-3 pt-2">
                 <a
@@ -1274,7 +1306,45 @@ export default function Home() {
 
         <section className="mx-auto w-[85vw] max-w-none pb-12 sm:pb-18">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-[linear-gradient(90deg,rgba(240,233,255,0.92)_0%,rgba(247,243,255,0.84)_28%,rgba(255,250,240,0.74)_100%)] shadow-[0_18px_50px_rgba(125,96,207,0.08)]">
-            <div className="relative h-[240px] w-full sm:h-[295px] lg:h-[315px]">
+            <div className="lg:hidden">
+              <div className="relative h-[220px] w-full overflow-hidden sm:h-[260px]">
+                <Image
+                  src={ctaImage as StaticImageData}
+                  alt="Creators collaborating around a campaign board"
+                  priority={false}
+                  sizes="100vw"
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(243,237,255,0.06)_0%,rgba(243,237,255,0.38)_48%,rgba(243,237,255,0.92)_100%)]" />
+              </div>
+
+              <div className="px-5 pb-6 pt-5 sm:px-7 sm:pb-7">
+                <h2 className="max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,8vw,3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#17162b]">
+                  Ready to build your creator roster?
+                </h2>
+                <p className="mt-4 max-w-[34ch] text-[1rem] leading-[1.45] text-[#55526b] sm:text-[1.05rem]">
+                  Join thousands of creators and brands building meaningful
+                  partnerships that grow.
+                </p>
+
+                <div className="mt-6 grid gap-3">
+                  <a
+                    href="#"
+                    className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-6 py-4 text-center text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.34)] transition-transform duration-200 hover:-translate-y-0.5"
+                  >
+                    Join as Creator
+                  </a>
+                  <a
+                    href="#"
+                    className="rounded-2xl border border-[#c9bef4] bg-white/65 px-6 py-4 text-center text-[1.02rem] font-semibold text-[#6d44ec] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/80"
+                  >
+                    Join as Brand
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative hidden h-[240px] w-full sm:h-[295px] lg:block lg:h-[315px]">
               <Image
                 src={ctaImage as StaticImageData}
                 alt="Creators collaborating around a campaign board"
