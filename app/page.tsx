@@ -1167,7 +1167,12 @@ export default function Home() {
                     <a
                       href="#"
                       className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
-                      style={{ background: `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)` }}
+                      style={{
+                        background:
+                          plan.name === "Agency"
+                            ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
+                            : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
+                      }}
                     >
                       {plan.cta}
                     </a>
@@ -1237,7 +1242,12 @@ export default function Home() {
                     <a
                       href="#"
                       className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
-                      style={{ background: `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)` }}
+                      style={{
+                        background:
+                          plan.name === "Agency"
+                            ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
+                            : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
+                      }}
                     >
                       {plan.cta}
                     </a>
