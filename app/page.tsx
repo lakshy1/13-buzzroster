@@ -477,15 +477,18 @@ function ToolsDropdown() {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      <a
-        href="#tools"
+      <button
+        type="button"
+        onClick={() => setOpen((current) => !current)}
         className="flex items-center gap-1 transition-colors hover:text-[#5c36d6]"
+        aria-haspopup="menu"
+        aria-expanded={open}
       >
         <span>Tools</span>
         <ChevronIcon
           className={`h-4 w-4 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
-      </a>
+      </button>
 
       <div
         aria-hidden="true"
@@ -493,21 +496,32 @@ function ToolsDropdown() {
       />
 
       <div
-        className={`absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2 rounded-[1.2rem] border border-white/70 bg-[rgba(255,255,255,0.92)] p-2 shadow-[0_18px_40px_rgba(125,96,207,0.12)] backdrop-blur-xl transition-all duration-200 ${
+        role="menu"
+        className={`absolute left-1/2 top-full z-50 mt-3 w-72 -translate-x-1/2 rounded-[1.6rem] border border-[#e4dcfb] bg-[linear-gradient(180deg,rgba(248,243,255,0.98)_0%,rgba(255,255,255,0.94)_100%)] p-4 shadow-[0_22px_50px_rgba(125,96,207,0.12)] backdrop-blur-xl transition-all duration-200 ${
           open
             ? "pointer-events-auto opacity-100 translate-y-0"
             : "pointer-events-none opacity-0 -translate-y-1"
         }`}
       >
-        {toolsMenuItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            className="block rounded-xl px-4 py-3 text-[0.95rem] text-[#4f4d66] transition-colors hover:bg-[#f2ecff] hover:text-[#5c36d6]"
-          >
-            {item.label}
-          </Link>
-        ))}
+        <div className="mb-3 flex items-center justify-between">
+          <span className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#6d44ec]/75">
+            Tools
+          </span>
+          <span className="h-px flex-1 bg-[#e8e1f8] ml-3" />
+        </div>
+
+        <div className="grid gap-2.5">
+          {toolsMenuItems.map((item) => (
+            <Link
+              key={item.label}
+              href={item.href}
+              role="menuitem"
+              className="rounded-[1.05rem] border border-white/80 bg-white px-4 py-4 text-[1rem] text-[#3d3a57] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:border-[#e3d8ff] hover:bg-[#f7f2ff] hover:text-[#5c36d6]"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -644,6 +658,7 @@ export default function Home() {
   const [testimonialPage, setTestimonialPage] = useState(0);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
   const [mobileStepsPage, setMobileStepsPage] = useState(0);
   const [mobilePricingPage, setMobilePricingPage] = useState(0);
   const testimonialViewportRef = useRef<HTMLDivElement | null>(null);
@@ -679,6 +694,7 @@ export default function Home() {
   useEffect(() => {
     const closeOnScroll = () => {
       if (mobileNavOpen) {
+        setMobileToolsOpen(false);
         setMobileNavOpen(false);
       }
     };
@@ -847,7 +863,15 @@ export default function Home() {
 
             <button
               type="button"
-              onClick={() => setMobileNavOpen((current) => !current)}
+              onClick={() => {
+                setMobileNavOpen((current) => {
+                  const next = !current;
+                  if (!next) {
+                    setMobileToolsOpen(false);
+                  }
+                  return next;
+                });
+              }}
               className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[#d8cfff] bg-white/70 text-[#5c36d6] shadow-[0_10px_24px_rgba(125,96,207,0.08)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 lg:hidden"
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileNavOpen}
@@ -875,54 +899,91 @@ export default function Home() {
 
           <div
             className={`mt-3 overflow-hidden rounded-[1.5rem] border border-[#e1d7fb] bg-[rgba(255,255,255,0.94)] shadow-[0_20px_50px_rgba(125,96,207,0.12)] transition-all duration-300 lg:hidden ${
-              mobileNavOpen ? "max-h-[70vh] opacity-100" : "max-h-0 border-transparent opacity-0"
+              mobileNavOpen ? "max-h-[78vh] opacity-100" : "max-h-0 border-transparent opacity-0"
             }`}
           >
-            <div className="flex flex-col gap-4 p-4">
+            <div className="flex max-h-[78vh] flex-col gap-4 overflow-y-auto p-4 pb-6 overscroll-contain">
               <nav className="grid gap-2 text-[1rem] font-medium text-[#1a1731]">
-                {navItems
-                  .filter((item) => item.label !== "Tools")
-                  .map((item) => (
+                {navItems.map((item) =>
+                  item.label === "Tools" ? (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={() => setMobileToolsOpen((current) => !current)}
+                      className="flex items-center justify-between rounded-2xl px-4 py-3 text-left transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
+                      aria-expanded={mobileToolsOpen}
+                      aria-controls="mobile-tools-menu"
+                    >
+                      <span>Tools</span>
+                      <ChevronIcon
+                        className={`h-4 w-4 transition-transform duration-300 ease-out ${
+                          mobileToolsOpen ? "rotate-90" : "rotate-0"
+                        }`}
+                      />
+                    </button>
+                  ) : (
                     <a
                       key={item.label}
                       href={item.href}
-                      onClick={() => setMobileNavOpen(false)}
+                      onClick={() => {
+                        setMobileToolsOpen(false);
+                        setMobileNavOpen(false);
+                      }}
                       className="rounded-2xl px-4 py-3 transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
                     >
                       {item.label}
                     </a>
-                  ))}
+                  ),
+                )}
               </nav>
 
-              <div className="rounded-[1.4rem] border border-[#efe7ff] bg-[#faf7ff] p-4">
-                <p className="text-[0.84rem] font-semibold uppercase tracking-[0.18em] text-[#6d44ec]">
-                  Tools
-                </p>
-                <div className="mt-3 grid gap-2">
-                  {toolsMenuItems.map((item) => (
-                    <a
-                      key={item.label}
-                      href={item.href}
-                      onClick={() => setMobileNavOpen(false)}
-                      className="rounded-2xl bg-white px-4 py-3 text-[0.98rem] text-[#302d47] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:bg-[#f4edff] hover:text-[#5c36d6]"
-                    >
-                      {item.label}
-                    </a>
-                  ))}
+              <div
+                id="mobile-tools-menu"
+                className={`overflow-hidden rounded-[1.4rem] border border-[#efe7ff] bg-[#faf7ff] transition-all duration-300 ease-out ${
+                  mobileToolsOpen
+                    ? "max-h-96 translate-y-0 opacity-100"
+                    : "max-h-0 -translate-y-1 border-transparent opacity-0"
+                }`}
+              >
+                <div className="p-4">
+                  <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]">
+                    Tools
+                  </p>
+                  <div className="mt-3 grid gap-2">
+                    {toolsMenuItems.map((item) => (
+                      <a
+                        key={item.label}
+                        href={item.href}
+                        onClick={() => {
+                          setMobileToolsOpen(false);
+                          setMobileNavOpen(false);
+                        }}
+                        className="rounded-2xl bg-white px-4 py-3 text-[0.98rem] text-[#302d47] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:bg-[#f4edff] hover:text-[#5c36d6]"
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="grid gap-3 pt-2">
+              <div className="grid gap-3 pt-2 pb-2">
                 <a
                   href="#"
-                  onClick={() => setMobileNavOpen(false)}
+                  onClick={() => {
+                    setMobileToolsOpen(false);
+                    setMobileNavOpen(false);
+                  }}
                   className="rounded-2xl border border-[#cdbcf8] bg-white/70 px-4 py-3 text-center text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-white"
                 >
                   Log in
                 </a>
                 <a
                   href="#"
-                  onClick={() => setMobileNavOpen(false)}
+                  onClick={() => {
+                    setMobileToolsOpen(false);
+                    setMobileNavOpen(false);
+                  }}
                   className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.32)]"
                 >
                   Join Buzzroster free
@@ -1114,7 +1175,8 @@ export default function Home() {
             <button
               type="button"
               onClick={() => scrollTestimonials("prev")}
-              className="hidden h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec] lg:flex"
+              disabled={testimonialPage <= 0}
+              className="hidden text-[2.8rem] leading-none text-[#19182e] transition-opacity hover:text-[#6d44ec] disabled:cursor-not-allowed disabled:text-[#19182e]/20 lg:flex"
               aria-label="Previous testimonials"
             >
               ‹
@@ -1163,7 +1225,8 @@ export default function Home() {
             <button
               type="button"
               onClick={() => scrollTestimonials("next")}
-              className="hidden h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec] lg:flex"
+              disabled={testimonialPage >= testimonialLastPageIndex}
+              className="hidden text-[2.8rem] leading-none text-[#19182e] transition-opacity hover:text-[#6d44ec] disabled:cursor-not-allowed disabled:text-[#19182e]/20 lg:flex"
               aria-label="Next testimonials"
             >
               ›
@@ -1548,9 +1611,10 @@ export default function Home() {
           id="resources"
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-64 pb-0"
         >
-          <div className="w-full rounded-none border-y border-[#e7e2f0] bg-[rgba(255,255,255,0.82)] px-8 py-8 shadow-[0_14px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-10 lg:px-24 xl:px-28">
-            <div className="grid gap-10 lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
-              <div className="flex flex-col items-center border-b border-[#ece7f4] pb-8 text-center lg:items-start lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10 lg:text-left">
+          <div className="relative w-full overflow-hidden rounded-none border-t border-[#e7e2f0] bg-[linear-gradient(180deg,rgba(252,247,240,0.96)_0%,rgba(250,243,235,0.96)_24%,rgba(248,240,250,0.96)_58%,rgba(247,239,232,0.96)_100%)] px-8 py-10 shadow-[0_-10px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-12 lg:px-24 xl:px-28">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.55),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(193,171,255,0.18),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(255,220,170,0.12),transparent_26%)]" />
+            <div className="relative z-10 grid gap-10 text-left lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
+              <div className="flex flex-col items-start border-b border-[#ece7f4] pb-8 text-left lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
                 <a
                   href="#"
                   className="inline-flex items-start gap-1 text-[2.9rem] leading-none text-[#11101f]"
@@ -1561,12 +1625,12 @@ export default function Home() {
                   </span>
                   <SparkIcon className="mt-1 h-4 w-4 text-[#f0b44b]" />
                 </a>
-                <p className="mx-auto mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278] lg:mx-0">
+                <p className="mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278]">
                   The all-in-one platform for creator-brand collaborations.
                   Connect, collaborate and grow together.
                 </p>
 
-                <div className="mt-8 flex items-center justify-center gap-5 text-[#19182e] lg:justify-start">
+                <div className="mt-8 flex items-center justify-start gap-5 text-[#19182e]">
                   {[
                     "instagram",
                     "tiktok",
@@ -1586,7 +1650,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid justify-items-center gap-8 text-center sm:grid-cols-4 lg:gap-10">
+              <div className="grid justify-items-start gap-8 text-left sm:grid-cols-4 lg:gap-10">
                 <FooterColumn
                   title="Product"
                   items={["Features", "For Creators", "For Brands", "How It Works", "Pricing", "Changelog"]}
@@ -1605,13 +1669,13 @@ export default function Home() {
                 />
               </div>
 
-              <div className="flex flex-col items-center justify-between gap-8 border-t border-[#ece7f4] pt-8 text-center lg:items-end lg:border-t-0 lg:pt-0 lg:text-right">
+              <div className="flex flex-col items-start justify-between gap-8 border-t border-[#ece7f4] pt-8 text-left lg:border-t-0 lg:pt-0">
                 <p className="max-w-[170px] text-[1rem] leading-[1.5] text-[#5f5d6f]">
                   © 2024 Buzzroster, Inc.
                   <br />
                   All rights reserved.
                 </p>
-                <div className="flex flex-col items-center gap-3 text-[#19182e] opacity-80 lg:items-end">
+                <div className="flex flex-col items-start gap-3 text-[#19182e] opacity-80">
                   <HeartMark />
                 </div>
               </div>
