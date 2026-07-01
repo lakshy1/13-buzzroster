@@ -643,6 +643,7 @@ export default function Home() {
   const [visibleTestimonialCards, setVisibleTestimonialCards] = useState(1);
   const [testimonialPage, setTestimonialPage] = useState(0);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const testimonialViewportRef = useRef<HTMLDivElement | null>(null);
   const activeSteps = audience === "creators" ? howItWorksSteps : brandWorksSteps;
   const activeTestimonials = audience === "creators" ? testimonials : brandTestimonials;
@@ -666,6 +667,17 @@ export default function Home() {
 
     return () => window.removeEventListener("resize", updateVisibleCards);
   }, []);
+
+  useEffect(() => {
+    const closeOnScroll = () => {
+      if (mobileNavOpen) {
+        setMobileNavOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", closeOnScroll, { passive: true });
+    return () => window.removeEventListener("scroll", closeOnScroll);
+  }, [mobileNavOpen]);
 
   const setActiveAudience = (nextAudience: "creators" | "brands") => {
     setAudience(nextAudience);
@@ -725,47 +737,102 @@ export default function Home() {
       </div>
 
       <div className="relative mx-auto flex min-h-screen w-full flex-col px-4 pb-0 pt-5 sm:px-6 md:px-8">
-        <header className="fixed left-1/2 top-4 z-50 flex w-[calc(100vw-2rem)] -translate-x-1/2 items-center justify-between gap-6 rounded-[1.75rem] border border-white/55 bg-[rgba(255,255,255,0.58)] px-4 py-3 shadow-[0_14px_40px_rgba(125,96,207,0.08)] backdrop-blur-xl sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
-          <a
-            href="#"
-            className="group flex items-start gap-1 text-[2.6rem] leading-none text-[#5c36d6] transition-transform duration-200 hover:scale-[1.01] md:text-[3.1rem]"
-            aria-label="Buzzroster home"
+        <header className="fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] border border-white/55 bg-[rgba(255,255,255,0.58)] px-4 py-3 shadow-[0_14px_40px_rgba(125,96,207,0.08)] backdrop-blur-xl sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
+          <div className="flex items-center justify-between gap-3">
+            <a
+              href="#"
+              className="group flex items-start gap-1 text-[2.4rem] leading-none text-[#5c36d6] transition-transform duration-200 hover:scale-[1.01] sm:text-[2.6rem] md:text-[3.1rem]"
+              aria-label="Buzzroster home"
+            >
+              <span className="font-[family-name:var(--font-pacifico)] tracking-tight">
+                Buzzroster
+              </span>
+              <SparkIcon className="mt-1 h-4 w-4 text-[#5c36d6] transition-transform duration-200 group-hover:rotate-12 md:h-5 md:w-5" />
+            </a>
+
+            <nav className="hidden items-center gap-6 text-[0.98rem] font-medium text-[#1a1731] lg:flex xl:gap-10">
+              {navItems.map((item) => (
+                item.label === "Tools" ? (
+                  <ToolsDropdown key={item.label} />
+                ) : (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="flex items-center gap-1 transition-colors hover:text-[#5c36d6]"
+                  >
+                    <span>{item.label}</span>
+                  </a>
+                )
+              ))}
+            </nav>
+
+            <div className="hidden items-center gap-3 sm:gap-4 lg:flex">
+              <a
+                href="#"
+                className="rounded-2xl border border-[#cdbcf8] bg-white/55 px-5 py-3 text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+              >
+                Log in
+              </a>
+              <a
+                href="#"
+                className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-6"
+              >
+                Join Buzzroster free
+              </a>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setMobileNavOpen((current) => !current)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[#d8cfff] bg-white/70 text-[#5c36d6] shadow-[0_10px_24px_rgba(125,96,207,0.08)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 lg:hidden"
+              aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileNavOpen}
+            >
+              <span className="sr-only">{mobileNavOpen ? "Close menu" : "Open menu"}</span>
+              <span className="relative flex h-4 w-4 flex-col justify-center">
+                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "translate-y-1 rotate-45" : "-translate-y-1"}`} />
+                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "opacity-0" : "opacity-100"}`} />
+                <span className={`block h-0.5 rounded-full bg-current transition-all duration-200 ${mobileNavOpen ? "-translate-y-1 -rotate-45" : "translate-y-1"}`} />
+              </span>
+            </button>
+          </div>
+
+          <div
+            className={`mt-3 overflow-hidden rounded-[1.5rem] border border-[#e1d7fb] bg-[rgba(255,255,255,0.94)] shadow-[0_20px_50px_rgba(125,96,207,0.12)] transition-all duration-300 lg:hidden ${
+              mobileNavOpen ? "max-h-[70vh] opacity-100" : "max-h-0 border-transparent opacity-0"
+            }`}
           >
-            <span className="font-[family-name:var(--font-pacifico)] tracking-tight">
-              Buzzroster
-            </span>
-            <SparkIcon className="mt-1 h-4 w-4 text-[#5c36d6] transition-transform duration-200 group-hover:rotate-12 md:h-5 md:w-5" />
-          </a>
+            <div className="flex flex-col gap-4 p-4">
+              <nav className="grid gap-2 text-[1rem] font-medium text-[#1a1731]">
+                {navItems.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileNavOpen(false)}
+                    className="rounded-2xl px-4 py-3 transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </nav>
 
-          <nav className="hidden items-center gap-6 text-[0.98rem] font-medium text-[#1a1731] lg:flex xl:gap-10">
-            {navItems.map((item) => (
-              item.label === "Tools" ? (
-                <ToolsDropdown key={item.label} />
-              ) : (
+              <div className="grid gap-3 pt-2">
                 <a
-                  key={item.label}
-                  href={item.href}
-                  className="flex items-center gap-1 transition-colors hover:text-[#5c36d6]"
+                  href="#"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="rounded-2xl border border-[#cdbcf8] bg-white/70 px-4 py-3 text-center text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-white"
                 >
-                  <span>{item.label}</span>
+                  Log in
                 </a>
-              )
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3 sm:gap-4">
-            <a
-              href="#"
-              className="rounded-2xl border border-[#cdbcf8] bg-white/55 px-5 py-3 text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
-            >
-              Log in
-            </a>
-            <a
-              href="#"
-              className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-6"
-            >
-              Join Buzzroster free
-            </a>
+                <a
+                  href="#"
+                  onClick={() => setMobileNavOpen(false)}
+                  className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.32)]"
+                >
+                  Join Buzzroster free
+                </a>
+              </div>
+            </div>
           </div>
         </header>
 
@@ -773,7 +840,7 @@ export default function Home() {
           id="about-us"
           className="mx-auto flex w-[85vw] max-w-none scroll-mt-36 flex-1 flex-col items-center pt-20 text-center sm:pt-24"
         >
-          <h1 className="mt-4 max-w-[1240px] font-[family-name:var(--font-serif)] text-[clamp(2.85rem,5.9vw,6rem)] font-medium leading-[0.92] tracking-[-0.05em] text-[#17162b] md:mt-6">
+          <h1 className="mt-4 max-w-[1120px] font-[family-name:var(--font-serif)] text-[clamp(2.85rem,5.9vw,6rem)] font-medium leading-[0.92] tracking-[-0.05em] text-[#17162b] md:mt-6 xl:text-[clamp(2.35rem,4vw,4.1rem)] 2xl:text-[clamp(2.15rem,3.4vw,3.8rem)]">
             <span className="block">A visual collaboration workspace</span>
             <span className="block">built for modern creators.</span>
           </h1>
@@ -787,14 +854,6 @@ export default function Home() {
             </span>
           </p>
 
-          <Link
-            href="/tools/creator-worth-calculator"
-            className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#d8cfff] bg-white/70 px-4 py-2 text-[0.98rem] font-medium text-[#5c36d6] shadow-[0_10px_26px_rgba(125,96,207,0.08)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90"
-          >
-            Estimate your creator worth
-            <ChevronIcon className="h-4 w-4 -rotate-90" />
-          </Link>
-
           <div className="relative mt-5 w-full flex-1 pb-2 md:mt-7">
             <div className="absolute left-1/2 top-0 h-28 w-[76%] -translate-x-1/2 rounded-full bg-white/35 blur-3xl" />
             <div className="relative mx-auto flex w-full items-end justify-center">
@@ -802,8 +861,8 @@ export default function Home() {
                 src={heroSection as StaticImageData}
                 alt="Buzzroster product hero showing the mobile app interface"
                 priority
-                className="h-auto w-[min(100%,1710px)] select-none object-contain drop-shadow-[0_35px_70px_rgba(93,61,179,0.1)]"
-                sizes="(max-width: 768px) 100vw, 1710px"
+                className="h-auto w-[min(100%,1540px)] select-none object-contain drop-shadow-[0_35px_70px_rgba(93,61,179,0.1)]"
+                sizes="(max-width: 768px) 100vw, 1540px"
               />
             </div>
           </div>
@@ -874,7 +933,33 @@ export default function Home() {
 
           <div className="relative mt-12">
             <div className="absolute left-[5%] right-[5%] top-[58px] hidden h-px bg-[#eef0f5] lg:block" />
-            <div key={audience} className="toggle-panel grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-7 lg:gap-6">
+
+            <div
+              key={`${audience}-mobile-steps`}
+              className="no-scrollbar toggle-panel -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 lg:hidden"
+            >
+              {activeSteps.map((step) => (
+                <div
+                  key={step.number}
+                  className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.5rem] border border-white/80 bg-white/70 px-6 py-8 text-center shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)]"
+                >
+                  <div className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
+                    <StepIcon kind={step.icon} color={step.color} />
+                  </div>
+                  <div className="mx-auto mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-[#6d44ec] text-[0.82rem] font-semibold text-white shadow-[0_8px_18px_rgba(109,68,236,0.25)]">
+                    {step.number}
+                  </div>
+                  <h3 className="mt-5 text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-[#19182e]">
+                    {step.title}
+                  </h3>
+                  <p className="mt-4 text-[0.98rem] leading-[1.55] text-[#656278]">
+                    {step.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div key={audience} className="toggle-panel hidden grid-cols-1 gap-10 md:grid md:grid-cols-2 lg:grid lg:grid-cols-7 lg:gap-6">
               {activeSteps.map((step) => (
                 <div key={step.number} className="relative flex flex-col items-center text-center">
                   <div className="flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
@@ -904,12 +989,12 @@ export default function Home() {
 
           <div
             key={`${audience}-testimonials`}
-            className="toggle-panel mt-8 grid grid-cols-[40px_minmax(0,1fr)_40px] items-center gap-4 lg:gap-6"
+            className="toggle-panel mt-8 grid grid-cols-[minmax(0,1fr)] items-center gap-4 lg:grid-cols-[40px_minmax(0,1fr)_40px] lg:gap-6"
           >
             <button
               type="button"
               onClick={() => scrollTestimonials("prev")}
-              className="flex h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec]"
+              className="hidden h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec] lg:flex"
               aria-label="Previous testimonials"
             >
               ‹
@@ -918,13 +1003,13 @@ export default function Home() {
             <div
               ref={testimonialViewportRef}
               onScroll={handleTestimonialsScroll}
-              className="overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="overflow-x-auto scroll-smooth no-scrollbar"
             >
               <div className="flex snap-x snap-mandatory gap-6">
                 {activeTestimonials.map((testimonial) => (
                   <article
                     key={testimonial.name}
-                    className="min-w-full snap-start rounded-[1.5rem] border border-white/80 p-6 shadow-[0_16px_45px_rgba(125,96,207,0.08)] md:min-w-[calc(50%-12px)] lg:min-w-[calc((100%-48px)/3)]"
+                    className="min-w-[calc(100vw-2rem)] snap-start rounded-[1.5rem] border border-white/80 p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)] md:min-w-[calc(50%-12px)] lg:min-w-[calc((100%-48px)/3)]"
                     style={{ background: testimonial.background }}
                   >
                     <div className="flex items-start justify-between gap-4">
@@ -958,7 +1043,7 @@ export default function Home() {
             <button
               type="button"
               onClick={() => scrollTestimonials("next")}
-              className="flex h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec]"
+              className="hidden h-12 w-12 items-center justify-center justify-self-center rounded-full text-[2.8rem] leading-none text-[#19182e] transition-colors hover:text-[#6d44ec] lg:flex"
               aria-label="Next testimonials"
             >
               ›
@@ -989,7 +1074,77 @@ export default function Home() {
               Choose a plan that fits your goals.
             </p>
 
-            <div className="mt-10 grid gap-6 xl:grid-cols-3">
+            <div className="no-scrollbar mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 lg:hidden">
+              {pricingPlans.map((plan) => (
+                <article
+                  key={plan.name}
+                  className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.8rem] border bg-white/70 p-8 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm sm:min-w-[calc(100vw-3rem)]"
+                  style={{ borderColor: plan.border }}
+                >
+                  {plan.badge ? (
+                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6d44ec] px-5 py-1 text-[0.92rem] font-semibold text-white shadow-[0_12px_24px_rgba(109,68,236,0.25)]">
+                      {plan.badge}
+                    </div>
+                  ) : null}
+
+                  <div className="text-[1.05rem] font-semibold text-[#27243f]">
+                    {plan.name}
+                  </div>
+                  <div className="mt-5 flex items-end gap-2">
+                    <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
+                      {plan.price}
+                    </span>
+                    {plan.period ? (
+                      <span className="pb-2 text-[1.05rem] text-[#7b7890]">
+                        {plan.period}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p className="mt-4 text-[1.05rem] text-[#66637d]">
+                    {plan.name === "Creator"
+                      ? "Everything you need to grow"
+                      : plan.name === "Brand Starter"
+                        ? "Perfect for small brands"
+                        : "For agencies & growing teams"}
+                  </p>
+
+                  <ul className="mt-8 space-y-4 text-[1rem] text-[#4a475c]">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-start gap-3">
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          className="mt-0.5 h-5 w-5 shrink-0"
+                          style={{ color: plan.accent }}
+                        >
+                          <path
+                            d="M16.5 5.5 8.5 14 3.8 9.5"
+                            stroke="currentColor"
+                            strokeWidth="2.2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto pt-8">
+                    <a
+                      href="#"
+                      className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                      style={{ background: `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)` }}
+                    >
+                      {plan.cta}
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="mt-10 hidden gap-6 xl:grid xl:grid-cols-3">
               {pricingPlans.map((plan) => (
                 <article
                   key={plan.name}
@@ -1060,31 +1215,31 @@ export default function Home() {
             </div>
           </div>
 
-          <div id="faq" className="mt-16 scroll-mt-36">
-            <h2 className="text-[clamp(2rem,2.6vw,3.25rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
+          <div id="faq" className="mt-12 scroll-mt-36">
+            <h2 className="text-[clamp(1.8rem,2.3vw,2.9rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
               Frequently asked questions
             </h2>
 
-          <div className="mt-10 space-y-4">
+          <div className="mt-6 space-y-3">
               {faqItems.map((item) => {
                 const open = openFaq === item.question;
 
                 return (
                   <div
                     key={item.question}
-                    className="overflow-hidden rounded-[1rem] border border-[#ece8f5] bg-white/72 shadow-[0_10px_28px_rgba(125,96,207,0.05)]"
+                    className="overflow-hidden rounded-[0.9rem] border border-[#ece8f5] bg-white/72 shadow-[0_10px_28px_rgba(125,96,207,0.05)]"
                   >
                     <button
                       type="button"
                       onClick={() => toggleFaq(item.question)}
                       aria-expanded={open}
-                      className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors hover:bg-white/50"
+                      className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition-colors hover:bg-white/50 sm:px-5"
                     >
-                      <span className="text-[1.05rem] font-medium text-[#34324b]">
+                      <span className="text-[0.98rem] font-medium text-[#34324b] sm:text-[1.05rem]">
                         {item.question}
                       </span>
                       <span
-                        className={`text-[1.8rem] leading-none text-[#6f6c83] transition-transform duration-300 ${
+                        className={`text-[1.5rem] leading-none text-[#6f6c83] transition-transform duration-300 ${
                           open ? "rotate-45" : "rotate-0"
                         }`}
                         aria-hidden="true"
@@ -1098,7 +1253,7 @@ export default function Home() {
                         open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                       }`}
                     >
-                      <div className="overflow-hidden px-6 pb-5 text-[0.98rem] leading-[1.7] text-[#5f5b72]">
+                      <div className="overflow-hidden px-4 pb-4 text-[0.94rem] leading-[1.65] text-[#5f5b72] sm:px-5 sm:text-[0.98rem]">
                         {item.answer}
                       </div>
                     </div>
@@ -1109,7 +1264,7 @@ export default function Home() {
 
             <a
               href="#"
-              className="mt-8 inline-flex items-center gap-2 text-[1.05rem] font-semibold text-[#6d44ec]"
+              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-[#6d44ec] sm:text-[1.05rem]"
             >
               <span>View all FAQs</span>
               <span className="text-[1.4rem] leading-none">→</span>
@@ -1117,23 +1272,23 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mx-auto w-[85vw] max-w-none pb-16 sm:pb-24">
+        <section className="mx-auto w-[85vw] max-w-none pb-12 sm:pb-18">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-[linear-gradient(90deg,rgba(240,233,255,0.92)_0%,rgba(247,243,255,0.84)_28%,rgba(255,250,240,0.74)_100%)] shadow-[0_18px_50px_rgba(125,96,207,0.08)]">
-            <div className="relative h-[280px] w-full sm:h-[340px] lg:h-[360px]">
+            <div className="relative h-[240px] w-full sm:h-[295px] lg:h-[315px]">
               <Image
                 src={ctaImage as StaticImageData}
                 alt="Creators collaborating around a campaign board"
                 priority={false}
-                sizes="85vw"
+                sizes="(max-width: 768px) 100vw, 85vw"
                 className="h-full w-full object-cover object-right"
               />
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(243,237,255,0.97)_0%,rgba(243,237,255,0.93)_22%,rgba(243,237,255,0.74)_38%,rgba(255,250,240,0.28)_58%,rgba(255,250,240,0.08)_100%)]" />
               <div className="absolute left-8 top-1/2 z-10 w-[44%] max-w-[580px] -translate-y-1/2 sm:left-12 lg:left-16">
-                <h2 className="max-w-[520px] font-[family-name:var(--font-serif)] text-[clamp(2.3rem,3.4vw,4.2rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#17162b]">
+                <h2 className="max-w-[500px] font-[family-name:var(--font-serif)] text-[clamp(2.15rem,3.1vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#17162b]">
                   Ready to build your
                   <span className="block">creator roster?</span>
                 </h2>
-                <p className="mt-5 max-w-[480px] text-[clamp(1.02rem,1.45vw,1.28rem)] leading-[1.45] text-[#55526b]">
+                <p className="mt-5 max-w-[460px] text-[clamp(0.98rem,1.25vw,1.18rem)] leading-[1.45] text-[#55526b]">
                   Join thousands of creators and brands building meaningful
                   partnerships that grow.
                 </p>
@@ -1161,9 +1316,9 @@ export default function Home() {
           id="resources"
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-64 pb-0"
         >
-          <div className="rounded-none border-y border-[#e7e2f0] bg-[rgba(255,255,255,0.82)] px-6 py-8 shadow-[0_14px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-8 sm:py-10">
-            <div className="grid gap-10 lg:grid-cols-[1.05fr_1.8fr_0.9fr] lg:gap-8">
-              <div className="border-b border-[#ece7f4] pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
+          <div className="w-full rounded-none border-y border-[#e7e2f0] bg-[rgba(255,255,255,0.82)] px-8 py-8 shadow-[0_14px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-10 lg:px-24 xl:px-28">
+            <div className="grid gap-10 lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
+              <div className="flex flex-col items-center border-b border-[#ece7f4] pb-8 text-center lg:items-start lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10 lg:text-left">
                 <a
                   href="#"
                   className="inline-flex items-start gap-1 text-[2.9rem] leading-none text-[#11101f]"
@@ -1174,12 +1329,12 @@ export default function Home() {
                   </span>
                   <SparkIcon className="mt-1 h-4 w-4 text-[#f0b44b]" />
                 </a>
-                <p className="mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278]">
+                <p className="mx-auto mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278] lg:mx-0">
                   The all-in-one platform for creator-brand collaborations.
                   Connect, collaborate and grow together.
                 </p>
 
-                <div className="mt-8 flex items-center gap-5 text-[#19182e]">
+                <div className="mt-8 flex items-center justify-center gap-5 text-[#19182e] lg:justify-start">
                   {[
                     "instagram",
                     "tiktok",
@@ -1199,7 +1354,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:gap-10">
+              <div className="grid justify-items-center gap-8 text-center sm:grid-cols-4 lg:gap-10">
                 <FooterColumn
                   title="Product"
                   items={["Features", "For Creators", "For Brands", "How It Works", "Pricing", "Changelog"]}
@@ -1218,13 +1373,13 @@ export default function Home() {
                 />
               </div>
 
-              <div className="flex flex-col items-end justify-between gap-8 border-t border-[#ece7f4] pt-8 text-right lg:border-t-0 lg:pt-0">
+              <div className="flex flex-col items-center justify-between gap-8 border-t border-[#ece7f4] pt-8 text-center lg:items-end lg:border-t-0 lg:pt-0 lg:text-right">
                 <p className="max-w-[170px] text-[1rem] leading-[1.5] text-[#5f5d6f]">
                   © 2024 Buzzroster, Inc.
                   <br />
                   All rights reserved.
                 </p>
-                <div className="flex flex-col items-end gap-3 text-[#19182e] opacity-80">
+                <div className="flex flex-col items-center gap-3 text-[#19182e] opacity-80 lg:items-end">
                   <HeartMark />
                 </div>
               </div>
