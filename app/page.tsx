@@ -260,7 +260,7 @@ const pricingPlans = [
     period: "/ month",
     accent: "#7a61ef",
     border: "rgba(122, 97, 239, 0.38)",
-    badge: "Most Popular",
+    badge: "Recommended",
     features: [
       "Discover & filter creators",
       "Send up to 50 invites / month",
@@ -644,7 +644,11 @@ export default function Home() {
   const [testimonialPage, setTestimonialPage] = useState(0);
   const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [mobileStepsPage, setMobileStepsPage] = useState(0);
+  const [mobilePricingPage, setMobilePricingPage] = useState(0);
   const testimonialViewportRef = useRef<HTMLDivElement | null>(null);
+  const mobileStepsViewportRef = useRef<HTMLDivElement | null>(null);
+  const mobilePricingViewportRef = useRef<HTMLDivElement | null>(null);
   const activeSteps = audience === "creators" ? howItWorksSteps : brandWorksSteps;
   const activeTestimonials = audience === "creators" ? testimonials : brandTestimonials;
   const testimonialPageCount = Math.ceil(
@@ -713,6 +717,54 @@ export default function Home() {
 
     const nextPage = Math.round(viewport.scrollLeft / viewport.clientWidth);
     setTestimonialPage(nextPage);
+  };
+
+  const scrollMobileSteps = (direction: "prev" | "next") => {
+    const viewport = mobileStepsViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    viewport.scrollTo({
+      left:
+        direction === "next"
+          ? viewport.scrollLeft + viewport.clientWidth
+          : viewport.scrollLeft - viewport.clientWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const handleMobileStepsScroll = () => {
+    const viewport = mobileStepsViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    setMobileStepsPage(Math.round(viewport.scrollLeft / viewport.clientWidth));
+  };
+
+  const scrollMobilePricing = (direction: "prev" | "next") => {
+    const viewport = mobilePricingViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    viewport.scrollTo({
+      left:
+        direction === "next"
+          ? viewport.scrollLeft + viewport.clientWidth
+          : viewport.scrollLeft - viewport.clientWidth,
+      behavior: "smooth",
+    });
+  };
+
+  const handleMobilePricingScroll = () => {
+    const viewport = mobilePricingViewportRef.current;
+    if (!viewport) {
+      return;
+    }
+
+    setMobilePricingPage(Math.round(viewport.scrollLeft / viewport.clientWidth));
   };
 
   const toggleFaq = (question: string) => {
@@ -904,16 +956,16 @@ export default function Home() {
           id="tools"
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-36 pb-6 pt-2 sm:pb-8"
         >
-          <div className="border-y border-white/70 bg-[rgba(255,255,255,0.72)] shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-md">
-            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-[#2a2940] sm:text-[1.05rem]">
+          <div className="border-y border-white/35 bg-[rgba(255,255,255,0.42)] backdrop-blur-[8px]">
+            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-[#2a2940] opacity-90 sm:text-[1.05rem]">
               Trusted by creators, brands & agencies worldwide
             </p>
             <div className="overflow-hidden px-5 py-5 sm:px-8">
-              <div className="brand-marquee flex w-max items-center gap-14 text-[#6e6c7f]">
+              <div className="brand-marquee flex w-max items-center gap-12 text-[#6e6c7f] sm:gap-14">
                 {repeatedTrustedBrands.map((brand, index) => (
                   <div
                     key={`${brand}-${index}`}
-                    className="flex shrink-0 items-center gap-2 rounded-full border border-white/60 bg-white/58 px-4 py-2 shadow-[0_8px_20px_rgba(125,96,207,0.06)]"
+                    className="flex shrink-0 items-center gap-2.5 px-1 py-1"
                   >
                     <BrandIcon kind={brand.icon} />
                     <span className="font-[family-name:var(--font-serif)] text-[1.02rem] italic text-[#5f5d6f] opacity-90 sm:text-[1.1rem]">
@@ -933,7 +985,6 @@ export default function Home() {
           <div className="mx-auto max-w-[780px] text-center">
             <h2 className="text-[clamp(2rem,2.4vw,3rem)] font-semibold tracking-[-0.04em] text-[#17162b]">
               How <span className="text-[#6d44ec]">BuzzRoster</span> works
-              <span className="ml-1 text-[#f0b44b]">✦</span>
             </h2>
           <div className="mx-auto mt-5 flex w-full max-w-[360px] items-center justify-between border-b border-[#e9e4f3] text-[1rem] font-semibold text-[#4f4d66]">
               <button
@@ -966,29 +1017,62 @@ export default function Home() {
           <div className="relative mt-12">
             <div className="absolute left-[5%] right-[5%] top-[58px] hidden h-px bg-[#eef0f5] lg:block" />
 
-            <div
-              key={`${audience}-mobile-steps`}
-              className="no-scrollbar toggle-panel -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 lg:hidden"
-            >
-              {activeSteps.map((step) => (
-                <div
-                  key={step.number}
-                  className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.5rem] border border-white/80 bg-white/70 px-6 py-8 text-center shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)]"
-                >
-                  <div className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
-                    <StepIcon kind={step.icon} color={step.color} />
+            <div className="relative lg:hidden">
+              <button
+                type="button"
+                onClick={() => scrollMobileSteps("prev")}
+                className="absolute left-1 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                aria-label="Previous steps"
+              >
+                <span className="text-[1.25rem] leading-none">‹</span>
+              </button>
+
+              <div
+                key={`${audience}-mobile-steps`}
+                ref={mobileStepsViewportRef}
+                onScroll={handleMobileStepsScroll}
+                className="no-scrollbar toggle-panel -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3"
+              >
+                {activeSteps.map((step) => (
+                  <div
+                    key={step.number}
+                    className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.5rem] border border-white/80 bg-white/70 px-6 py-8 text-center shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)]"
+                  >
+                    <div className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
+                      <StepIcon kind={step.icon} color={step.color} />
+                    </div>
+                    <div className="mx-auto mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-[#6d44ec] text-[0.82rem] font-semibold text-white shadow-[0_8px_18px_rgba(109,68,236,0.25)]">
+                      {step.number}
+                    </div>
+                    <h3 className="mt-5 text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-[#19182e]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-4 text-[0.98rem] leading-[1.55] text-[#656278]">
+                      {step.description}
+                    </p>
                   </div>
-                  <div className="mx-auto mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-[#6d44ec] text-[0.82rem] font-semibold text-white shadow-[0_8px_18px_rgba(109,68,236,0.25)]">
-                    {step.number}
-                  </div>
-                  <h3 className="mt-5 text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-[#19182e]">
-                    {step.title}
-                  </h3>
-                  <p className="mt-4 text-[0.98rem] leading-[1.55] text-[#656278]">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollMobileSteps("next")}
+                className="absolute right-1 top-1/2 z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                aria-label="Next steps"
+              >
+                <span className="text-[1.25rem] leading-none">›</span>
+              </button>
+
+              <div className="mt-2 flex justify-center gap-1.5">
+                {activeSteps.map((step, index) => (
+                  <span
+                    key={step.number}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === mobileStepsPage ? "w-5 bg-[#6d44ec]" : "w-1.5 bg-[#dcd4ef]"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
             <div key={audience} className="toggle-panel hidden grid-cols-1 gap-10 md:grid md:grid-cols-2 lg:grid lg:grid-cols-7 lg:gap-6">
@@ -1011,12 +1095,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-16 flex items-center gap-5">
-            <div className="h-px flex-1 bg-[#eceaf3]" />
+          <div className="mt-16 flex flex-col items-center gap-3 md:flex-row md:gap-5">
+            <div className="hidden h-px flex-1 bg-[#eceaf3] md:block" />
             <h3 className="whitespace-nowrap text-center text-[clamp(1.8rem,2.2vw,2.7rem)] font-semibold tracking-[-0.04em] text-[#17162b]">
               Loved by creators & brands
             </h3>
-            <div className="h-px flex-1 bg-[#eceaf3]" />
+            <div className="hidden h-px flex-1 bg-[#eceaf3] md:block" />
           </div>
 
           <div
@@ -1106,97 +1190,148 @@ export default function Home() {
               Choose a plan that fits your goals.
             </p>
 
-            <div className="no-scrollbar mt-10 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3 lg:hidden">
-              {pricingPlans.map((plan) => (
-                <article
-                  key={plan.name}
-                  className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.8rem] border bg-white/70 p-8 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm sm:min-w-[calc(100vw-3rem)]"
-                  style={{ borderColor: plan.border }}
-                >
-                  {plan.badge ? (
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6d44ec] px-5 py-1 text-[0.92rem] font-semibold text-white shadow-[0_12px_24px_rgba(109,68,236,0.25)]">
-                      {plan.badge}
+            <div className="relative mt-10 lg:hidden">
+              <button
+                type="button"
+                onClick={() => scrollMobilePricing("prev")}
+                className="absolute left-1 top-[42%] z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                aria-label="Previous pricing plan"
+              >
+                <span className="text-[1.25rem] leading-none">‹</span>
+              </button>
+
+              <div
+                ref={mobilePricingViewportRef}
+                onScroll={handleMobilePricingScroll}
+                className="no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-3"
+              >
+                {pricingPlans.map((plan) => (
+                  <article
+                    key={plan.name}
+                    className={`relative min-w-[calc(100vw-2rem)] snap-center overflow-hidden rounded-[1.8rem] border p-8 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm sm:min-w-[calc(100vw-3rem)] ${
+                      plan.badge ? "border-[#d9cffc]" : ""
+                    }`}
+                    style={{
+                      borderColor: plan.badge ? "rgba(141, 121, 246, 0.28)" : plan.border,
+                      background: plan.badge
+                        ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
+                        : "rgba(255,255,255,0.70)",
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="text-[1.05rem] font-semibold text-[#27243f]">
+                        {plan.name}
+                      </div>
+                      {plan.badge ? (
+                        <div className="rounded-full border border-[#e5dcff] bg-[linear-gradient(135deg,rgba(141,121,246,0.14)_0%,rgba(255,255,255,0.72)_45%,rgba(111,195,161,0.06)_100%)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]/55 shadow-[0_8px_18px_rgba(109,68,236,0.08)]">
+                          {plan.badge}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
 
-                  <div className="text-[1.05rem] font-semibold text-[#27243f]">
-                    {plan.name}
-                  </div>
-                  <div className="mt-5 flex items-end gap-2">
-                    <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
-                      {plan.price}
-                    </span>
-                    {plan.period ? (
-                      <span className="pb-2 text-[1.05rem] text-[#7b7890]">
-                        {plan.period}
+                    <div className="mt-5 flex items-end gap-2">
+                      <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
+                        {plan.price}
                       </span>
-                    ) : null}
-                  </div>
-                  <p className="mt-4 text-[1.05rem] text-[#66637d]">
-                    {plan.name === "Creator"
-                      ? "Everything you need to grow"
-                      : plan.name === "Brand Starter"
-                        ? "Perfect for small brands"
-                        : "For agencies & growing teams"}
-                  </p>
+                      {plan.period ? (
+                        <span className="pb-2 text-[1.05rem] text-[#7b7890]">
+                          {plan.period}
+                        </span>
+                      ) : null}
+                    </div>
+                    <p className="relative z-10 mt-4 text-[1.05rem] text-[#66637d]">
+                      {plan.name === "Creator"
+                        ? "Everything you need to grow"
+                        : plan.name === "Brand Starter"
+                          ? "Perfect for small brands"
+                          : "For agencies & growing teams"}
+                    </p>
 
-                  <ul className="mt-8 space-y-4 text-[1rem] text-[#4a475c]">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3">
-                        <svg
-                          aria-hidden="true"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          className="mt-0.5 h-5 w-5 shrink-0"
-                          style={{ color: plan.accent }}
-                        >
-                          <path
-                            d="M16.5 5.5 8.5 14 3.8 9.5"
-                            stroke="currentColor"
-                            strokeWidth="2.2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    <ul className="relative z-10 mt-8 space-y-4 text-[1rem] text-[#4a475c]">
+                      {plan.features.map((feature) => (
+                        <li key={feature} className="flex items-start gap-3">
+                          <svg
+                            aria-hidden="true"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            className="mt-0.5 h-5 w-5 shrink-0"
+                            style={{ color: plan.accent }}
+                          >
+                            <path
+                              d="M16.5 5.5 8.5 14 3.8 9.5"
+                              stroke="currentColor"
+                              strokeWidth="2.2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                  <div className="mt-auto pt-8">
-                    <a
-                      href="#"
-                      className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
-                      style={{
-                        background:
-                          plan.name === "Agency"
-                            ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
-                            : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
-                      }}
-                    >
-                      {plan.cta}
-                    </a>
-                  </div>
-                </article>
-              ))}
+                    <div className="relative z-10 mt-auto pt-8">
+                      <a
+                        href="#"
+                        className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                        style={{
+                          background:
+                            plan.name === "Agency"
+                              ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
+                              : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
+                        }}
+                      >
+                        {plan.cta}
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => scrollMobilePricing("next")}
+                className="absolute right-1 top-[42%] z-20 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white/55 text-[#5b3dd7] shadow-[0_8px_16px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                aria-label="Next pricing plan"
+              >
+                <span className="text-[1.25rem] leading-none">›</span>
+              </button>
+
+              <div className="mt-2 flex justify-center gap-1.5">
+                {pricingPlans.map((plan, index) => (
+                  <span
+                    key={plan.name}
+                    className={`h-1.5 rounded-full transition-all ${
+                      index === mobilePricingPage ? "w-5 bg-[#6d44ec]" : "w-1.5 bg-[#dcd4ef]"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="mt-10 hidden gap-6 xl:grid xl:grid-cols-3">
               {pricingPlans.map((plan) => (
-                <article
-                  key={plan.name}
-                  className="relative flex min-h-[470px] flex-col rounded-[1.8rem] border bg-white/70 p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm"
-                  style={{ borderColor: plan.border }}
-                >
-                  {plan.badge ? (
-                    <div className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#6d44ec] px-5 py-1 text-[0.92rem] font-semibold text-white shadow-[0_12px_24px_rgba(109,68,236,0.25)]">
-                      {plan.badge}
+                  <article
+                    key={plan.name}
+                    className="relative flex min-h-[470px] flex-col rounded-[1.8rem] border p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                    style={{
+                      borderColor: plan.badge ? "rgba(141, 121, 246, 0.28)" : plan.border,
+                      background: plan.badge
+                        ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
+                        : "rgba(255,255,255,0.70)",
+                    }}
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="text-[1.05rem] font-semibold text-[#27243f]">
+                        {plan.name}
+                      </div>
+                      {plan.badge ? (
+                        <div className="rounded-full border border-[#e5dcff] bg-[linear-gradient(135deg,rgba(141,121,246,0.14)_0%,rgba(255,255,255,0.72)_45%,rgba(111,195,161,0.06)_100%)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]/55 shadow-[0_8px_18px_rgba(109,68,236,0.08)]">
+                          {plan.badge}
+                        </div>
+                      ) : null}
                     </div>
-                  ) : null}
 
-                  <div className="text-[1.05rem] font-semibold text-[#27243f]">
-                    {plan.name}
-                  </div>
                   <div className="mt-5 flex items-end gap-2">
                     <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
                       {plan.price}
@@ -1207,7 +1342,7 @@ export default function Home() {
                       </span>
                     ) : null}
                   </div>
-                  <p className="mt-4 text-[1.05rem] text-[#66637d]">
+                  <p className="relative z-10 mt-4 text-[1.05rem] text-[#66637d]">
                     {plan.name === "Creator"
                       ? "Everything you need to grow"
                       : plan.name === "Brand Starter"
@@ -1215,7 +1350,7 @@ export default function Home() {
                         : "For agencies & growing teams"}
                   </p>
 
-                  <ul className="mt-8 space-y-4 text-[1rem] text-[#4a475c]">
+                  <ul className="relative z-10 mt-8 space-y-4 text-[1rem] text-[#4a475c]">
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
                         <svg
@@ -1238,7 +1373,7 @@ export default function Home() {
                     ))}
                   </ul>
 
-                  <div className="mt-auto pt-8">
+                  <div className="relative z-10 mt-auto pt-8">
                     <a
                       href="#"
                       className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
