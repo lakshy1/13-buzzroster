@@ -1467,10 +1467,6 @@ export default function CreatorWorthCalculatorPage() {
                 className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-start"
               >
                 <div className="relative">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f2dde6] bg-[linear-gradient(90deg,rgba(244,237,255,0.95)_0%,rgba(255,236,240,0.88)_100%)] px-4 py-2 text-[0.92rem] font-medium text-[#6d44ec] shadow-[0_10px_28px_rgba(125,96,207,0.08)]">
-                    <span>Creator Worth Calculator</span>
-                    <SparkIcon className="h-4 w-4 text-[#f0b44b]" />
-                  </div>
                   <AnalysisCard platform={detectPlatform(inputUrl)} step={analysisStep} />
                 </div>
                 <PreviewCard />
@@ -1485,12 +1481,7 @@ export default function CreatorWorthCalculatorPage() {
                 className="grid gap-8 lg:grid-cols-[1.04fr_0.96fr] lg:items-start"
               >
                 <div className="relative">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-[#f2dde6] bg-[linear-gradient(90deg,rgba(244,237,255,0.95)_0%,rgba(255,236,240,0.88)_100%)] px-4 py-2 text-[0.92rem] font-medium text-[#6d44ec] shadow-[0_10px_28px_rgba(125,96,207,0.08)]">
-                    <span>Creator Worth Calculator</span>
-                    <SparkIcon className="h-4 w-4 text-[#f0b44b]" />
-                  </div>
-
-                  <h1 className="mt-5 max-w-[11.5ch] font-[family-name:var(--font-serif)] text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.06em] text-[#17162b]">
+                  <h1 className="max-w-[11.5ch] font-[family-name:var(--font-serif)] text-[clamp(3rem,5.4vw,5.8rem)] font-medium leading-[0.92] tracking-[-0.06em] text-[#17162b]">
                     <span className="block">Know your creator worth</span>
                     <span className="block text-[#6d44ec]">for Instagram and YouTube.</span>
                   </h1>

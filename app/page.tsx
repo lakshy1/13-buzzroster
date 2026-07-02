@@ -17,6 +17,7 @@ const navItems = [
 ];
 
 const toolsMenuItems = [
+  { label: "Creator Worth Calculator", href: "/tools/creator-worth-calculator" },
   { label: "Creator Workspace", href: "#features" },
   { label: "Campaign Tracking", href: "#pricing" },
   { label: "Support & Resources", href: "#resources" },
