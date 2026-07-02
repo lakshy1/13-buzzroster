@@ -1689,10 +1689,12 @@ export default function CreatorWorthCalculatorPage() {
             animate={{ opacity: 1, scale: [1, 1.06, 1], x: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
             onClick={() => setDrawerOpen(true)}
-            className="fixed bottom-5 right-5 z-40 hidden h-14 w-14 items-center justify-center rounded-[1.35rem] border border-[#eadff7] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_40px_rgba(125,96,207,0.16)] backdrop-blur-xl transition-transform duration-200 hover:-translate-y-0.5 md:flex"
+            className="fixed bottom-5 right-3 z-40 hidden h-14 w-14 items-center justify-center rounded-full border border-[#eadff7] bg-[rgba(255,255,255,0.94)] p-0 shadow-[0_18px_40px_rgba(125,96,207,0.16)] backdrop-blur-xl transition-transform duration-200 hover:-translate-y-0.5 md:flex"
             aria-label="Open creator worth contact drawer"
           >
-            <MailIcon className="h-6 w-6" />
+            <span className="flex h-full w-full items-center justify-center">
+              <MailIcon className="h-6 w-6 translate-x-[1px]" />
+            </span>
           </motion.button>
         ) : null}
 
