@@ -10,8 +10,8 @@ export default function ProfilePage() {
         description="This page behaves like your creator identity hub: audience proof, social accounts, showcase content, collaboration results, and the signals brands care about before they invite you."
         action={
           <>
-            <SecondaryButton href="/dashboard/settings">Edit settings</SecondaryButton>
-            <PrimaryButton href="/dashboard/brand-invites">See invites</PrimaryButton>
+            <SecondaryButton href="/creator/settings">Edit settings</SecondaryButton>
+            <PrimaryButton href="/creator/invites">See invites</PrimaryButton>
           </>
         }
       />

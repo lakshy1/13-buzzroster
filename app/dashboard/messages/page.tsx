@@ -10,8 +10,8 @@ export default function MessagesPage() {
         description="Follow timelines, approvals, and quick asks without context switching across email, chat apps, and scattered threads."
         action={
           <>
-            <SecondaryButton href="/dashboard/active-campaigns">Campaign view</SecondaryButton>
-            <PrimaryButton href="/dashboard/submissions">Share status update</PrimaryButton>
+            <SecondaryButton href="/creator/campaigns">Campaign view</SecondaryButton>
+            <PrimaryButton href="/creator/campaigns/campaign-1">Share status update</PrimaryButton>
           </>
         }
       />

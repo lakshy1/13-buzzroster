@@ -9,8 +9,8 @@ export default function SettingsPage() {
         description="Manage account details, notification preferences, payout setup, and security from one tidy settings page."
         action={
           <>
-            <SecondaryButton href="/dashboard/profile">Profile page</SecondaryButton>
-            <PrimaryButton href="/dashboard/earnings">Review payouts</PrimaryButton>
+            <SecondaryButton href="/creator/profile">Profile page</SecondaryButton>
+            <PrimaryButton href="/creator/earnings">Review payouts</PrimaryButton>
           </>
         }
       />

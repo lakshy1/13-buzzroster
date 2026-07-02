@@ -10,8 +10,8 @@ export default function EarningsPage() {
         description="Your earnings page keeps money visibility simple so you can see what is paid, what is queued, and what is still outstanding."
         action={
           <>
-            <SecondaryButton href="/dashboard/messages">Follow up with brands</SecondaryButton>
-            <PrimaryButton href="/dashboard/settings">Manage payout settings</PrimaryButton>
+            <SecondaryButton href="/creator/messages">Follow up with brands</SecondaryButton>
+            <PrimaryButton href="/creator/settings">Manage payout settings</PrimaryButton>
           </>
         }
       />

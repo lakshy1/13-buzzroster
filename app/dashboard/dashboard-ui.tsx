@@ -1,7 +1,19 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 
-import type { AttentionItem, CampaignRow, MetricCard, SidebarItem } from "./dashboard-data";
+import type { AttentionItem, CampaignRow, MetricCard } from "./dashboard-data";
+
+type SidebarIconName =
+  | "dashboard"
+  | "invites"
+  | "campaigns"
+  | "submissions"
+  | "earnings"
+  | "messages"
+  | "profile"
+  | "portfolio"
+  | "calculator"
+  | "settings";
 
 export function SparkIcon({ className = "" }: { className?: string }) {
   return (
@@ -25,7 +37,7 @@ export function LogoMark() {
   );
 }
 
-export function SidebarIcon({ icon, className = "" }: { icon: SidebarItem["icon"]; className?: string }) {
+export function SidebarIcon({ icon, className = "" }: { icon: SidebarIconName; className?: string }) {
   const common = { className, viewBox: "0 0 24 24", fill: "none", "aria-hidden": "true" as const };
 
   switch (icon) {
@@ -74,6 +86,14 @@ export function SidebarIcon({ icon, className = "" }: { icon: SidebarItem["icon"
         <svg {...common}>
           <circle cx="12" cy="8.25" r="3.25" stroke="currentColor" strokeWidth="1.8" />
           <path d="M5 19c1.5-3 4-4.5 7-4.5s5.5 1.5 7 4.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      );
+    case "portfolio":
+      return (
+        <svg {...common}>
+          <rect x="4.5" y="6.5" width="15" height="11" rx="2.2" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M9 6.5V5.5a1.75 1.75 0 0 1 1.75-1.75h2.5A1.75 1.75 0 0 1 15 5.5v1" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M4.5 12h15" stroke="currentColor" strokeWidth="1.8" />
         </svg>
       );
     case "calculator":
