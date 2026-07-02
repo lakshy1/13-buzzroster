@@ -51,7 +51,7 @@ const roleCopy = {
   },
   brand: {
     title: {
-      login: "Brand team log in",
+      login: "Welcome back, brand",
       register: "Build your brand workspace",
     },
     description: {
@@ -262,16 +262,16 @@ function AuthPanel({
           <div className="mx-auto h-px w-full max-w-[34rem] bg-[#ece6fa]" />
           <div>
             <h1 className="font-[family-name:var(--font-serif)] text-[clamp(2rem,3vw,3.1rem)] font-medium leading-[0.95] tracking-[-0.05em] text-[#17162b]">
-              {role === "creator" && mode === "login" ? (
+              {mode === "login" ? (
                 <>
-                  <span>Welcome back, creator</span>
+                  <span>{copy.title[mode]}</span>
                   <span className="wave-hand ml-3 inline-block align-[0.08em] text-[0.86em]">👋</span>
                 </>
               ) : (
                 copy.title[mode]
               )}
             </h1>
-            {!(role === "creator" && mode === "login") ? (
+            {mode !== "login" ? (
               <p className="mx-auto mt-4 max-w-xl text-[0.98rem] leading-[1.6] text-[#625f77]">
                 {copy.description[mode]}
               </p>

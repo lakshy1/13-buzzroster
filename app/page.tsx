@@ -17,7 +17,6 @@ const navItems = [
 ];
 
 const toolsMenuItems = [
-  { label: "Creator Worth Calculator", href: "/tools/creator-worth-calculator" },
   { label: "Creator Workspace", href: "#features" },
   { label: "Campaign Tracking", href: "#pricing" },
   { label: "Support & Resources", href: "#resources" },
@@ -835,7 +834,13 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="hidden items-center lg:flex">
+            <div className="hidden items-center gap-3 lg:flex">
+              <Link
+                href="/#resources"
+                className="rounded-2xl border border-[#cdbcf8] bg-white/55 px-5 py-3 text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+              >
+                Contact sales
+              </Link>
               <Link
                 href="/auth"
                 className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-6 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5"
@@ -951,6 +956,16 @@ export default function Home() {
               </div>
 
               <div className="grid gap-3 pt-2 pb-2">
+                <Link
+                  href="/#resources"
+                  onClick={() => {
+                    setMobileToolsOpen(false);
+                    setMobileNavOpen(false);
+                  }}
+                  className="rounded-2xl border border-[#cdbcf8] bg-white/70 px-4 py-3 text-center text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-white"
+                >
+                  Contact sales
+                </Link>
                 <Link
                   href="/auth"
                   onClick={() => {
@@ -1447,7 +1462,7 @@ export default function Home() {
 
           <div id="faq" className="mt-12 scroll-mt-36">
             <div className="grid gap-6 lg:grid-cols-[0.9fr_minmax(0,1.1fr)] lg:items-start lg:gap-10">
-              <div className="relative max-w-[28rem] lg:min-h-[31rem]">
+              <div className="relative max-w-[28rem] lg:min-h-[24.75rem]">
                 <p className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#6d44ec]/65">
                   Help center
                 </p>
@@ -1466,10 +1481,10 @@ export default function Home() {
 
                 <a
                   href="#"
-                  className="hidden lg:absolute lg:bottom-0 lg:left-0 lg:inline-flex lg:items-center lg:gap-2 lg:text-[0.98rem] lg:font-semibold lg:text-[#6d44ec] xl:text-[1.05rem]"
+                  className="hidden lg:absolute lg:bottom-[-0.35rem] lg:left-0 lg:inline-flex lg:items-center lg:gap-2 lg:text-[0.98rem] lg:font-semibold lg:text-[#6d44ec] xl:text-[1.05rem]"
                 >
                   <span>View all FAQs</span>
-                  <span className="text-[1.4rem] leading-none">â†’</span>
+                  <span className="text-[1.4rem] leading-none">&rarr;</span>
                 </a>
               </div>
 
@@ -1526,7 +1541,7 @@ export default function Home() {
               className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-[#6d44ec] sm:text-[1.05rem] lg:hidden"
             >
               <span>View all FAQs</span>
-              <span className="text-[1.4rem] leading-none">→</span>
+              <span className="text-[1.4rem] leading-none">&rarr;</span>
             </a>
           </div>
         </section>
