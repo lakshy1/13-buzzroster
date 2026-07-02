@@ -330,7 +330,7 @@ function BrandIcon({ kind }: { kind: string }) {
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-          className="h-5 w-5 shrink-0 text-[#6d44ec]"
+          className="h-5 w-5 shrink-0 text-black"
         >
           <path
             d="M5 19V5M5 12L15 5M5 12L16 19"
@@ -347,7 +347,7 @@ function BrandIcon({ kind }: { kind: string }) {
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-          className="h-5 w-5 shrink-0 text-[#f26d8a]"
+          className="h-5 w-5 shrink-0 text-black"
         >
           <path
             d="M12 20.2c-4.7-2.8-7.5-6-7.5-9.3A4.2 4.2 0 0 1 12 7.9a4.2 4.2 0 0 1 7.5 3c0 3.3-2.8 6.5-7.5 9.3Z"
@@ -368,7 +368,7 @@ function BrandIcon({ kind }: { kind: string }) {
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-          className="h-5 w-5 shrink-0 text-[#25a6a1]"
+          className="h-5 w-5 shrink-0 text-black"
         >
           <path
             d="M12 4 20 12l-8 8-8-8 8-8Z"
@@ -389,7 +389,7 @@ function BrandIcon({ kind }: { kind: string }) {
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-          className="h-5 w-5 shrink-0 text-[#6c8cff]"
+          className="h-5 w-5 shrink-0 text-black"
         >
           <path
             d="M7.5 17.5h8.2a3.3 3.3 0 0 0 .3-6.58 4.6 4.6 0 0 0-8.9 1.23A2.9 2.9 0 0 0 7.5 17.5Z"
@@ -411,7 +411,7 @@ function BrandIcon({ kind }: { kind: string }) {
           aria-hidden="true"
           viewBox="0 0 24 24"
           fill="none"
-          className="h-5 w-5 shrink-0 text-[#d59a3d]"
+          className="h-5 w-5 shrink-0 text-black"
         >
           <path
             d="M12 4v12"
@@ -1029,19 +1029,19 @@ export default function Home() {
           id="tools"
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-36 pb-6 pt-2 sm:pb-8"
         >
-          <div className="border-y border-white/35 bg-[rgba(255,255,255,0.42)] backdrop-blur-[8px]">
-            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-[#2a2940] opacity-90 sm:text-[1.05rem]">
+          <div className="bg-transparent">
+            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-black/90 sm:text-[1.05rem]">
               Trusted by creators, brands & agencies worldwide
             </p>
             <div className="overflow-hidden px-5 py-5 sm:px-8">
-              <div className="brand-marquee flex w-max items-center gap-12 text-[#6e6c7f] sm:gap-14">
+              <div className="brand-marquee flex w-max items-center gap-12 text-black sm:gap-14">
                 {repeatedTrustedBrands.map((brand, index) => (
                   <div
                     key={`${brand}-${index}`}
                     className="flex shrink-0 items-center gap-2.5 px-1 py-1"
                   >
                     <BrandIcon kind={brand.icon} />
-                    <span className="font-[family-name:var(--font-serif)] text-[1.02rem] italic text-[#5f5d6f] opacity-90 sm:text-[1.1rem]">
+                    <span className="font-[family-name:var(--font-serif)] text-[1.02rem] font-semibold not-italic tracking-[-0.02em] text-black opacity-100 sm:text-[1.1rem]">
                       {brand.name}
                     </span>
                   </div>
