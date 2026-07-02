@@ -182,6 +182,28 @@ function LinkIcon({ className = "" }: { className?: string }) {
   );
 }
 
+function MailIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={className}>
+      <defs>
+        <linearGradient id="mail-icon-gradient" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#6d44ec" />
+          <stop offset="0.62" stopColor="#5b3dd7" />
+          <stop offset="1" stopColor="#f0b44b" />
+        </linearGradient>
+      </defs>
+      <rect x="3.75" y="5.5" width="16.5" height="13" rx="3.2" stroke="url(#mail-icon-gradient)" strokeWidth="1.8" />
+      <path
+        d="M5.8 8.1 12 12.8l6.2-4.7"
+        stroke="url(#mail-icon-gradient)"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function formatRupees(value: number) {
   return `\u20b9${new Intl.NumberFormat("en-IN").format(Math.round(value))}`;
 }
@@ -1676,19 +1698,10 @@ export default function CreatorWorthCalculatorPage() {
             animate={{ opacity: 1, scale: [1, 1.06, 1], x: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
             onClick={() => setDrawerOpen(true)}
-            className="fixed right-4 top-[58%] z-40 hidden -translate-y-1/2 items-center gap-3 rounded-[1.4rem] border border-[#eadff7] bg-[rgba(255,255,255,0.94)] px-4 py-3 shadow-[0_18px_40px_rgba(125,96,207,0.16)] backdrop-blur-xl md:flex"
+            className="fixed bottom-5 right-5 z-40 hidden h-14 w-14 items-center justify-center rounded-[1.35rem] border border-[#eadff7] bg-[rgba(255,255,255,0.94)] shadow-[0_18px_40px_rgba(125,96,207,0.16)] backdrop-blur-xl transition-transform duration-200 hover:-translate-y-0.5 md:flex"
+            aria-label="Open creator worth contact drawer"
           >
-            <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] text-white">
-              <SparkIcon className="h-4 w-4" />
-            </span>
-            <span className="text-left">
-              <span className="block text-[0.74rem] font-semibold uppercase tracking-[0.2em] text-[#6d44ec]/70">
-                Worth
-              </span>
-              <span className="block text-[1.05rem] font-semibold text-[#17162b]">
-                {result.scores.creatorScore}
-              </span>
-            </span>
+            <MailIcon className="h-6 w-6" />
           </motion.button>
         ) : null}
 
