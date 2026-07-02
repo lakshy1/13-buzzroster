@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
 import heroSection from "../assets/Images/Hero-Section-1.png";
 import ctaImage from "../assets/Images/CTA-Image.png";
+import faqImage from "../assets/Images/FAQ.png";
 
 const navItems = [
   { label: "About us", href: "#about-us" },
@@ -803,18 +804,6 @@ export default function Home() {
     <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#fcf7f0_0%,#faf3eb_24%,#f8f0fa_58%,#f7efe8_100%)] text-[#17162b]">
       <div className="absolute inset-0 opacity-90 [background:radial-gradient(circle_at_14%_18%,rgba(180,154,255,0.42),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(245,219,187,0.75),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(209,191,255,0.38),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(255,220,170,0.45),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(193,171,255,0.3),transparent_24%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.22)_100%)]" />
-      <div className="absolute left-[2.5%] top-[43%] hidden h-10 w-10 text-white/80 lg:block">
-        <SparkIcon className="h-full w-full drop-shadow-[0_0_10px_rgba(255,255,255,0.9)]" />
-      </div>
-      <div className="absolute right-[7%] top-[46%] hidden h-10 w-10 text-[#8f6ef2]/70 lg:block">
-        <SparkIcon className="h-full w-full drop-shadow-[0_0_12px_rgba(143,110,242,0.35)]" />
-      </div>
-      <div className="absolute right-[4%] top-[68%] hidden h-7 w-7 text-[#8d71e9]/70 lg:block">
-        <SparkIcon className="h-full w-full" />
-      </div>
-      <div className="absolute left-[7%] top-[72%] hidden h-6 w-6 text-[#9c80f5]/60 lg:block">
-        <SparkIcon className="h-full w-full" />
-      </div>
 
       <div className="relative mx-auto flex min-h-screen w-full flex-col px-4 pb-0 pt-5 sm:px-6 md:px-8">
         <header className="fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] border border-white/55 bg-[rgba(255,255,255,0.58)] px-4 py-3 shadow-[0_14px_40px_rgba(125,96,207,0.08)] backdrop-blur-xl sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
@@ -846,19 +835,13 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="hidden items-center gap-3 sm:gap-4 lg:flex">
-              <a
-                href="#"
-                className="rounded-2xl border border-[#cdbcf8] bg-white/55 px-5 py-3 text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+            <div className="hidden items-center lg:flex">
+              <Link
+                href="/auth"
+                className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-6 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5"
               >
                 Log in
-              </a>
-              <a
-                href="#"
-                className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-6"
-              >
-                Join Buzzroster free
-              </a>
+              </Link>
             </div>
 
             <button
@@ -968,26 +951,16 @@ export default function Home() {
               </div>
 
               <div className="grid gap-3 pt-2 pb-2">
-                <a
-                  href="#"
+                <Link
+                  href="/auth"
                   onClick={() => {
                     setMobileToolsOpen(false);
                     setMobileNavOpen(false);
                   }}
-                  className="rounded-2xl border border-[#cdbcf8] bg-white/70 px-4 py-3 text-center text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-white"
+                  className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.32)] transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   Log in
-                </a>
-                <a
-                  href="#"
-                  onClick={() => {
-                    setMobileToolsOpen(false);
-                    setMobileNavOpen(false);
-                  }}
-                  className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.32)]"
-                >
-                  Join Buzzroster free
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -1473,55 +1446,84 @@ export default function Home() {
           </div>
 
           <div id="faq" className="mt-12 scroll-mt-36">
-            <h2 className="text-[clamp(1.8rem,2.3vw,2.9rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
-              Frequently asked questions
-            </h2>
+            <div className="grid gap-6 lg:grid-cols-[0.9fr_minmax(0,1.1fr)] lg:items-start lg:gap-10">
+              <div className="relative max-w-[28rem] lg:min-h-[31rem]">
+                <p className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#6d44ec]/65">
+                  Help center
+                </p>
+                <h2 className="mt-3 text-[clamp(1.8rem,2.3vw,2.9rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
+                  Frequently asked questions
+                </h2>
 
-          <div className="mt-6 space-y-3">
-              {faqItems.map((item) => {
-                const open = openFaq === item.question;
+                <div className="pointer-events-none absolute left-0 top-[6.6rem] hidden w-[15.25rem] lg:block xl:top-[7rem] xl:w-[16.5rem]">
+                  <Image
+                    src={faqImage as StaticImageData}
+                    alt="Decorative FAQ illustration"
+                    sizes="(max-width: 1279px) 15.25rem, 16.5rem"
+                    className="h-auto w-full object-contain"
+                  />
+                </div>
 
-                return (
-                  <div
-                    key={item.question}
-                    className="overflow-hidden rounded-[0.9rem] border border-[#ece8f5] bg-white/72 shadow-[0_10px_28px_rgba(125,96,207,0.05)]"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleFaq(item.question)}
-                      aria-expanded={open}
-                      className="flex w-full items-center justify-between gap-3 px-4 py-4 text-left transition-colors hover:bg-white/50 sm:px-5"
-                    >
-                      <span className="text-[0.98rem] font-medium text-[#34324b] sm:text-[1.05rem]">
-                        {item.question}
-                      </span>
-                      <span
-                        className={`text-[1.5rem] leading-none text-[#6f6c83] transition-transform duration-300 ${
-                          open ? "rotate-45" : "rotate-0"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        +
-                      </span>
-                    </button>
+                <a
+                  href="#"
+                  className="hidden lg:absolute lg:bottom-0 lg:left-0 lg:inline-flex lg:items-center lg:gap-2 lg:text-[0.98rem] lg:font-semibold lg:text-[#6d44ec] xl:text-[1.05rem]"
+                >
+                  <span>View all FAQs</span>
+                  <span className="text-[1.4rem] leading-none">â†’</span>
+                </a>
+              </div>
 
+              <div className="space-y-2.5">
+                {faqItems.map((item) => {
+                  const open = openFaq === item.question;
+
+                  return (
                     <div
-                      className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
-                        open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      key={item.question}
+                      className={`overflow-hidden rounded-[1.35rem] border transition-all duration-300 ${
+                        open
+                          ? "border-[#d6cafb] bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(248,243,255,0.98)_100%)] shadow-[0_18px_40px_rgba(125,96,207,0.1)]"
+                          : "border-[#ece8f5] bg-white/72 shadow-[0_10px_24px_rgba(125,96,207,0.04)]"
                       }`}
                     >
-                      <div className="overflow-hidden px-4 pb-4 text-[0.94rem] leading-[1.65] text-[#5f5b72] sm:px-5 sm:text-[0.98rem]">
-                        {item.answer}
+                      <button
+                        type="button"
+                        onClick={() => toggleFaq(item.question)}
+                        aria-expanded={open}
+                        className="flex w-full items-start justify-between gap-4 px-5 py-3 text-left transition-colors hover:bg-white/40 sm:px-6 sm:py-3.5"
+                      >
+                        <span className="max-w-[calc(100%-2.5rem)] text-[0.98rem] font-medium leading-[1.35] tracking-[-0.02em] text-[#2f2d45] sm:text-[1.04rem]">
+                          {item.question}
+                        </span>
+                        <span
+                          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#ddd4f8] text-[1rem] font-semibold leading-none text-[#6d44ec] transition-transform duration-300 ${
+                            open ? "rotate-45 bg-[#f5f0ff]" : "bg-white"
+                          }`}
+                          aria-hidden="true"
+                        >
+                          +
+                        </span>
+                      </button>
+
+                      <div
+                        className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                          open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <div className="overflow-hidden px-5 pb-4 pt-0 text-[0.94rem] leading-[1.68] text-[#5f5b72] sm:px-6 sm:pb-4">
+                          <div className="h-px w-full bg-[linear-gradient(90deg,rgba(109,68,236,0.18),rgba(109,68,236,0.04),transparent)]" />
+                          <p className="pt-3">{item.answer}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
 
             <a
               href="#"
-              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-[#6d44ec] sm:text-[1.05rem]"
+              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-[#6d44ec] sm:text-[1.05rem] lg:hidden"
             >
               <span>View all FAQs</span>
               <span className="text-[1.4rem] leading-none">→</span>
@@ -1578,12 +1580,12 @@ export default function Home() {
                 className="h-full w-full object-cover object-right"
               />
               <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(243,237,255,0.97)_0%,rgba(243,237,255,0.93)_22%,rgba(243,237,255,0.74)_38%,rgba(255,250,240,0.28)_58%,rgba(255,250,240,0.08)_100%)]" />
-              <div className="absolute left-8 top-1/2 z-10 w-[44%] max-w-[580px] -translate-y-1/2 sm:left-12 lg:left-16">
-                <h2 className="max-w-[500px] font-[family-name:var(--font-serif)] text-[clamp(2.15rem,3.1vw,4rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#17162b]">
+              <div className="absolute left-8 top-1/2 z-10 w-[44%] max-w-[560px] -translate-y-1/2 sm:left-12 lg:left-16">
+                <h2 className="max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,2.65vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.05em] text-[#17162b] xl:text-[clamp(2.05rem,2.9vw,3.8rem)]">
                   Ready to build your
                   <span className="block">creator roster?</span>
                 </h2>
-                <p className="mt-5 max-w-[460px] text-[clamp(0.98rem,1.25vw,1.18rem)] leading-[1.45] text-[#55526b]">
+                <p className="mt-5 max-w-[440px] text-[clamp(0.98rem,1.18vw,1.12rem)] leading-[1.48] text-[#55526b]">
                   Join thousands of creators and brands building meaningful
                   partnerships that grow.
                 </p>
@@ -1670,7 +1672,7 @@ export default function Home() {
               </div>
 
               <div className="flex flex-col items-start justify-between gap-8 border-t border-[#ece7f4] pt-8 text-left lg:border-t-0 lg:pt-0">
-                <p className="max-w-[170px] text-[1rem] leading-[1.5] text-[#5f5d6f]">
+                <p className="w-max max-w-none text-[1rem] leading-[1.5] text-[#5f5d6f]">
                   © 2024 Buzzroster, Inc.
                   <br />
                   All rights reserved.
