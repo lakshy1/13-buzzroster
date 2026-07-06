@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { BrandSidebar } from "./BrandSidebar";
+import { BrandLogo } from "../components/BrandLogo";
 
 function NotificationIcon() {
   return (
@@ -28,7 +29,9 @@ export default function BrandLayout({ children }: { children: ReactNode }) {
               <div className="flex flex-col gap-4 rounded-[1.55rem] border border-[#ece4fa] bg-white/88 px-4 py-3 shadow-[0_18px_40px_rgba(118,93,202,0.10)] backdrop-blur-xl sm:px-5 lg:flex-row lg:items-center lg:justify-between">
                 <div className="min-w-0">
                   <div className="text-xs font-semibold uppercase tracking-[0.22em] text-[#8a80a8]">Brand workspace</div>
-                  <div className="mt-1 truncate text-base font-semibold tracking-[-0.04em] text-[#1a1830]">Welcome back, BuzzRoster Growth Team</div>
+                  <div className="mt-2">
+                    <BrandLogo compact />
+                  </div>
                 </div>
                 <div className="flex flex-wrap items-center gap-3">
                   <Link
@@ -37,11 +40,11 @@ export default function BrandLayout({ children }: { children: ReactNode }) {
                     aria-label="Notifications"
                   >
                     <NotificationIcon />
-                    <span className="absolute right-2.5 top-2.5 h-2.5 w-2.5 rounded-full bg-[#6d44ec]" />
+                    <span className="absolute right-2.5 top-2.5 h-2.5 w-2.5 rounded-full bg-[var(--brand-primary)]" />
                   </Link>
                   <Link
                     href="/brand/campaigns/create"
-                    className="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(91,61,215,0.20)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="inline-flex items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--brand-primary)_0%,var(--brand-primary-strong)_100%)] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(138,43,226,0.20)] transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     Create campaign
                   </Link>

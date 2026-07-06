@@ -1,3 +1,5 @@
+import type { MetricCard } from "../dashboard/dashboard-data";
+
 export type BrandSidebarItem = {
   label: string;
   href: string;
@@ -16,7 +18,7 @@ export const brandSidebarItems: BrandSidebarItem[] = [
   { label: "Settings", href: "/brand/settings", icon: "settings" },
 ];
 
-export const brandMetrics = [
+export const brandMetrics: MetricCard[] = [
   { label: "Active campaigns", value: "6", note: "2 launch this week", tone: "violet", icon: "briefcase" as const },
   { label: "Invites sent", value: "42", note: "8 pending replies", tone: "orange", icon: "mail" as const },
   { label: "Accepted creators", value: "14", note: "Across 6 campaigns", tone: "green", icon: "spark" as const },

@@ -23,7 +23,7 @@ export function CreatorSidebar() {
         <LogoMark />
         <Link
           href="/tools/creator-worth-calculator"
-          className="inline-flex items-center rounded-full border border-[#e8defd] bg-[#f7f1ff] px-4 py-2 text-sm font-semibold text-[#6d44ec] transition-colors hover:bg-[#efe6ff] lg:hidden"
+          className="inline-flex items-center rounded-full border border-[#e8defd] bg-[var(--brand-primary-soft)] px-4 py-2 text-sm font-semibold text-[var(--brand-primary-strong)] transition-colors hover:bg-[#efe6ff] lg:hidden"
         >
           Check worth
         </Link>
@@ -39,7 +39,7 @@ export function CreatorSidebar() {
               href={item.href}
               className={`inline-flex min-w-max items-center gap-3 rounded-[1.1rem] px-4 py-3 text-sm font-medium transition-all duration-200 lg:flex ${
                 active
-                  ? "bg-[linear-gradient(135deg,rgba(114,84,242,0.14),rgba(114,84,242,0.06))] text-[#6d44ec] shadow-[0_14px_28px_rgba(114,84,242,0.08)]"
+                  ? "bg-[linear-gradient(135deg,rgba(138,43,226,0.16),rgba(138,43,226,0.06))] text-[var(--brand-primary-strong)] shadow-[0_14px_28px_rgba(138,43,226,0.08)]"
                   : "text-[#49465d] hover:bg-white hover:text-[#1b1930]"
               }`}
             >
@@ -56,12 +56,12 @@ export function CreatorSidebar() {
             <div className="text-[0.92rem] font-semibold tracking-[-0.03em] text-[#201d34]">Complete your profile</div>
             <div className="mt-0.5 text-[0.72rem] font-medium text-[#6b6680]">82% completed</div>
           </div>
-          <div className="rounded-full bg-[#f1eaff] px-2.5 py-1 text-[0.7rem] font-semibold text-[#7a51f4]">82%</div>
+          <div className="rounded-full bg-[var(--brand-primary-soft)] px-2.5 py-1 text-[0.7rem] font-semibold text-[var(--brand-primary-strong)]">82%</div>
         </div>
         <div className="mt-2.5 h-1.5 rounded-full bg-[#ece7f6]">
-          <div className="h-full w-[82%] rounded-full bg-[linear-gradient(90deg,#6d44ec_0%,#9c7dff_100%)]" />
+          <div className="h-full w-[82%] rounded-full bg-[linear-gradient(90deg,var(--brand-primary)_0%,#c26cff_100%)]" />
         </div>
-        <Link href="/creator/profile" className="mt-2.5 inline-flex text-[0.76rem] font-semibold text-[#6d44ec] transition-colors hover:text-[#5b3dd7]">
+        <Link href="/creator/profile" className="mt-2.5 inline-flex text-[0.76rem] font-semibold text-[var(--brand-primary-strong)] transition-colors hover:text-[#5b2ecf]">
           Review profile
         </Link>
       </div>

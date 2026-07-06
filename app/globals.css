@@ -3,6 +3,8 @@
 :root {
   --background: #faf5ee;
   --foreground: #17162b;
+  --brand-primary: #8a2be2;
+  --brand-primary-strong: #5a24d1;
 }
 
 @theme inline {
@@ -50,12 +52,12 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #8f72f4 0%, #d6bfa4 100%);
+  background: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-primary-strong) 100%);
   border-radius: 999px;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #7d5fe9 0%, #c8ab86 100%);
+  background: linear-gradient(180deg, #a24cf0 0%, var(--brand-primary-strong) 100%);
 }
 
 *::-webkit-scrollbar-button {

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
+import { BrandLogo } from "./components/BrandLogo";
 import heroSection from "../assets/Images/Hero-Section-1.png";
 import ctaImage from "../assets/Images/CTA-Image.png";
 import faqImage from "../assets/Images/FAQ.png";
@@ -808,16 +809,7 @@ export default function Home() {
       <div className="relative mx-auto flex min-h-screen w-full flex-col px-4 pb-0 pt-5 sm:px-6 md:px-8">
         <header className="fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] border border-white/55 bg-[rgba(255,255,255,0.58)] px-4 py-3 shadow-[0_14px_40px_rgba(125,96,207,0.08)] backdrop-blur-xl sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
           <div className="flex items-center justify-between gap-3">
-            <a
-              href="#"
-              className="group flex items-start gap-1 text-[2.4rem] leading-none text-[#5c36d6] transition-transform duration-200 hover:scale-[1.01] sm:text-[2.6rem] md:text-[3.1rem]"
-              aria-label="Buzzroster home"
-            >
-              <span className="font-[family-name:var(--font-pacifico)] tracking-tight">
-                Buzzroster
-              </span>
-              <SparkIcon className="mt-1 h-4 w-4 text-[#5c36d6] transition-transform duration-200 group-hover:rotate-12 md:h-5 md:w-5" />
-            </a>
+            <BrandLogo />
 
             <nav className="hidden items-center gap-6 text-[0.98rem] font-medium text-[#1a1731] lg:flex xl:gap-10">
               {navItems.map((item) => (
@@ -1573,13 +1565,13 @@ export default function Home() {
                 <div className="mt-6 grid gap-3">
                   <a
                     href="#"
-                    className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-6 py-4 text-center text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.34)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="rounded-2xl bg-[linear-gradient(135deg,var(--brand-primary)_0%,var(--brand-primary-strong)_100%)] px-6 py-4 text-center text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(138,43,226,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     Join as Creator
                   </a>
                   <a
                     href="#"
-                    className="rounded-2xl border border-[#c9bef4] bg-white/65 px-6 py-4 text-center text-[1.02rem] font-semibold text-[#6d44ec] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/80"
+                    className="rounded-2xl border border-[#d6baf5] bg-white/65 px-6 py-4 text-center text-[1.02rem] font-semibold text-[var(--brand-primary-strong)] shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/80"
                   >
                     Join as Brand
                   </a>
@@ -1609,13 +1601,13 @@ export default function Home() {
                 <div className="mt-6 flex flex-wrap gap-4">
                   <a
                     href="#"
-                    className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.34)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="rounded-2xl bg-[linear-gradient(135deg,var(--brand-primary)_0%,var(--brand-primary-strong)_100%)] px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(138,43,226,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     Join as Creator
                   </a>
                   <a
                     href="#"
-                    className="rounded-2xl border border-[#c9bef4] bg-white/55 px-7 py-4 text-[1.02rem] font-semibold text-[#6d44ec] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+                    className="rounded-2xl border border-[#d6baf5] bg-white/55 px-7 py-4 text-[1.02rem] font-semibold text-[var(--brand-primary-strong)] shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
                   >
                     Join as Brand
                   </a>
@@ -1633,16 +1625,7 @@ export default function Home() {
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.55),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(193,171,255,0.18),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(255,220,170,0.12),transparent_26%)]" />
             <div className="relative z-10 grid gap-10 text-left lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
               <div className="flex flex-col items-start border-b border-[#ece7f4] pb-8 text-left lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
-                <a
-                  href="#"
-                  className="inline-flex items-start gap-1 text-[2.9rem] leading-none text-[#11101f]"
-                  aria-label="Buzzroster home"
-                >
-                  <span className="font-[family-name:var(--font-pacifico)] tracking-tight">
-                    Buzzroster
-                  </span>
-                  <SparkIcon className="mt-1 h-4 w-4 text-[#f0b44b]" />
-                </a>
+                <BrandLogo />
                 <p className="mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278]">
                   The all-in-one platform for creator-brand collaborations.
                   Connect, collaborate and grow together.

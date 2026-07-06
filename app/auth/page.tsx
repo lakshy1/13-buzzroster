@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { BrandLogo } from "../components/BrandLogo";
 
 type Role = "creator" | "brand";
 type Mode = "login" | "register";
@@ -159,17 +160,6 @@ function ProviderIcon({ provider }: { provider: Provider }) {
   return <LinkedInIcon />;
 }
 
-function BrandMark() {
-  return (
-    <Link href="/" className="inline-flex items-start gap-1 text-[#5c36d6]" aria-label="Buzzroster home">
-      <span className="font-[family-name:var(--font-pacifico)] text-[2.2rem] leading-none tracking-tight">
-        Buzzroster
-      </span>
-      <SparkIcon className="mt-1 h-4 w-4" />
-    </Link>
-  );
-}
-
 function RoleToggle({
   role,
   onChange,
@@ -258,7 +248,7 @@ function AuthPanel({
     <div className="flex flex-col">
       <div className="space-y-5">
         <div className="space-y-4 text-center">
-          <BrandMark />
+          <BrandLogo />
           <div className="mx-auto h-px w-full max-w-[34rem] bg-[#ece6fa]" />
           <div>
             <h1 className="font-[family-name:var(--font-serif)] text-[clamp(2rem,3vw,3.1rem)] font-medium leading-[0.95] tracking-[-0.05em] text-[#17162b]">

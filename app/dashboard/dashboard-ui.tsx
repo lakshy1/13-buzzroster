@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 import type { AttentionItem, CampaignRow, MetricCard } from "./dashboard-data";
+import { BrandLogo } from "../components/BrandLogo";
 
 type SidebarIconName =
   | "dashboard"
@@ -27,14 +28,7 @@ export function SparkIcon({ className = "" }: { className?: string }) {
 }
 
 export function LogoMark() {
-  return (
-    <Link href="/" className="inline-flex items-start gap-1 text-[#5c36d6]" aria-label="Buzzroster home">
-      <span className="font-[family-name:var(--font-pacifico)] text-[2.05rem] leading-none tracking-tight">
-        Buzzroster
-      </span>
-      <SparkIcon className="mt-1 h-4 w-4" />
-    </Link>
-  );
+  return <BrandLogo compact />;
 }
 
 export function SidebarIcon({ icon, className = "" }: { icon: SidebarIconName; className?: string }) {
@@ -123,7 +117,7 @@ export function BrandAvatar({ name, accent }: { name: string; accent: string }) 
 
   return (
     <span
-      className="flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold text-white shadow-[0_12px_24px_rgba(90,67,160,0.16)]"
+      className="flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold text-white shadow-[0_12px_24px_rgba(138,43,226,0.16)]"
       style={{ background: `linear-gradient(135deg, ${accent} 0%, rgba(255,255,255,0.1) 140%)` }}
     >
       {initials}
@@ -133,7 +127,7 @@ export function BrandAvatar({ name, accent }: { name: string; accent: string }) 
 
 export function MetricGlyph({ icon, tone }: { icon: MetricCard["icon"]; tone: MetricCard["tone"] }) {
   const toneClasses = {
-    violet: "bg-[#f1eaff] text-[#7a51f4]",
+    violet: "bg-[var(--brand-primary-soft)] text-[var(--brand-primary-strong)]",
     green: "bg-[#e7f8ec] text-[#28a153]",
     orange: "bg-[#fff0e6] text-[#f07b3b]",
     blue: "bg-[#eaf2ff] text-[#3e79f2]",
@@ -162,7 +156,7 @@ export function MetricGlyph({ icon, tone }: { icon: MetricCard["icon"]; tone: Me
 
 export function MiniTrend({ tone }: { tone: MetricCard["tone"] }) {
   const stroke = {
-    violet: "#8a5cf7",
+    violet: "var(--brand-primary)",
     green: "#2bb455",
     orange: "#f37d3f",
     blue: "#3f7bf2",
@@ -183,7 +177,7 @@ export function MiniTrend({ tone }: { tone: MetricCard["tone"] }) {
 
 export function StatusPill({ tone, children }: { tone: AttentionItem["statusTone"]; children: ReactNode }) {
   const toneClasses = {
-    violet: "bg-[#f1eaff] text-[#7a51f4]",
+    violet: "bg-[var(--brand-primary-soft)] text-[var(--brand-primary-strong)]",
     orange: "bg-[#fff0e4] text-[#f07b3b]",
     blue: "bg-[#edf4ff] text-[#3b74ef]",
   } as const;
@@ -206,7 +200,7 @@ export function ProgressTrack({ progress }: { progress: CampaignRow["progress"] 
             {index < progress.length - 1 ? (
               <span
                 className={`absolute left-[calc(50%+0.75rem)] right-[-50%] top-1/2 h-[2px] -translate-y-1/2 ${
-                  progress[index + 1] === "upcoming" && step !== "done" ? "bg-[#ddd7ef]" : "bg-[#8f69f6]"
+                  progress[index + 1] === "upcoming" && step !== "done" ? "bg-[#ddd7ef]" : "bg-[var(--brand-primary)]"
                 }`}
               />
             ) : null}
@@ -215,7 +209,7 @@ export function ProgressTrack({ progress }: { progress: CampaignRow["progress"] 
                 step === "done"
                   ? "border-[#45b35f] bg-[#45b35f]"
                   : step === "current"
-                    ? "border-[#8f69f6] bg-white"
+                    ? "border-[var(--brand-primary)] bg-white"
                     : "border-[#ddd7ef] bg-white"
               }`}
             />
@@ -337,7 +331,7 @@ export function PrimaryButton({ href, children }: { href: string; children: Reac
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)]"
+      className="inline-flex items-center justify-center rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)] transition-transform duration-200 hover:-translate-y-0.5"
     >
       {children}
     </Link>
