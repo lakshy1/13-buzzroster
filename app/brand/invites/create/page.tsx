@@ -17,10 +17,10 @@ export default function SendInvitePage() {
         ))}
       </div>
       <div className="mt-5 flex flex-wrap gap-3">
-        <Link href="/brand/invites" className="rounded-[1rem] border border-[#dfd2fb] px-4 py-2.5 text-sm font-semibold text-[#6d44ec]">
+        <Link href="/brand/invites" className="rounded-[1rem] border border-border px-4 py-2.5 text-sm font-semibold text-accent">
           Cancel
         </Link>
-        <button type="button" className="rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-2.5 text-sm font-semibold text-white">
+        <button type="button" className="rounded-[1rem] bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-4 py-2.5 text-sm font-semibold text-accent-foreground">
           Send invite
         </button>
       </div>

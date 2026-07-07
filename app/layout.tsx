@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Inter, Pacifico } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,9 +33,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${inter.variable} ${bodoni.variable} ${pacifico.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-background text-foreground transition-colors duration-300">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

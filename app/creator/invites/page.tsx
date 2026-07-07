@@ -20,7 +20,7 @@ export default function CreatorInvitesPage() {
         {["All", "Pending", "Accepted", "Rejected", "Expired"].map((tab, index) => (
           <div
             key={tab}
-            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-[#6d44ec] text-white" : "border border-[#e6ddfb] bg-white text-[#5f5977]"}`}
+            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-accent text-accent-foreground" : "border border-border bg-surface text-muted-foreground"}`}
           >
             {tab}
           </div>
@@ -38,42 +38,42 @@ export default function CreatorInvitesPage() {
           {inviteCards.map((invite, index) => (
             <article
               key={invite.brand}
-              className="rounded-[1.7rem] border border-[#f0ebfa] bg-[linear-gradient(180deg,#ffffff_0%,#fbf9ff_100%)] p-4 shadow-[0_14px_32px_rgba(114,84,242,0.06)]"
+              className="rounded-[1.7rem] border border-border bg-surface p-4 shadow-[0_14px_32px_rgba(114,84,242,0.06)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <BrandAvatar name={invite.brand} accent={invite.accent} />
                   <div>
-                    <div className="text-lg font-semibold tracking-[-0.04em] text-[#1d1b32]">{invite.brand}</div>
-                    <div className="text-sm text-[#6f6985]">{invite.campaign}</div>
+                    <div className="text-lg font-semibold tracking-[-0.04em] text-foreground">{invite.brand}</div>
+                    <div className="text-sm text-muted-foreground">{invite.campaign}</div>
                   </div>
                 </div>
-                <span className="rounded-full bg-[#eef8f3] px-3 py-1 text-xs font-semibold text-[#2ea661]">{invite.fit}</span>
+                <span className="rounded-full bg-success/10 px-3 py-1 text-xs font-semibold text-success">{invite.fit}</span>
               </div>
 
-              <div className="mt-4 inline-flex rounded-full bg-[#f4efff] px-3 py-1 text-xs font-semibold text-[#7a51f4]">
+              <div className="mt-4 inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
                 {invite.niche}
               </div>
 
-              <div className="mt-4 grid grid-cols-2 gap-3 rounded-[1.25rem] bg-[#fbfaff] p-3">
+              <div className="mt-4 grid grid-cols-2 gap-3 rounded-[1.25rem] bg-background p-3">
                 <div>
-                  <div className="text-xs font-medium uppercase tracking-[0.16em] text-[#8f88a8]">Budget</div>
-                  <div className="mt-1 text-lg font-semibold tracking-[-0.04em] text-[#201d34]">{invite.payout}</div>
+                  <div className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Budget</div>
+                  <div className="mt-1 text-lg font-semibold tracking-[-0.04em] text-foreground">{invite.payout}</div>
                 </div>
                 <div>
-                  <div className="text-xs font-medium uppercase tracking-[0.16em] text-[#8f88a8]">Deliverables</div>
-                  <div className="mt-1 text-lg font-semibold tracking-[-0.04em] text-[#201d34]">{invite.deliverables}</div>
+                  <div className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">Deliverables</div>
+                  <div className="mt-1 text-lg font-semibold tracking-[-0.04em] text-foreground">{invite.deliverables}</div>
                 </div>
               </div>
 
               <div className="mt-4 grid grid-cols-3 gap-3">
                 <SecondaryButton href={`/creator/invites/invite-${index + 1}`}>View details</SecondaryButton>
-                <button type="button" className="rounded-[1rem] border border-[#dfd2fb] px-3 py-2.5 text-sm font-semibold text-[#6d44ec]">
+                <button type="button" className="rounded-[1rem] border border-border px-3 py-2.5 text-sm font-semibold text-accent">
                   Decline
                 </button>
                 <button
                   type="button"
-                  className="rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-3 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)]"
+                  className="rounded-[1rem] bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-3 py-2.5 text-sm font-semibold text-accent-foreground shadow-glow"
                 >
                   Accept
                 </button>

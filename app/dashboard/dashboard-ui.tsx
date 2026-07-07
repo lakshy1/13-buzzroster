@@ -117,7 +117,7 @@ export function BrandAvatar({ name, accent }: { name: string; accent: string }) 
 
   return (
     <span
-      className="flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold text-white shadow-[0_12px_24px_rgba(138,43,226,0.16)]"
+      className="flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold text-white shadow-glow"
       style={{ background: `linear-gradient(135deg, ${accent} 0%, rgba(255,255,255,0.1) 140%)` }}
     >
       {initials}
@@ -127,10 +127,10 @@ export function BrandAvatar({ name, accent }: { name: string; accent: string }) 
 
 export function MetricGlyph({ icon, tone }: { icon: MetricCard["icon"]; tone: MetricCard["tone"] }) {
   const toneClasses = {
-    violet: "bg-[var(--brand-primary-soft)] text-[var(--brand-primary-strong)]",
-    green: "bg-[#e7f8ec] text-[#28a153]",
-    orange: "bg-[#fff0e6] text-[#f07b3b]",
-    blue: "bg-[#eaf2ff] text-[#3e79f2]",
+    violet: "bg-accent-soft text-accent-strong",
+    green: "bg-[rgba(34,197,94,0.12)] text-success",
+    orange: "bg-[rgba(245,158,11,0.12)] text-warning",
+    blue: "bg-[rgba(96,165,250,0.12)] text-info",
   } as const;
 
   return (
@@ -156,10 +156,10 @@ export function MetricGlyph({ icon, tone }: { icon: MetricCard["icon"]; tone: Me
 
 export function MiniTrend({ tone }: { tone: MetricCard["tone"] }) {
   const stroke = {
-    violet: "var(--brand-primary)",
-    green: "#2bb455",
-    orange: "#f37d3f",
-    blue: "#3f7bf2",
+    violet: "var(--accent)",
+    green: "var(--success)",
+    orange: "var(--warning)",
+    blue: "var(--info)",
   }[tone];
 
   return (
@@ -177,9 +177,9 @@ export function MiniTrend({ tone }: { tone: MetricCard["tone"] }) {
 
 export function StatusPill({ tone, children }: { tone: AttentionItem["statusTone"]; children: ReactNode }) {
   const toneClasses = {
-    violet: "bg-[var(--brand-primary-soft)] text-[var(--brand-primary-strong)]",
-    orange: "bg-[#fff0e4] text-[#f07b3b]",
-    blue: "bg-[#edf4ff] text-[#3b74ef]",
+    violet: "bg-accent-soft text-accent-strong",
+    orange: "bg-[rgba(245,158,11,0.12)] text-warning",
+    blue: "bg-[rgba(96,165,250,0.12)] text-info",
   } as const;
 
   return (
@@ -228,11 +228,11 @@ export function ProgressTrack({ progress }: { progress: CampaignRow["progress"] 
 export function ProfileRing() {
   return (
     <div className="relative flex h-40 w-40 items-center justify-center">
-      <div className="absolute inset-0 rounded-full bg-[conic-gradient(from_180deg,#24b36d_0deg,#24b36d_295deg,#e7e4f4_295deg,#e7e4f4_360deg)]" />
-      <div className="absolute inset-[12px] rounded-full bg-white" />
+      <div className="absolute inset-0 rounded-full bg-[conic-gradient(from_180deg,var(--success)_0deg,var(--success)_295deg,var(--border-subtle)_295deg,var(--border-subtle)_360deg)]" />
+      <div className="absolute inset-[12px] rounded-full bg-surface-strong" />
       <div className="relative text-center">
-        <div className="text-[2.2rem] font-semibold tracking-[-0.05em] text-[#1b1930]">82%</div>
-        <div className="text-sm font-medium text-[#2fab65]">Strong</div>
+        <div className="text-[2.2rem] font-semibold tracking-[-0.05em] text-foreground">82%</div>
+        <div className="text-sm font-medium text-success">Strong</div>
       </div>
     </div>
   );
@@ -250,13 +250,13 @@ export function DashboardHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="flex flex-col gap-5 border-b border-[#ece6f8] pb-5 lg:flex-row lg:items-start lg:justify-between">
+    <div className="flex flex-col gap-5 border-b border-border pb-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#7a51f4]">{eyebrow}</div>
-        <h1 className="mt-3 max-w-3xl text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1.03] tracking-[-0.06em] text-[#17162b]">
+        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">{eyebrow}</div>
+        <h1 className="mt-3 max-w-3xl text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1.03] tracking-[-0.06em] text-foreground">
           {title}
         </h1>
-        <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-[#656079]">{description}</p>
+        <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">{description}</p>
       </div>
       {action ? <div className="flex shrink-0 items-center gap-3">{action}</div> : null}
     </div>
@@ -265,7 +265,7 @@ export function DashboardHeader({
 
 export function Panel({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <section className={`rounded-[2rem] border border-[#efe8fb] bg-white p-5 shadow-[0_16px_36px_rgba(112,84,199,0.08)] ${className}`}>
+    <section className={`rounded-[2rem] border border-border bg-surface p-5 shadow-[0_16px_36px_rgba(112,84,199,0.08)] ${className}`}>
       {children}
     </section>
   );
@@ -285,9 +285,9 @@ export function PanelTitle({
   return (
     <div className="flex items-start justify-between gap-4">
       <div>
-        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#7a51f4]">{eyebrow}</div>
-        <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.05em] text-[#1d1b32]">{title}</h2>
-        {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-[#6f6985]">{description}</p> : null}
+        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">{eyebrow}</div>
+        <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.05em] text-foreground">{title}</h2>
+        {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p> : null}
       </div>
       {action}
     </div>
@@ -302,15 +302,15 @@ export function SummaryCard({
   icon,
 }: MetricCard) {
   return (
-    <article className="rounded-[1.8rem] border border-[#efe8fb] bg-white p-5 shadow-[0_16px_36px_rgba(112,84,199,0.08)]">
+    <article className="rounded-[1.8rem] border border-border bg-surface p-5 shadow-[0_16px_36px_rgba(112,84,199,0.08)]">
       <div className="flex items-start justify-between gap-4">
         <MetricGlyph icon={icon} tone={tone} />
         <MiniTrend tone={tone} />
       </div>
       <div className="mt-5">
-        <div className="text-sm font-medium text-[#66617c]">{label}</div>
-        <div className="mt-2 text-[2rem] font-semibold leading-none tracking-[-0.06em] text-[#19182d]">{value}</div>
-        <div className="mt-2 text-sm text-[#7b7591]">{note}</div>
+        <div className="text-sm font-medium text-muted-foreground">{label}</div>
+        <div className="mt-2 text-[2rem] font-semibold leading-none tracking-[-0.06em] text-foreground">{value}</div>
+        <div className="mt-2 text-sm text-muted-foreground">{note}</div>
       </div>
     </article>
   );
@@ -320,7 +320,7 @@ export function SecondaryButton({ href, children }: { href: string; children: Re
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center rounded-[1rem] border border-[#dfd2fb] px-4 py-2.5 text-sm font-semibold text-[#6d44ec]"
+      className="inline-flex items-center justify-center rounded-[1rem] border border-border bg-surface px-4 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-surface-muted"
     >
       {children}
     </Link>
@@ -331,7 +331,7 @@ export function PrimaryButton({ href, children }: { href: string; children: Reac
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)] transition-transform duration-200 hover:-translate-y-0.5"
+      className="inline-flex items-center justify-center rounded-[1rem] bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-4 py-2.5 text-sm font-semibold text-accent-foreground shadow-[0_14px_28px_rgba(91,61,215,0.18)] transition-transform duration-200 hover:-translate-y-0.5"
     >
       {children}
     </Link>

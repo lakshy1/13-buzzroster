@@ -24,9 +24,9 @@ export default function EarningsPage() {
           { label: "This month", value: "INR 32,000", note: "From 2 completed campaigns" },
         ].map((item) => (
           <Panel key={item.label} className="p-5">
-            <div className="text-sm font-medium text-[#66617c]">{item.label}</div>
-            <div className="mt-2 text-[2rem] font-semibold tracking-[-0.05em] text-[#1d1b32]">{item.value}</div>
-            <div className="mt-2 text-sm text-[#6f6985]">{item.note}</div>
+            <div className="text-sm font-medium text-muted-foreground">{item.label}</div>
+            <div className="mt-2 text-[2rem] font-semibold tracking-[-0.05em] text-foreground">{item.value}</div>
+            <div className="mt-2 text-sm text-muted-foreground">{item.note}</div>
           </Panel>
         ))}
       </div>
@@ -39,8 +39,8 @@ export default function EarningsPage() {
             description="Track every campaign payment with enough detail to know whether action is needed."
           />
 
-          <div className="mt-5 overflow-hidden rounded-[1.45rem] border border-[#efe8fb]">
-            <div className="grid grid-cols-[1.8fr_1fr_1fr_1fr] gap-3 bg-[#faf7ff] px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#8f88a8]">
+          <div className="mt-5 overflow-hidden rounded-[1.45rem] border border-border">
+            <div className="grid grid-cols-[1.8fr_1fr_1fr_1fr] gap-3 bg-surface px-4 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               <span>Campaign</span>
               <span>Amount</span>
               <span>Status</span>
@@ -49,12 +49,12 @@ export default function EarningsPage() {
             {payments.map((row) => (
               <div
                 key={row.campaign}
-                className="grid grid-cols-[1.8fr_1fr_1fr_1fr] gap-3 border-t border-[#f2ecfb] px-4 py-3 text-sm text-[#4f4a67]"
+                className="grid grid-cols-[1.8fr_1fr_1fr_1fr] gap-3 border-t border-border px-4 py-3 text-sm text-muted-foreground"
               >
-                <span className="font-medium text-[#26233a]">{row.campaign}</span>
+                <span className="font-medium text-foreground">{row.campaign}</span>
                 <span>{row.amount}</span>
                 <span>
-                  <span className="rounded-full bg-[#edf4ff] px-3 py-1 text-xs font-semibold text-[#3b74ef]">{row.status}</span>
+                  <span className="rounded-full bg-info/10 px-3 py-1 text-xs font-semibold text-info">{row.status}</span>
                 </span>
                 <span>{row.date}</span>
               </div>
@@ -75,13 +75,13 @@ export default function EarningsPage() {
               { label: "Next 2 weeks", value: "INR 30,750", width: "w-[72%]" },
               { label: "This month total", value: "INR 48,750", width: "w-full" },
             ].map((item) => (
-              <div key={item.label} className="rounded-[1.25rem] bg-[#fbfaff] p-4">
-                <div className="flex items-center justify-between gap-3 text-sm font-medium text-[#4f4a67]">
+              <div key={item.label} className="rounded-[1.25rem] bg-surface p-4">
+                <div className="flex items-center justify-between gap-3 text-sm font-medium text-foreground">
                   <span>{item.label}</span>
-                  <span className="font-semibold text-[#1d1b32]">{item.value}</span>
+                  <span className="font-semibold text-foreground">{item.value}</span>
                 </div>
-                <div className="mt-3 h-2.5 rounded-full bg-[#ece8f6]">
-                  <div className={`h-full rounded-full bg-[linear-gradient(90deg,#6d44ec_0%,#9c7dff_100%)] ${item.width}`} />
+                <div className="mt-3 h-2.5 rounded-full bg-muted/30">
+                  <div className={`h-full rounded-full bg-[linear-gradient(90deg,var(--accent)_0%,var(--accent-strong)_100%)] ${item.width}`} />
                 </div>
               </div>
             ))}

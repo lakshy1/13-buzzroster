@@ -4,9 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
 import { BrandLogo } from "./components/BrandLogo";
+import { ThemeToggle } from "./components/theme-toggle";
 import heroSection from "../assets/Images/Hero-Section-1.png";
+import heroSectionDark from "../assets/Images/Hero-Section-1-Dark.png";
 import ctaImage from "../assets/Images/CTA-Image.png";
+import ctaImageDark from "../assets/Images/CTA-Image-Dark.png";
 import faqImage from "../assets/Images/FAQ.png";
+import { useTheme } from "./theme-context";
 
 const navItems = [
   { label: "About us", href: "#about-us" },
@@ -19,9 +23,9 @@ const navItems = [
 
 const toolsMenuItems = [
   { label: "Creator Worth Calculator", href: "/tools/creator-worth-calculator" },
-  { label: "Creator Workspace", href: "#features" },
-  { label: "Campaign Tracking", href: "#pricing" },
-  { label: "Support & Resources", href: "#resources" },
+  { label: "Reel Idea Studio", href: "/tools/reel-idea-studio" },
+  { label: "Creator Content Planner", href: "/tools/content-planner" },
+  { label: "Tax Calculator", href: "/tools/tax-calculator" },
 ];
 
 const trustedBrands = [
@@ -143,48 +147,48 @@ const testimonials = [
     name: "Ananya S.",
     handle: "@ananyacreates",
     role: "Creator",
-    accent: "#6957f2",
-    background: "rgba(239, 232, 255, 0.88)",
+    accent: "#6d44ec",
+    background: "rgba(247, 240, 255, 0.94)",
     text: "BuzzRoster changed the way I manage brand deals. Everything is organized, professional and easy to track.",
   },
   {
     name: "Rohit Mehta",
     handle: "Marketing Manager",
     role: "Brand",
-    accent: "#ef7f58",
-    background: "rgba(252, 244, 233, 0.9)",
+    accent: "#f08c5a",
+    background: "rgba(255, 246, 236, 0.95)",
     text: "Finding the right creators used to take hours. Now we discover, invite and track everything in one place.",
   },
   {
     name: "Priya Kapoor",
     handle: "Campaign Lead",
     role: "Agency",
-    accent: "#68bf71",
-    background: "rgba(242, 251, 243, 0.9)",
+    accent: "#6f90f6",
+    background: "rgba(242, 246, 255, 0.95)",
     text: "Our campaigns run smoother than ever. BuzzRoster helps us manage creators, deadlines and deliverables effortlessly.",
   },
   {
     name: "Maya Reed",
     handle: "@mayareels",
     role: "Creator",
-    accent: "#6d63f2",
-    background: "rgba(239, 232, 255, 0.88)",
+    accent: "#6d44ec",
+    background: "rgba(247, 240, 255, 0.94)",
     text: "I finally have one place for invites, approvals, revisions and payments. It makes me feel far more professional with brands.",
   },
   {
     name: "Aarav Jain",
     handle: "@frameswithaarav",
     role: "Creator",
-    accent: "#6d63f2",
-    background: "rgba(239, 232, 255, 0.88)",
+    accent: "#6d44ec",
+    background: "rgba(247, 240, 255, 0.94)",
     text: "The workflow is simple, clean and fast. I spend less time chasing updates and more time actually creating content.",
   },
   {
     name: "Sana Qureshi",
     handle: "@sanaedits",
     role: "Creator",
-    accent: "#6d63f2",
-    background: "rgba(239, 232, 255, 0.88)",
+    accent: "#6d44ec",
+    background: "rgba(247, 240, 255, 0.94)",
     text: "BuzzRoster gives me clarity on deadlines, deliverables and payouts. It turns collabs into a proper business system.",
   },
 ];
@@ -194,48 +198,48 @@ const brandTestimonials = [
     name: "Kanthast",
     handle: "Operations Team",
     role: "Brand",
-    accent: "#6957f2",
-    background: "rgba(239, 232, 255, 0.88)",
+    accent: "#6d44ec",
+    background: "rgba(247, 240, 255, 0.94)",
     text: "We can discover creators, send briefs and track approvals in one clean flow. It keeps our campaigns moving.",
   },
   {
     name: "Soul Pharma",
     handle: "Growth Manager",
     role: "Brand",
-    accent: "#ef7f58",
-    background: "rgba(252, 244, 233, 0.9)",
+    accent: "#f08c5a",
+    background: "rgba(255, 246, 236, 0.95)",
     text: "The workflow makes it easy to manage submissions, revisions and deadlines without endless back-and-forth.",
   },
   {
     name: "Cloud Duty",
     handle: "Campaign Lead",
     role: "Brand",
-    accent: "#68bf71",
-    background: "rgba(242, 251, 243, 0.9)",
+    accent: "#6f90f6",
+    background: "rgba(242, 246, 255, 0.95)",
     text: "Our team gets more done because everything from invites to approvals stays visible and organized.",
   },
   {
     name: "Aconic Technologies",
     handle: "Partnership Team",
     role: "Brand",
-    accent: "#ef7f58",
-    background: "rgba(252, 244, 233, 0.9)",
+    accent: "#f08c5a",
+    background: "rgba(255, 246, 236, 0.95)",
     text: "The creator matching and review flow save us hours every week. The platform feels built for modern campaign operations.",
   },
   {
     name: "Learning Tree",
     handle: "Marketing Team",
     role: "Brand",
-    accent: "#68bf71",
-    background: "rgba(242, 251, 243, 0.9)",
+    accent: "#6f90f6",
+    background: "rgba(242, 246, 255, 0.95)",
     text: "We can see progress clearly across invites, content and approvals. It makes creator collaboration feel reliable and scalable.",
   },
   {
     name: "FitFuel",
     handle: "Campaign Ops",
     role: "Brand",
-    accent: "#ef7f58",
-    background: "rgba(252, 244, 233, 0.9)",
+    accent: "#f08c5a",
+    background: "rgba(255, 246, 236, 0.95)",
     text: "BuzzRoster helps us move faster without losing control. Communication, deliverables and approvals all stay in sync.",
   },
 ];
@@ -277,7 +281,7 @@ const pricingPlans = [
     price: "$99",
     period: "/ month",
     accent: "#cfe7c8",
-    border: "rgba(191, 221, 184, 0.82)",
+    border: "rgba(191, 221, 184, 0.62)",
     badge: null,
     features: [
       "Advanced creator discovery",
@@ -435,19 +439,18 @@ function BrandIcon({ kind }: { kind: string }) {
   }
 }
 
-function SparkIcon({ className = "" }: { className?: string }) {
+function HeroImage() {
+  const { resolvedTheme } = useTheme();
+  const heroSource = resolvedTheme === "dark" ? heroSectionDark : heroSection;
+
   return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-    >
-      <path
-        d="M12 2.5L13.76 8.24L19.5 10L13.76 11.76L12 17.5L10.24 11.76L4.5 10L10.24 8.24L12 2.5Z"
-        fill="currentColor"
-      />
-    </svg>
+    <Image
+      src={heroSource as StaticImageData}
+      alt="Buzzroster product hero showing the mobile app interface"
+      priority
+      className="h-auto w-[min(100%,1540px)] select-none object-contain drop-shadow-[0_35px_70px_rgba(93,61,179,0.1)]"
+      sizes="(max-width: 768px) 100vw, 1540px"
+    />
   );
 }
 
@@ -482,7 +485,9 @@ function ToolsDropdown() {
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="flex items-center gap-1 transition-colors hover:text-[#5c36d6]"
+        className={`flex items-center gap-1 rounded-full px-3 py-2 transition-colors hover:bg-white/6 hover:text-accent ${
+          open ? "text-accent" : ""
+        }`}
         aria-haspopup="menu"
         aria-expanded={open}
       >
@@ -499,28 +504,33 @@ function ToolsDropdown() {
 
       <div
         role="menu"
-        className={`absolute left-1/2 top-full z-50 mt-3 w-72 -translate-x-1/2 rounded-[1.6rem] border border-[#e4dcfb] bg-[linear-gradient(180deg,rgba(248,243,255,0.98)_0%,rgba(255,255,255,0.94)_100%)] p-4 shadow-[0_22px_50px_rgba(125,96,207,0.12)] backdrop-blur-xl transition-all duration-200 ${
+        className={`absolute left-0 top-full z-[70] mt-4 w-[22rem] overflow-hidden rounded-[1.5rem] border border-white/10 bg-[linear-gradient(180deg,rgba(19,16,32,0.92)_0%,rgba(29,22,46,0.88)_100%)] p-3 shadow-[0_28px_80px_rgba(6,6,10,0.42)] backdrop-blur-2xl transition-all duration-200 ${
           open
             ? "pointer-events-auto opacity-100 translate-y-0"
-            : "pointer-events-none opacity-0 -translate-y-1"
+            : "pointer-events-none opacity-0 -translate-y-2"
         }`}
       >
-        <div className="mb-3 flex items-center justify-between">
-          <span className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#6d44ec]/75">
+        <div className="mb-3 flex items-center justify-between px-2 pt-1">
+          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.34em] text-accent/85">
             Tools
           </span>
-          <span className="h-px flex-1 bg-[#e8e1f8] ml-3" />
+          <span className="ml-3 h-px flex-1 bg-white/10" />
         </div>
 
-        <div className="grid gap-2.5">
+        <div className="grid gap-2">
           {toolsMenuItems.map((item) => (
             <Link
               key={item.label}
               href={item.href}
               role="menuitem"
-              className="rounded-[1.05rem] border border-white/80 bg-white px-4 py-4 text-[1rem] text-[#3d3a57] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:border-[#e3d8ff] hover:bg-[#f7f2ff] hover:text-[#5c36d6]"
+              className="group rounded-[1.1rem] border border-white/10 bg-white/[0.04] px-4 py-4 text-[0.98rem] font-medium text-white/88 shadow-[0_10px_26px_rgba(0,0,0,0.18)] transition-all duration-200 hover:border-white/18 hover:bg-white/[0.08] hover:text-white hover:translate-x-0.5"
             >
-              {item.label}
+              <div className="flex items-center justify-between gap-3">
+                <span>{item.label}</span>
+                <span className="text-white/35 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-accent">
+                  →
+                </span>
+              </div>
             </Link>
           ))}
         </div>
@@ -627,7 +637,7 @@ function StepIcon({ kind, color }: { kind: string; color: string }) {
 function Avatar({ initials, tint }: { initials: string; tint: string }) {
   return (
     <div
-      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/80 text-[0.95rem] font-semibold text-white shadow-sm"
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-[0.95rem] font-semibold text-white shadow-sm"
       style={{ background: tint }}
     >
       {initials}
@@ -666,6 +676,7 @@ export default function Home() {
   const testimonialViewportRef = useRef<HTMLDivElement | null>(null);
   const mobileStepsViewportRef = useRef<HTMLDivElement | null>(null);
   const mobilePricingViewportRef = useRef<HTMLDivElement | null>(null);
+  const { resolvedTheme } = useTheme();
   const activeSteps = audience === "creators" ? howItWorksSteps : brandWorksSteps;
   const activeTestimonials = audience === "creators" ? testimonials : brandTestimonials;
   const testimonialPageCount = Math.ceil(
@@ -675,6 +686,8 @@ export default function Home() {
   const mobilePricingLastIndex = Math.max(0, pricingPlans.length - 1);
   const mobileTestimonialLastIndex = Math.max(0, activeTestimonials.length - 1);
   const testimonialLastPageIndex = Math.max(0, testimonialPageCount - 1);
+  const isDark = resolvedTheme === "dark";
+  const ctaSource = isDark ? ctaImageDark : ctaImage;
 
   useEffect(() => {
     const updateVisibleCards = () => {
@@ -802,16 +815,18 @@ export default function Home() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[linear-gradient(180deg,#fcf7f0_0%,#faf3eb_24%,#f8f0fa_58%,#f7efe8_100%)] text-[#17162b]">
-      <div className="absolute inset-0 opacity-90 [background:radial-gradient(circle_at_14%_18%,rgba(180,154,255,0.42),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(245,219,187,0.75),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(209,191,255,0.38),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(255,220,170,0.45),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(193,171,255,0.3),transparent_24%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.22)_100%)]" />
+    <main className="theme-shell relative min-h-screen overflow-hidden">
+      <div
+        className={`absolute inset-0 opacity-90 ${isDark ? "[background:radial-gradient(circle_at_14%_18%,rgba(139,92,246,0.26),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(168,85,247,0.16),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(139,92,246,0.12),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(124,58,237,0.12),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(168,85,247,0.12),transparent_24%)]" : "[background:radial-gradient(circle_at_14%_18%,rgba(180,154,255,0.42),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(245,219,187,0.75),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(209,191,255,0.38),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(255,220,170,0.45),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(193,171,255,0.3),transparent_24%)]"}`}
+      />
+      <div className={`absolute inset-0 ${isDark ? "bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.04)_100%)]" : "bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.22)_100%)]"}`} />
 
       <div className="relative mx-auto flex min-h-screen w-full flex-col px-4 pb-0 pt-5 sm:px-6 md:px-8">
-        <header className="fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] border border-white/55 bg-[rgba(255,255,255,0.58)] px-4 py-3 shadow-[0_14px_40px_rgba(125,96,207,0.08)] backdrop-blur-xl sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
+        <header className="glass-panel fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] px-4 py-3 sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
           <div className="flex items-center justify-between gap-3">
             <BrandLogo />
 
-            <nav className="hidden items-center gap-6 text-[0.98rem] font-medium text-[#1a1731] lg:flex xl:gap-10">
+            <nav className="hidden items-center gap-6 text-[0.98rem] font-medium text-foreground lg:flex xl:gap-10">
               {navItems.map((item) => (
                 item.label === "Tools" ? (
                   <ToolsDropdown key={item.label} />
@@ -819,7 +834,7 @@ export default function Home() {
                   <a
                     key={item.label}
                     href={item.href}
-                    className="flex items-center gap-1 transition-colors hover:text-[#5c36d6]"
+                    className="flex items-center gap-1 transition-colors hover:text-accent"
                   >
                     <span>{item.label}</span>
                   </a>
@@ -828,15 +843,16 @@ export default function Home() {
             </nav>
 
             <div className="hidden items-center gap-3 lg:flex">
+              <ThemeToggle />
               <Link
                 href="/#resources"
-                className="rounded-2xl border border-[#cdbcf8] bg-white/55 px-5 py-3 text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+                className="rounded-2xl border border-border bg-surface px-5 py-3 text-[1rem] font-medium text-foreground shadow-[0_10px_30px_rgba(111,76,203,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-surface-muted"
               >
                 Contact sales
               </Link>
               <Link
                 href="/auth"
-                className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-6 py-3 text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.38)] transition-transform duration-200 hover:-translate-y-0.5"
+                className="rounded-2xl bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-6 py-3 text-[1rem] font-semibold text-accent-foreground shadow-glow transition-transform duration-200 hover:-translate-y-0.5"
               >
                 Log in
               </Link>
@@ -853,7 +869,7 @@ export default function Home() {
                   return next;
                 });
               }}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[#d8cfff] bg-white/70 text-[#5c36d6] shadow-[0_10px_24px_rgba(125,96,207,0.08)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/90 lg:hidden"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-surface text-accent shadow-[0_10px_24px_rgba(125,96,207,0.08)] transition-transform duration-200 hover:-translate-y-0.5 hover:bg-surface-muted lg:hidden"
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
               aria-expanded={mobileNavOpen}
             >
@@ -879,19 +895,27 @@ export default function Home() {
           </div>
 
           <div
-            className={`mt-3 overflow-hidden rounded-[1.5rem] border border-[#e1d7fb] bg-[rgba(255,255,255,0.94)] shadow-[0_20px_50px_rgba(125,96,207,0.12)] transition-all duration-300 lg:hidden ${
+            className={`glass-panel mt-3 overflow-hidden rounded-[1.5rem] transition-all duration-300 lg:hidden ${
               mobileNavOpen ? "max-h-[78vh] opacity-100" : "max-h-0 border-transparent opacity-0"
             }`}
           >
-            <div className="flex max-h-[78vh] flex-col gap-4 overflow-y-auto p-4 pb-6 overscroll-contain">
-              <nav className="grid gap-2 text-[1rem] font-medium text-[#1a1731]">
+          <div className="flex max-h-[78vh] flex-col gap-4 overflow-y-auto p-4 pb-6 overscroll-contain">
+            <div className="flex items-center justify-between gap-3 rounded-2xl border border-border bg-surface px-4 py-3">
+              <div>
+                <p className="text-sm font-semibold text-foreground">Theme</p>
+                <p className="text-xs text-muted-foreground">Switch light or dark mode</p>
+              </div>
+              <ThemeToggle compact />
+            </div>
+
+              <nav className="grid gap-2 text-[1rem] font-medium text-foreground">
                 {navItems.map((item) =>
                   item.label === "Tools" ? (
                     <button
                       key={item.label}
                       type="button"
                       onClick={() => setMobileToolsOpen((current) => !current)}
-                      className="flex items-center justify-between rounded-2xl px-4 py-3 text-left transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
+                      className="flex items-center justify-between rounded-2xl px-4 py-3 text-left transition-colors hover:bg-surface-muted hover:text-accent"
                       aria-expanded={mobileToolsOpen}
                       aria-controls="mobile-tools-menu"
                     >
@@ -910,7 +934,7 @@ export default function Home() {
                         setMobileToolsOpen(false);
                         setMobileNavOpen(false);
                       }}
-                      className="rounded-2xl px-4 py-3 transition-colors hover:bg-[#f2ebff] hover:text-[#5c36d6]"
+                      className="rounded-2xl px-4 py-3 transition-colors hover:bg-surface-muted hover:text-accent"
                     >
                       {item.label}
                     </a>
@@ -920,14 +944,14 @@ export default function Home() {
 
               <div
                 id="mobile-tools-menu"
-                className={`overflow-hidden rounded-[1.4rem] border border-[#efe7ff] bg-[#faf7ff] transition-all duration-300 ease-out ${
+                className={`overflow-hidden rounded-[1.4rem] border border-border bg-surface transition-all duration-300 ease-out ${
                   mobileToolsOpen
                     ? "max-h-96 translate-y-0 opacity-100"
                     : "max-h-0 -translate-y-1 border-transparent opacity-0"
                 }`}
               >
                 <div className="p-4">
-                  <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]">
+                  <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-accent">
                     Tools
                   </p>
                   <div className="mt-3 grid gap-2">
@@ -939,7 +963,7 @@ export default function Home() {
                           setMobileToolsOpen(false);
                           setMobileNavOpen(false);
                         }}
-                        className="rounded-2xl bg-white px-4 py-3 text-[0.98rem] text-[#302d47] shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:bg-[#f4edff] hover:text-[#5c36d6]"
+                        className="rounded-2xl bg-surface px-4 py-3 text-[0.98rem] text-foreground shadow-[0_8px_20px_rgba(125,96,207,0.06)] transition-colors hover:bg-surface-muted hover:text-accent"
                       >
                         {item.label}
                       </a>
@@ -955,7 +979,7 @@ export default function Home() {
                     setMobileToolsOpen(false);
                     setMobileNavOpen(false);
                   }}
-                  className="rounded-2xl border border-[#cdbcf8] bg-white/70 px-4 py-3 text-center text-[1rem] font-medium text-[#1a1731] shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-white"
+                  className="rounded-2xl border border-border bg-surface px-4 py-3 text-center text-[1rem] font-medium text-foreground shadow-[0_10px_24px_rgba(111,76,203,0.08)] transition-colors hover:bg-surface-muted"
                 >
                   Contact sales
                 </Link>
@@ -965,7 +989,7 @@ export default function Home() {
                     setMobileToolsOpen(false);
                     setMobileNavOpen(false);
                   }}
-                  className="rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-white shadow-[0_16px_35px_rgba(91,61,215,0.32)] transition-transform duration-200 hover:-translate-y-0.5"
+                  className="rounded-2xl bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-4 py-3 text-center text-[1rem] font-semibold text-accent-foreground shadow-glow transition-transform duration-200 hover:-translate-y-0.5"
                 >
                   Log in
                 </Link>
@@ -978,12 +1002,12 @@ export default function Home() {
           id="about-us"
           className="mx-auto flex w-[85vw] max-w-none scroll-mt-36 flex-1 flex-col items-center pt-20 text-center sm:pt-24"
         >
-          <h1 className="mt-4 max-w-[1120px] font-[family-name:var(--font-serif)] text-[clamp(2.85rem,5.9vw,6rem)] font-medium leading-[0.92] tracking-[-0.05em] text-[#17162b] md:mt-6 xl:text-[clamp(2.35rem,4vw,4.1rem)] 2xl:text-[clamp(2.15rem,3.4vw,3.8rem)]">
+          <h1 className="mt-4 max-w-[1120px] font-[family-name:var(--font-serif)] text-[clamp(2.85rem,5.9vw,6rem)] font-medium leading-[0.92] tracking-[-0.05em] text-foreground md:mt-6 xl:text-[clamp(2.35rem,4vw,4.1rem)] 2xl:text-[clamp(2.15rem,3.4vw,3.8rem)]">
             <span className="block">A visual collaboration workspace</span>
             <span className="block">built for modern creators.</span>
           </h1>
 
-          <p className="mt-4 max-w-[930px] text-[clamp(1.05rem,1.8vw,1.45rem)] leading-[1.32] text-[#5d5a6f] md:mt-5">
+          <p className="mt-4 max-w-[930px] text-[clamp(1.05rem,1.8vw,1.45rem)] leading-[1.32] text-muted-foreground md:mt-5">
             <span className="block">
               Organize invites, campaigns, reviews, payments, and deliverables
             </span>
@@ -993,15 +1017,9 @@ export default function Home() {
           </p>
 
           <div className="relative mt-5 w-full flex-1 pb-2 md:mt-7">
-            <div className="absolute left-1/2 top-0 h-28 w-[76%] -translate-x-1/2 rounded-full bg-white/35 blur-3xl" />
+            <div className={`absolute left-1/2 top-0 h-28 w-[76%] -translate-x-1/2 rounded-full blur-3xl ${isDark ? "bg-[rgba(139,92,246,0.18)]" : "bg-white/35"}`} />
             <div className="relative mx-auto flex w-full items-end justify-center">
-              <Image
-                src={heroSection as StaticImageData}
-                alt="Buzzroster product hero showing the mobile app interface"
-                priority
-                className="h-auto w-[min(100%,1540px)] select-none object-contain drop-shadow-[0_35px_70px_rgba(93,61,179,0.1)]"
-                sizes="(max-width: 768px) 100vw, 1540px"
-              />
+              <HeroImage />
             </div>
           </div>
         </section>
@@ -1011,18 +1029,18 @@ export default function Home() {
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-36 pb-6 pt-2 sm:pb-8"
         >
           <div className="bg-transparent">
-            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-black/90 sm:text-[1.05rem]">
+            <p className="px-5 pt-5 text-center text-[0.98rem] font-semibold tracking-[-0.01em] text-foreground sm:text-[1.05rem]">
               Trusted by creators, brands & agencies worldwide
             </p>
             <div className="overflow-hidden px-5 py-5 sm:px-8">
-              <div className="brand-marquee flex w-max items-center gap-12 text-black sm:gap-14">
+              <div className="brand-marquee flex w-max items-center gap-12 text-foreground sm:gap-14">
                 {repeatedTrustedBrands.map((brand, index) => (
                   <div
                     key={`${brand}-${index}`}
                     className="flex shrink-0 items-center gap-2.5 px-1 py-1"
                   >
                     <BrandIcon kind={brand.icon} />
-                    <span className="font-[family-name:var(--font-serif)] text-[1.02rem] font-semibold not-italic tracking-[-0.02em] text-black opacity-100 sm:text-[1.1rem]">
+                    <span className="font-[family-name:var(--font-serif)] text-[1.02rem] font-semibold not-italic tracking-[-0.02em] text-foreground opacity-100 sm:text-[1.1rem]">
                       {brand.name}
                     </span>
                   </div>
@@ -1037,39 +1055,39 @@ export default function Home() {
           className="mx-auto w-[85vw] max-w-none scroll-mt-36 pb-14 pt-12 sm:pb-20 sm:pt-16"
         >
           <div className="mx-auto max-w-[780px] text-center">
-            <h2 className="text-[clamp(2rem,2.4vw,3rem)] font-semibold tracking-[-0.04em] text-[#17162b]">
-              How <span className="text-[#6d44ec]">BuzzRoster</span> works
+            <h2 className="text-[clamp(2rem,2.4vw,3rem)] font-semibold tracking-[-0.04em] text-foreground">
+              How <span className="text-accent">BuzzRoster</span> works
             </h2>
-          <div className="mx-auto mt-5 flex w-full max-w-[360px] items-center justify-between border-b border-[#e9e4f3] text-[1rem] font-semibold text-[#4f4d66]">
+          <div className="mx-auto mt-5 flex w-full max-w-[360px] items-center justify-between border-b border-border text-[1rem] font-semibold text-muted-foreground">
               <button
                 type="button"
                 onClick={() => setActiveAudience("creators")}
                 className={`relative flex-1 pb-4 transition-colors ${
-                  audience === "creators" ? "text-[#403c68]" : "text-[#66637d]"
+                  audience === "creators" ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
                 For Creators
                 {audience === "creators" ? (
-                  <span className="absolute inset-x-0 bottom-0 h-1 rounded-full bg-[#6d44ec]" />
+                  <span className="absolute inset-x-0 bottom-0 h-1 rounded-full bg-accent" />
                 ) : null}
               </button>
               <button
                 type="button"
                 onClick={() => setActiveAudience("brands")}
                 className={`relative flex-1 pb-4 transition-colors ${
-                  audience === "brands" ? "text-[#403c68]" : "text-[#66637d]"
+                  audience === "brands" ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
                 For Brands
                 {audience === "brands" ? (
-                  <span className="absolute inset-x-0 bottom-0 h-1 rounded-full bg-[#6d44ec]" />
+                  <span className="absolute inset-x-0 bottom-0 h-1 rounded-full bg-accent" />
                 ) : null}
               </button>
             </div>
           </div>
 
           <div className="relative mt-12">
-            <div className="absolute left-[5%] right-[5%] top-[58px] hidden h-px bg-[#eef0f5] lg:block" />
+            <div className="absolute left-[5%] right-[5%] top-[58px] hidden h-px bg-border lg:block" />
 
             <div className="relative lg:hidden">
               <div
@@ -1081,18 +1099,18 @@ export default function Home() {
                 {activeSteps.map((step) => (
                   <div
                     key={step.number}
-                    className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.5rem] border border-white/80 bg-white/70 px-6 py-8 text-center shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)]"
+                    className="relative min-w-[calc(100vw-2rem)] snap-center rounded-[1.5rem] border border-border bg-surface px-6 py-8 text-center shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)]"
                   >
                     <div className="mx-auto flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
                       <StepIcon kind={step.icon} color={step.color} />
                     </div>
-                    <div className="mx-auto mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-[#6d44ec] text-[0.82rem] font-semibold text-white shadow-[0_8px_18px_rgba(109,68,236,0.25)]">
+                    <div className="mx-auto mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[0.82rem] font-semibold text-accent-foreground shadow-glow">
                       {step.number}
                     </div>
-                    <h3 className="mt-5 text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-[#19182e]">
+                    <h3 className="mt-5 text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-foreground">
                       {step.title}
                     </h3>
-                    <p className="mt-4 text-[0.98rem] leading-[1.55] text-[#656278]">
+                    <p className="mt-4 text-[0.98rem] leading-[1.55] text-muted-foreground">
                       {step.description}
                     </p>
                   </div>
@@ -1104,7 +1122,7 @@ export default function Home() {
                   type="button"
                   onClick={() => scrollMobileSteps("prev")}
                   disabled={mobileStepsPage <= 0}
-                  className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  className="text-[1.45rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
                   aria-label="Previous steps"
                 >
                   ←
@@ -1113,7 +1131,7 @@ export default function Home() {
                   type="button"
                   onClick={() => scrollMobileSteps("next")}
                   disabled={mobileStepsPage >= mobileStepsLastIndex}
-                  className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  className="text-[1.45rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
                   aria-label="Next steps"
                 >
                   →
@@ -1127,13 +1145,13 @@ export default function Home() {
                   <div className="flex h-[112px] w-[112px] items-center justify-center rounded-full" style={{ background: `${step.color}1f` }}>
                     <StepIcon kind={step.icon} color={step.color} />
                   </div>
-                  <div className="mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-[#6d44ec] text-[0.82rem] font-semibold text-white shadow-[0_8px_18px_rgba(109,68,236,0.25)]">
+                  <div className="mt-7 flex h-7 w-7 items-center justify-center rounded-full bg-accent text-[0.82rem] font-semibold text-accent-foreground shadow-glow">
                     {step.number}
                   </div>
-                  <h3 className="mt-5 max-w-[160px] text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-[#19182e]">
+                  <h3 className="mt-5 max-w-[160px] text-[1.08rem] font-semibold leading-[1.28] tracking-[-0.02em] text-foreground">
                     {step.title}
                   </h3>
-                  <p className="mt-4 max-w-[170px] text-[0.98rem] leading-[1.55] text-[#656278]">
+                  <p className="mt-4 max-w-[170px] text-[0.98rem] leading-[1.55] text-muted-foreground">
                     {step.description}
                   </p>
                 </div>
@@ -1142,11 +1160,11 @@ export default function Home() {
           </div>
 
           <div className="mt-16 flex flex-col items-center gap-3 md:flex-row md:gap-5">
-            <div className="hidden h-px flex-1 bg-[#eceaf3] md:block" />
-            <h3 className="whitespace-nowrap text-center text-[clamp(1.8rem,2.2vw,2.7rem)] font-semibold tracking-[-0.04em] text-[#17162b]">
+            <div className="hidden h-px flex-1 bg-border md:block" />
+            <h3 className="whitespace-nowrap text-center text-[clamp(1.8rem,2.2vw,2.7rem)] font-semibold tracking-[-0.04em] text-foreground">
               Loved by creators & brands
             </h3>
-            <div className="hidden h-px flex-1 bg-[#eceaf3] md:block" />
+            <div className="hidden h-px flex-1 bg-border md:block" />
           </div>
 
           <div
@@ -1157,7 +1175,7 @@ export default function Home() {
               type="button"
               onClick={() => scrollTestimonials("prev")}
               disabled={testimonialPage <= 0}
-              className="hidden text-[2.8rem] leading-none text-[#19182e] transition-opacity hover:text-[#6d44ec] disabled:cursor-not-allowed disabled:text-[#19182e]/20 lg:flex"
+              className="hidden text-[2.8rem] leading-none text-foreground transition-opacity hover:text-accent disabled:cursor-not-allowed disabled:text-foreground/20 lg:flex"
               aria-label="Previous testimonials"
             >
               ‹
@@ -1172,15 +1190,21 @@ export default function Home() {
                 {activeTestimonials.map((testimonial) => (
                   <article
                     key={testimonial.name}
-                    className="min-w-[calc(100vw-2rem)] snap-start rounded-[1.5rem] border border-white/80 p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] sm:min-w-[calc(100vw-3rem)] md:min-w-[calc(50%-12px)] lg:min-w-[calc((100%-48px)/3)]"
-                    style={{ background: testimonial.background }}
+                    className={`min-w-[calc(100vw-2rem)] snap-start rounded-[1.5rem] border p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] transition-colors sm:min-w-[calc(100vw-3rem)] md:min-w-[calc(50%-12px)] lg:min-w-[calc((100%-48px)/3)] ${
+                      isDark ? "border-border bg-[rgba(18,17,26,0.92)]" : "border-border"
+                    }`}
+                    style={
+                      isDark
+                        ? { boxShadow: "0 18px 50px rgba(0, 0, 0, 0.32)" }
+                        : { background: testimonial.background }
+                    }
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-3">
                         <Avatar initials={testimonial.name.split(" ").map((part) => part[0]).join("").slice(0, 2)} tint={testimonial.accent} />
                         <div>
-                          <div className="text-[1rem] font-semibold text-[#1c1b30]">{testimonial.name}</div>
-                          <div className="text-[0.95rem] text-[#6c6780]">{testimonial.handle}</div>
+                          <div className="text-[1rem] font-semibold text-foreground">{testimonial.name}</div>
+                          <div className="text-[0.95rem] text-muted-foreground">{testimonial.handle}</div>
                         </div>
                       </div>
                       <span
@@ -1191,7 +1215,7 @@ export default function Home() {
                       </span>
                     </div>
 
-                    <p className="mt-6 max-w-[520px] text-[1.25rem] leading-[1.55] tracking-[-0.02em] text-[#2b283b]">
+                    <p className={`mt-6 max-w-[520px] text-[1.25rem] leading-[1.55] tracking-[-0.02em] ${isDark ? "text-white/88" : "text-foreground"}`}>
                       {testimonial.text}
                     </p>
 
@@ -1207,7 +1231,7 @@ export default function Home() {
               type="button"
               onClick={() => scrollTestimonials("next")}
               disabled={testimonialPage >= testimonialLastPageIndex}
-              className="hidden text-[2.8rem] leading-none text-[#19182e] transition-opacity hover:text-[#6d44ec] disabled:cursor-not-allowed disabled:text-[#19182e]/20 lg:flex"
+              className="hidden text-[2.8rem] leading-none text-foreground transition-opacity hover:text-accent disabled:cursor-not-allowed disabled:text-foreground/20 lg:flex"
               aria-label="Next testimonials"
             >
               ›
@@ -1219,7 +1243,7 @@ export default function Home() {
               type="button"
               onClick={() => scrollTestimonials("prev")}
               disabled={testimonialPage <= 0}
-              className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+              className="text-[1.45rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
               aria-label="Previous testimonials"
             >
               ←
@@ -1228,7 +1252,7 @@ export default function Home() {
               type="button"
               onClick={() => scrollTestimonials("next")}
               disabled={testimonialPage >= mobileTestimonialLastIndex}
-              className="text-[1.45rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+              className="text-[1.45rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
               aria-label="Next testimonials"
             >
               →
@@ -1240,7 +1264,7 @@ export default function Home() {
               <span
                 key={index}
                 className={`h-3 w-3 rounded-full transition-colors ${
-                  index === testimonialPage ? "bg-[#6d44ec]" : "bg-[#ded8ea]"
+                  index === testimonialPage ? "bg-accent" : "bg-muted"
                 }`}
               />
             ))}
@@ -1252,10 +1276,10 @@ export default function Home() {
           className="mx-auto w-[85vw] max-w-none scroll-mt-36 pb-20 pt-8 sm:pb-28 sm:pt-12"
         >
           <div>
-            <h2 className="text-[clamp(2rem,2.6vw,3.25rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
+            <h2 className="text-[clamp(2rem,2.6vw,3.25rem)] font-semibold tracking-[-0.05em] text-foreground">
               Simple pricing for everyone
             </h2>
-            <p className="mt-2 text-[1.15rem] text-[#66637d]">
+            <p className="mt-2 text-[1.15rem] text-muted-foreground">
               Choose a plan that fits your goals.
             </p>
 
@@ -1268,38 +1292,62 @@ export default function Home() {
                 {pricingPlans.map((plan) => (
                   <article
                     key={plan.name}
-                    className={`relative min-w-[calc(100vw-2rem)] snap-center overflow-hidden rounded-[1.8rem] border p-8 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm sm:min-w-[calc(100vw-3rem)] ${
-                      plan.badge ? "border-[#d9cffc]" : ""
+                    className={`relative min-w-[calc(100vw-2rem)] snap-center overflow-hidden rounded-[1.8rem] border p-8 backdrop-blur-xl transition-colors sm:min-w-[calc(100vw-3rem)] ${
+                      isDark
+                        ? "border-white/12 shadow-[0_26px_80px_rgba(0,0,0,0.4)]"
+                        : "border-border shadow-[0_16px_45px_rgba(125,96,207,0.08)]"
                     }`}
                     style={{
-                      borderColor: plan.badge ? "rgba(141, 121, 246, 0.28)" : plan.border,
-                      background: plan.badge
-                        ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
-                        : "rgba(255,255,255,0.70)",
+                      borderColor: isDark
+                        ? plan.badge
+                          ? "rgba(141,121,246,0.36)"
+                          : "rgba(255,255,255,0.10)"
+                        : plan.badge
+                          ? "rgba(141, 121, 246, 0.28)"
+                          : plan.border,
+                      background: isDark
+                        ? plan.badge
+                          ? "linear-gradient(180deg, rgba(31,22,50,0.98) 0%, rgba(16,13,24,0.96) 26%, rgba(12,11,18,0.98) 100%)"
+                          : "linear-gradient(180deg, rgba(23,17,33,0.98) 0%, rgba(12,11,18,0.96) 100%)"
+                        : plan.badge
+                          ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
+                          : "rgba(255,255,255,0.70)",
                     }}
                   >
+                    {isDark ? (
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.26),transparent_72%)]"
+                      />
+                    ) : null}
                     <div className="flex items-start justify-between gap-4">
-                      <div className="text-[1.05rem] font-semibold text-[#27243f]">
+                      <div className={`text-[1.05rem] font-semibold ${isDark ? "text-white" : "text-foreground"}`}>
                         {plan.name}
                       </div>
                       {plan.badge ? (
-                        <div className="rounded-full border border-[#e5dcff] bg-[linear-gradient(135deg,rgba(141,121,246,0.14)_0%,rgba(255,255,255,0.72)_45%,rgba(111,195,161,0.06)_100%)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]/55 shadow-[0_8px_18px_rgba(109,68,236,0.08)]">
+                        <div
+                          className={`rounded-full border px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] shadow-glow ${
+                            isDark
+                              ? "border-white/10 bg-[rgba(139,92,246,0.14)] text-[#cdbbff]"
+                              : "border-border bg-accent-soft text-accent"
+                          }`}
+                        >
                           {plan.badge}
                         </div>
                       ) : null}
                     </div>
 
                     <div className="mt-5 flex items-end gap-2">
-                      <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
+                      <span className={`text-[3.2rem] font-semibold tracking-[-0.06em] ${isDark ? "text-white" : "text-foreground"}`}>
                         {plan.price}
                       </span>
                       {plan.period ? (
-                        <span className="pb-2 text-[1.05rem] text-[#7b7890]">
+                        <span className={`pb-2 text-[1.05rem] ${isDark ? "text-white/55" : "text-muted-foreground"}`}>
                           {plan.period}
                         </span>
                       ) : null}
                     </div>
-                    <p className="relative z-10 mt-4 text-[1.05rem] text-[#66637d]">
+                    <p className={`relative z-10 mt-4 text-[1.05rem] ${isDark ? "text-white/70" : "text-muted-foreground"}`}>
                       {plan.name === "Creator"
                         ? "Everything you need to grow"
                         : plan.name === "Brand Starter"
@@ -1307,7 +1355,7 @@ export default function Home() {
                           : "For agencies & growing teams"}
                     </p>
 
-                    <ul className="relative z-10 mt-8 space-y-4 text-[1rem] text-[#4a475c]">
+                    <ul className={`relative z-10 mt-8 space-y-4 text-[1rem] ${isDark ? "text-white/90" : "text-foreground"}`}>
                       {plan.features.map((feature) => (
                         <li key={feature} className="flex items-start gap-3">
                           <svg
@@ -1333,7 +1381,11 @@ export default function Home() {
                     <div className="relative z-10 mt-auto pt-8">
                       <a
                         href="#"
-                        className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                        className={`flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 ${
+                          isDark
+                            ? "shadow-[0_18px_35px_rgba(91,61,215,0.42)]"
+                            : "shadow-[0_18px_35px_rgba(109,68,236,0.28)]"
+                        }`}
                         style={{
                           background:
                             plan.name === "Agency"
@@ -1353,7 +1405,7 @@ export default function Home() {
                   type="button"
                   onClick={() => scrollMobilePricing("prev")}
                   disabled={mobilePricingPage <= 0}
-                  className="text-[1.6rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  className="text-[1.6rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
                   aria-label="Previous pricing plan"
                 >
                   ←
@@ -1362,7 +1414,7 @@ export default function Home() {
                   type="button"
                   onClick={() => scrollMobilePricing("next")}
                   disabled={mobilePricingPage >= mobilePricingLastIndex}
-                  className="text-[1.6rem] leading-none text-[#6d44ec] transition-opacity disabled:cursor-not-allowed disabled:text-[#6d44ec]/20"
+                  className="text-[1.6rem] leading-none text-accent transition-opacity disabled:cursor-not-allowed disabled:text-accent/20"
                   aria-label="Next pricing plan"
                 >
                   →
@@ -1374,36 +1426,62 @@ export default function Home() {
               {pricingPlans.map((plan) => (
                   <article
                     key={plan.name}
-                    className="relative flex min-h-[470px] flex-col rounded-[1.8rem] border p-7 shadow-[0_16px_45px_rgba(125,96,207,0.08)] backdrop-blur-sm"
+                    className={`relative flex min-h-[470px] flex-col rounded-[1.8rem] border p-7 backdrop-blur-xl ${
+                      isDark
+                        ? "border-white/12 shadow-[0_26px_80px_rgba(0,0,0,0.4)]"
+                        : "border-border shadow-[0_16px_45px_rgba(125,96,207,0.08)]"
+                    }`}
                     style={{
-                      borderColor: plan.badge ? "rgba(141, 121, 246, 0.28)" : plan.border,
+                      borderColor: isDark
+                        ? plan.badge
+                          ? "rgba(141,121,246,0.36)"
+                          : "rgba(255,255,255,0.10)"
+                        : plan.badge
+                          ? "rgba(141, 121, 246, 0.28)"
+                          : plan.border,
                       background: plan.badge
-                        ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
-                        : "rgba(255,255,255,0.70)",
+                        ? isDark
+                          ? "linear-gradient(180deg, rgba(31,22,50,0.98) 0%, rgba(16,13,24,0.96) 26%, rgba(12,11,18,0.98) 100%)"
+                          : "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
+                        : isDark
+                          ? "linear-gradient(180deg, rgba(23,17,33,0.98) 0%, rgba(12,11,18,0.96) 100%)"
+                          : "rgba(255,255,255,0.70)",
                     }}
                   >
+                    {isDark ? (
+                      <div
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.24),transparent_72%)]"
+                      />
+                    ) : null}
                     <div className="flex items-start justify-between gap-4">
-                      <div className="text-[1.05rem] font-semibold text-[#27243f]">
+                      <div className={`text-[1.05rem] font-semibold ${isDark ? "text-white" : "text-foreground"}`}>
                         {plan.name}
                       </div>
                       {plan.badge ? (
-                        <div className="rounded-full border border-[#e5dcff] bg-[linear-gradient(135deg,rgba(141,121,246,0.14)_0%,rgba(255,255,255,0.72)_45%,rgba(111,195,161,0.06)_100%)] px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-[#6d44ec]/55 shadow-[0_8px_18px_rgba(109,68,236,0.08)]">
+                        <div
+                          className={`rounded-full border px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] shadow-glow ${
+                            isDark
+                              ? "border-white/10 bg-[rgba(139,92,246,0.14)] text-[#cdbbff]"
+                              : "border-border bg-accent-soft text-accent"
+                          }`}
+                        >
                           {plan.badge}
                         </div>
                       ) : null}
                     </div>
 
                   <div className="mt-5 flex items-end gap-2">
-                    <span className="text-[3.2rem] font-semibold tracking-[-0.06em] text-[#17162b]">
+                    <span className={`text-[3.2rem] font-semibold tracking-[-0.06em] ${isDark ? "text-white" : "text-foreground"}`}>
                       {plan.price}
                     </span>
                     {plan.period ? (
-                      <span className="pb-2 text-[1.05rem] text-[#7b7890]">
+                      <span className={`pb-2 text-[1.05rem] ${isDark ? "text-white/55" : "text-muted-foreground"}`}>
                         {plan.period}
                       </span>
                     ) : null}
                   </div>
-                  <p className="relative z-10 mt-4 text-[1.05rem] text-[#66637d]">
+                  <p className={`relative z-10 mt-4 text-[1.05rem] ${isDark ? "text-white/70" : "text-muted-foreground"}`}>
                     {plan.name === "Creator"
                       ? "Everything you need to grow"
                       : plan.name === "Brand Starter"
@@ -1411,7 +1489,7 @@ export default function Home() {
                         : "For agencies & growing teams"}
                   </p>
 
-                  <ul className="relative z-10 mt-8 space-y-4 text-[1rem] text-[#4a475c]">
+                  <ul className={`relative z-10 mt-8 space-y-4 text-[1rem] ${isDark ? "text-white/90" : "text-foreground"}`}>
                     {plan.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-3">
                         <svg
@@ -1437,7 +1515,11 @@ export default function Home() {
                   <div className="relative z-10 mt-auto pt-8">
                     <a
                       href="#"
-                      className="flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white shadow-[0_18px_35px_rgba(109,68,236,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                      className={`flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 ${
+                        isDark
+                          ? "shadow-[0_18px_35px_rgba(91,61,215,0.42)]"
+                          : "shadow-[0_18px_35px_rgba(109,68,236,0.28)]"
+                      }`}
                       style={{
                         background:
                           plan.name === "Agency"
@@ -1456,10 +1538,10 @@ export default function Home() {
           <div id="faq" className="mt-12 scroll-mt-36">
             <div className="grid gap-6 lg:grid-cols-[0.9fr_minmax(0,1.1fr)] lg:items-start lg:gap-10">
               <div className="relative max-w-[28rem] lg:min-h-[24.75rem]">
-                <p className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-[#6d44ec]/65">
+                <p className="text-[0.76rem] font-semibold uppercase tracking-[0.28em] text-accent/65">
                   Help center
                 </p>
-                <h2 className="mt-3 text-[clamp(1.8rem,2.3vw,2.9rem)] font-semibold tracking-[-0.05em] text-[#17162b]">
+                <h2 className="mt-3 text-[clamp(1.8rem,2.3vw,2.9rem)] font-semibold tracking-[-0.05em] text-foreground">
                   Frequently asked questions
                 </h2>
 
@@ -1474,7 +1556,7 @@ export default function Home() {
 
                 <a
                   href="#"
-                  className="hidden lg:absolute lg:bottom-[-0.35rem] lg:left-0 lg:inline-flex lg:items-center lg:gap-2 lg:text-[0.98rem] lg:font-semibold lg:text-[#6d44ec] xl:text-[1.05rem]"
+                  className="hidden lg:absolute lg:bottom-[-0.35rem] lg:left-0 lg:inline-flex lg:items-center lg:gap-2 lg:text-[0.98rem] lg:font-semibold lg:text-accent xl:text-[1.05rem]"
                 >
                   <span>View all FAQs</span>
                   <span className="text-[1.4rem] leading-none">&rarr;</span>
@@ -1490,22 +1572,22 @@ export default function Home() {
                       key={item.question}
                       className={`overflow-hidden rounded-[1.35rem] border transition-all duration-300 ${
                         open
-                          ? "border-[#d6cafb] bg-[linear-gradient(180deg,rgba(255,255,255,0.94)_0%,rgba(248,243,255,0.98)_100%)] shadow-[0_18px_40px_rgba(125,96,207,0.1)]"
-                          : "border-[#ece8f5] bg-white/72 shadow-[0_10px_24px_rgba(125,96,207,0.04)]"
+                          ? "border-border bg-surface shadow-[0_18px_40px_rgba(125,96,207,0.1)]"
+                          : "border-border bg-surface shadow-[0_10px_24px_rgba(125,96,207,0.04)]"
                       }`}
                     >
                       <button
                         type="button"
                         onClick={() => toggleFaq(item.question)}
                         aria-expanded={open}
-                        className="flex w-full items-start justify-between gap-4 px-5 py-3 text-left transition-colors hover:bg-white/40 sm:px-6 sm:py-3.5"
+                        className="flex w-full items-start justify-between gap-4 px-5 py-3 text-left transition-colors hover:bg-surface-muted sm:px-6 sm:py-3.5"
                       >
-                        <span className="max-w-[calc(100%-2.5rem)] text-[0.98rem] font-medium leading-[1.35] tracking-[-0.02em] text-[#2f2d45] sm:text-[1.04rem]">
+                        <span className="max-w-[calc(100%-2.5rem)] text-[0.98rem] font-medium leading-[1.35] tracking-[-0.02em] text-foreground sm:text-[1.04rem]">
                           {item.question}
                         </span>
                         <span
-                          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#ddd4f8] text-[1rem] font-semibold leading-none text-[#6d44ec] transition-transform duration-300 ${
-                            open ? "rotate-45 bg-[#f5f0ff]" : "bg-white"
+                          className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-border text-[1rem] font-semibold leading-none text-accent transition-transform duration-300 ${
+                            open ? "rotate-45 bg-accent-soft" : "bg-surface"
                           }`}
                           aria-hidden="true"
                         >
@@ -1518,8 +1600,8 @@ export default function Home() {
                           open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
                         }`}
                       >
-                        <div className="overflow-hidden px-5 pb-4 pt-0 text-[0.94rem] leading-[1.68] text-[#5f5b72] sm:px-6 sm:pb-4">
-                          <div className="h-px w-full bg-[linear-gradient(90deg,rgba(109,68,236,0.18),rgba(109,68,236,0.04),transparent)]" />
+                        <div className="overflow-hidden px-5 pb-4 pt-0 text-[0.94rem] leading-[1.68] text-muted-foreground sm:px-6 sm:pb-4">
+                          <div className="h-px w-full bg-[linear-gradient(90deg,var(--accent),transparent)] opacity-20" />
                           <p className="pt-3">{item.answer}</p>
                         </div>
                       </div>
@@ -1531,7 +1613,7 @@ export default function Home() {
 
             <a
               href="#"
-              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-[#6d44ec] sm:text-[1.05rem] lg:hidden"
+              className="mt-6 inline-flex items-center gap-2 text-[0.98rem] font-semibold text-accent sm:text-[1.05rem] lg:hidden"
             >
               <span>View all FAQs</span>
               <span className="text-[1.4rem] leading-none">&rarr;</span>
@@ -1540,38 +1622,51 @@ export default function Home() {
         </section>
 
         <section className="mx-auto w-[85vw] max-w-none pb-12 sm:pb-18">
-          <div className="relative overflow-hidden rounded-[2rem] border border-white/80 bg-[linear-gradient(90deg,rgba(240,233,255,0.92)_0%,rgba(247,243,255,0.84)_28%,rgba(255,250,240,0.74)_100%)] shadow-[0_18px_50px_rgba(125,96,207,0.08)]">
+          <div
+            className={`relative overflow-hidden rounded-[2rem] border shadow-[0_18px_50px_rgba(125,96,207,0.08)] ${
+              isDark ? "border-white/10 bg-[rgba(12,11,18,0.92)]" : "border-border bg-surface"
+            }`}
+          >
             <div className="lg:hidden">
               <div className="relative h-[220px] w-full overflow-hidden sm:h-[260px]">
                 <Image
-                  src={ctaImage as StaticImageData}
+                  src={ctaSource as StaticImageData}
                   alt="Creators collaborating around a campaign board"
                   priority={false}
                   sizes="100vw"
                   className="h-full w-full object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(243,237,255,0.06)_0%,rgba(243,237,255,0.38)_48%,rgba(243,237,255,0.92)_100%)]" />
+                <div
+                  className={`absolute inset-0 ${
+                    isDark
+                      ? "bg-[linear-gradient(180deg,rgba(8,8,13,0.22)_0%,rgba(8,8,13,0.56)_48%,rgba(8,8,13,0.96)_100%)]"
+                      : "bg-[linear-gradient(180deg,rgba(15,15,19,0.04)_0%,rgba(15,15,19,0.28)_48%,rgba(15,15,19,0.88)_100%)]"
+                  }`}
+                />
               </div>
 
               <div className="px-5 pb-6 pt-5 sm:px-7 sm:pb-7">
-                <h2 className="max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,8vw,3rem)] font-medium leading-[0.98] tracking-[-0.05em] text-[#17162b]">
-                  Ready to build your creator roster?
+                <h2 className={`max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,8vw,3rem)] font-medium leading-[0.98] tracking-[-0.05em] ${isDark ? "text-white" : "text-foreground"}`}>
+                  You create the content. We get you on the roster.
                 </h2>
-                <p className="mt-4 max-w-[34ch] text-[1rem] leading-[1.45] text-[#55526b] sm:text-[1.05rem]">
-                  Join thousands of creators and brands building meaningful
-                  partnerships that grow.
+                <p className={`mt-4 max-w-[34ch] text-[1rem] leading-[1.45] sm:text-[1.05rem] ${isDark ? "text-white/72" : "text-muted-foreground"}`}>
+                  Join 10,000+ creators already on Buzzroster.
                 </p>
 
                 <div className="mt-6 grid gap-3">
                   <a
                     href="#"
-                    className="rounded-2xl bg-[linear-gradient(135deg,var(--brand-primary)_0%,var(--brand-primary-strong)_100%)] px-6 py-4 text-center text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(138,43,226,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="rounded-2xl bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-6 py-4 text-center text-[1.02rem] font-semibold text-accent-foreground shadow-glow transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     Join as Creator
                   </a>
                   <a
                     href="#"
-                    className="rounded-2xl border border-[#d6baf5] bg-white/65 px-6 py-4 text-center text-[1.02rem] font-semibold text-[var(--brand-primary-strong)] shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/80"
+                    className={`rounded-2xl px-6 py-4 text-center text-[1.02rem] font-semibold shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 ${
+                      isDark
+                        ? "border border-white/10 bg-white/5 text-white hover:bg-white/[0.08]"
+                        : "border border-border bg-surface text-accent hover:bg-surface-muted"
+                    }`}
                   >
                     Join as Brand
                   </a>
@@ -1581,33 +1676,42 @@ export default function Home() {
 
             <div className="relative hidden h-[240px] w-full sm:h-[295px] lg:block lg:h-[315px]">
               <Image
-                src={ctaImage as StaticImageData}
+                src={ctaSource as StaticImageData}
                 alt="Creators collaborating around a campaign board"
                 priority={false}
                 sizes="(max-width: 768px) 100vw, 85vw"
                 className="h-full w-full object-cover object-right"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(243,237,255,0.97)_0%,rgba(243,237,255,0.93)_22%,rgba(243,237,255,0.74)_38%,rgba(255,250,240,0.28)_58%,rgba(255,250,240,0.08)_100%)]" />
+              <div
+                className={`absolute inset-0 ${
+                  isDark
+                    ? "bg-[linear-gradient(90deg,rgba(8,8,13,0.96)_0%,rgba(12,10,18,0.86)_22%,rgba(11,10,18,0.60)_38%,rgba(10,10,15,0.24)_58%,rgba(10,10,15,0.04)_100%)]"
+                    : "bg-[linear-gradient(90deg,rgba(243,237,255,0.97)_0%,rgba(243,237,255,0.93)_22%,rgba(243,237,255,0.74)_38%,rgba(255,250,240,0.28)_58%,rgba(255,250,240,0.08)_100%)]"
+                }`}
+              />
               <div className="absolute left-8 top-1/2 z-10 w-[44%] max-w-[560px] -translate-y-1/2 sm:left-12 lg:left-16">
-                <h2 className="max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,2.65vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.05em] text-[#17162b] xl:text-[clamp(2.05rem,2.9vw,3.8rem)]">
-                  Ready to build your
-                  <span className="block">creator roster?</span>
+                <h2 className={`max-w-[18ch] font-[family-name:var(--font-serif)] text-[clamp(1.95rem,2.65vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.05em] xl:text-[clamp(2.05rem,2.9vw,3.8rem)] ${isDark ? "text-white" : "text-foreground"}`}>
+                  You create the content.
+                  <span className="block">We get you on the roster.</span>
                 </h2>
-                <p className="mt-5 max-w-[440px] text-[clamp(0.98rem,1.18vw,1.12rem)] leading-[1.48] text-[#55526b]">
-                  Join thousands of creators and brands building meaningful
-                  partnerships that grow.
+                <p className={`mt-5 max-w-[440px] text-[clamp(0.98rem,1.18vw,1.12rem)] leading-[1.48] ${isDark ? "text-white/72" : "text-muted-foreground"}`}>
+                  Join 10,000+ creators already on Buzzroster.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-4">
                   <a
                     href="#"
-                    className="rounded-2xl bg-[linear-gradient(135deg,var(--brand-primary)_0%,var(--brand-primary-strong)_100%)] px-7 py-4 text-[1.02rem] font-semibold text-white shadow-[0_16px_35px_rgba(138,43,226,0.28)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="rounded-2xl bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-7 py-4 text-[1.02rem] font-semibold text-accent-foreground shadow-glow transition-transform duration-200 hover:-translate-y-0.5"
                   >
                     Join as Creator
                   </a>
                   <a
                     href="#"
-                    className="rounded-2xl border border-[#d6baf5] bg-white/55 px-7 py-4 text-[1.02rem] font-semibold text-[var(--brand-primary-strong)] shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-white/75"
+                    className={`rounded-2xl px-7 py-4 text-[1.02rem] font-semibold shadow-[0_10px_30px_rgba(138,43,226,0.08)] backdrop-blur-sm transition-transform duration-200 hover:-translate-y-0.5 ${
+                      isDark
+                        ? "border border-white/10 bg-white/5 text-white hover:bg-white/[0.08]"
+                        : "border border-border bg-surface text-accent hover:bg-surface-muted"
+                    }`}
                   >
                     Join as Brand
                   </a>
@@ -1621,17 +1725,17 @@ export default function Home() {
           id="resources"
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-64 pb-0"
         >
-          <div className="relative w-full overflow-hidden rounded-none border-t border-[#e7e2f0] bg-[linear-gradient(180deg,rgba(252,247,240,0.96)_0%,rgba(250,243,235,0.96)_24%,rgba(248,240,250,0.96)_58%,rgba(247,239,232,0.96)_100%)] px-8 py-10 shadow-[0_-10px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-12 lg:px-24 xl:px-28">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.55),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(193,171,255,0.18),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(255,220,170,0.12),transparent_26%)]" />
+          <div className="relative w-full overflow-hidden rounded-none border-t border-border bg-surface px-8 py-10 shadow-[0_-10px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-12 lg:px-24 xl:px-28">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.16),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(240,180,75,0.08),transparent_26%)]" />
             <div className="relative z-10 grid gap-10 text-left lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
-              <div className="flex flex-col items-start border-b border-[#ece7f4] pb-8 text-left lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
+              <div className="flex flex-col items-start border-b border-border pb-8 text-left lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
                 <BrandLogo />
-                <p className="mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-[#656278]">
+                <p className="mt-5 max-w-[290px] text-[1rem] leading-[1.55] text-muted-foreground">
                   The all-in-one platform for creator-brand collaborations.
                   Connect, collaborate and grow together.
                 </p>
 
-                <div className="mt-8 flex items-center justify-start gap-5 text-[#19182e]">
+                <div className="mt-8 flex items-center justify-start gap-5 text-foreground">
                   {[
                     "instagram",
                     "tiktok",
@@ -1670,13 +1774,13 @@ export default function Home() {
                 />
               </div>
 
-              <div className="flex flex-col items-start justify-between gap-8 border-t border-[#ece7f4] pt-8 text-left lg:border-t-0 lg:pt-0">
-                <p className="w-max max-w-none text-[1rem] leading-[1.5] text-[#5f5d6f]">
+              <div className="flex flex-col items-start justify-between gap-8 border-t border-border pt-8 text-left lg:border-t-0 lg:pt-0">
+                <p className="w-max max-w-none text-[1rem] leading-[1.5] text-muted-foreground">
                   © 2024 Buzzroster, Inc.
                   <br />
                   All rights reserved.
                 </p>
-                <div className="flex flex-col items-start gap-3 text-[#19182e] opacity-80">
+                <div className="flex flex-col items-start gap-3 text-foreground opacity-80">
                   <HeartMark />
                 </div>
               </div>
@@ -1697,11 +1801,11 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="text-[1.05rem] font-semibold text-[#19182e]">{title}</h3>
-      <ul className="mt-4 space-y-2 text-[0.98rem] leading-[1.4] text-[#66637d]">
+      <h3 className="text-[1.05rem] font-semibold text-foreground">{title}</h3>
+      <ul className="mt-4 space-y-2 text-[0.98rem] leading-[1.4] text-muted-foreground">
         {items.map((item) => (
           <li key={item}>
-            <a href="#" className="transition-colors hover:text-[#6d44ec]">
+            <a href="#" className="transition-colors hover:text-accent">
               {item}
             </a>
           </li>
@@ -1712,7 +1816,7 @@ function FooterColumn({
 }
 
 function SocialIcon({ kind }: { kind: string }) {
-  const common = "h-8 w-8 text-[#19182e]";
+  const common = "h-8 w-8 text-foreground";
 
   switch (kind) {
     case "instagram":

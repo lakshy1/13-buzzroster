@@ -20,7 +20,7 @@ export default function CreatorCampaignsPage() {
         {["Active", "Submitted", "Under review", "Completed", "Paid"].map((tab, index) => (
           <div
             key={tab}
-            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-[#6d44ec] text-white" : "border border-[#e6ddfb] bg-white text-[#5f5977]"}`}
+            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-accent text-accent-foreground" : "border border-border bg-surface text-muted-foreground"}`}
           >
             {tab}
           </div>
@@ -36,13 +36,13 @@ export default function CreatorCampaignsPage() {
 
         <div className="mt-5 grid gap-4 xl:grid-cols-2">
           {activeCampaigns.map((campaign, index) => (
-            <article key={campaign.brand} className="rounded-[1.7rem] border border-[#f0ebfa] bg-[#fcfbff] p-4">
+            <article key={campaign.brand} className="rounded-[1.7rem] border border-border bg-surface p-4">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex items-center gap-3">
-                  <BrandAvatar name={campaign.brand} accent={campaign.brand === "Mamaearth" ? "#22b38b" : "#2556d9"} />
+                  <BrandAvatar name={campaign.brand} accent={campaign.brand === "Mamaearth" ? "var(--success)" : "var(--info)"} />
                   <div>
-                    <div className="text-lg font-semibold tracking-[-0.04em] text-[#1d1b32]">{campaign.brand}</div>
-                    <div className="text-sm text-[#6f6985]">{campaign.campaign}</div>
+                    <div className="text-lg font-semibold tracking-[-0.04em] text-foreground">{campaign.brand}</div>
+                    <div className="text-sm text-muted-foreground">{campaign.campaign}</div>
                   </div>
                 </div>
                 <PrimaryButton href={`/creator/campaigns/campaign-${index + 1}`}>View workspace</PrimaryButton>

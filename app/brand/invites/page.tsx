@@ -20,7 +20,7 @@ export default function BrandInvitesPage() {
         {["All", "Pending", "Accepted", "Rejected", "Expired"].map((tab, index) => (
           <div
             key={tab}
-            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-[#6d44ec] text-white" : "border border-[#e6ddfb] bg-white text-[#5f5977]"}`}
+            className={`rounded-full px-4 py-2 text-sm font-semibold ${index === 0 ? "bg-accent text-accent-foreground" : "border border-border bg-surface text-muted-foreground"}`}
           >
             {tab}
           </div>
@@ -31,18 +31,18 @@ export default function BrandInvitesPage() {
         <PanelTitle eyebrow="Invite tracker" title="Invites sent" description="Status visibility across creators, campaigns, and response deadlines." />
         <div className="mt-5 space-y-3">
           {discoverCreators.map((creator) => (
-            <div key={creator.name} className="flex flex-col gap-4 rounded-[1.35rem] border border-[#f0ebfa] bg-[#fbfaff] p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div key={creator.name} className="flex flex-col gap-4 rounded-[1.35rem] border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 <BrandAvatar name={creator.name} accent={creator.accent} />
                 <div>
-                  <div className="text-sm font-semibold text-[#1d1b32]">{creator.name}</div>
-                  <div className="text-sm text-[#6f6985]">Summer Glow Launch</div>
+                  <div className="text-sm font-semibold text-foreground">{creator.name}</div>
+                  <div className="text-sm text-muted-foreground">Summer Glow Launch</div>
                 </div>
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-[#5f5977]">
+              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                 <span>INR 28,000 offer</span>
                 <span>Deadline May 18</span>
-                <span className="rounded-full bg-[#f4efff] px-3 py-1 text-xs font-semibold text-[#7a51f4]">Pending</span>
+                <span className="rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">Pending</span>
               </div>
             </div>
           ))}

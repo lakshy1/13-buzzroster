@@ -24,9 +24,9 @@ export default function SubmissionsPage() {
           { label: "Turnaround", value: "1.8 days", note: "Average review cycle" },
         ].map((item) => (
           <Panel key={item.label} className="p-5">
-            <div className="text-sm font-medium text-[#66617c]">{item.label}</div>
-            <div className="mt-2 text-[2rem] font-semibold tracking-[-0.05em] text-[#1d1b32]">{item.value}</div>
-            <div className="mt-2 text-sm text-[#6f6985]">{item.note}</div>
+            <div className="text-sm font-medium text-muted-foreground">{item.label}</div>
+            <div className="mt-2 text-[2rem] font-semibold tracking-[-0.05em] text-foreground">{item.value}</div>
+            <div className="mt-2 text-sm text-muted-foreground">{item.note}</div>
           </Panel>
         ))}
       </div>
@@ -42,25 +42,25 @@ export default function SubmissionsPage() {
           {attentionItems.map((item) => (
             <div
               key={item.brand}
-              className="flex flex-col gap-4 rounded-[1.6rem] border border-[#f1ebfb] bg-[#fcfbff] p-4 lg:flex-row lg:items-center lg:justify-between"
+              className="flex flex-col gap-4 rounded-[1.6rem] border border-border bg-surface p-4 lg:flex-row lg:items-center lg:justify-between"
             >
               <div className="flex min-w-0 items-center gap-4">
                 <BrandAvatar
                   name={item.brand}
-                  accent={item.statusTone === "orange" ? "#f07b3b" : item.statusTone === "blue" ? "#4b7df1" : "#7a51f4"}
+                  accent={item.statusTone === "orange" ? "var(--warning)" : item.statusTone === "blue" ? "var(--info)" : "var(--accent)"}
                 />
                 <div className="min-w-0">
-                  <div className="text-lg font-semibold tracking-[-0.04em] text-[#1d1b32]">{item.brand}</div>
-                  <div className="truncate text-sm text-[#6f6985]">{item.campaign}</div>
+                  <div className="text-lg font-semibold tracking-[-0.04em] text-foreground">{item.brand}</div>
+                  <div className="truncate text-sm text-muted-foreground">{item.campaign}</div>
                 </div>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
                 <StatusPill tone={item.statusTone}>{item.status}</StatusPill>
-                <span className="text-sm text-[#6f6985]">{item.deadline}</span>
+                <span className="text-sm text-muted-foreground">{item.deadline}</span>
                 <button
                   type="button"
-                  className="rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)]"
+                  className="rounded-[1rem] bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-4 py-2.5 text-sm font-semibold text-accent-foreground shadow-glow"
                 >
                   {item.action}
                 </button>
@@ -80,13 +80,13 @@ export default function SubmissionsPage() {
 
           <div className="mt-5 space-y-3">
             {[
-              { brand: "Mamaearth", note: "Please tighten the opening hook in the first 3 seconds.", tone: "bg-[#fff0e4] text-[#f07b3b]" },
-              { brand: "Plum Goodness", note: "Can you add one close-up product shot before the final CTA?", tone: "bg-[#f4efff] text-[#7a51f4]" },
-              { brand: "Dot & Key", note: "Approved overall. Only the caption needs one line updated.", tone: "bg-[#eef8f3] text-[#2ea661]" },
+              { brand: "Mamaearth", note: "Please tighten the opening hook in the first 3 seconds.", tone: "bg-warning/10 text-warning" },
+              { brand: "Plum Goodness", note: "Can you add one close-up product shot before the final CTA?", tone: "bg-accent-soft text-accent" },
+              { brand: "Dot & Key", note: "Approved overall. Only the caption needs one line updated.", tone: "bg-success/10 text-success" },
             ].map((item) => (
-              <div key={item.note} className="rounded-[1.3rem] border border-[#f0ebfa] p-4">
+              <div key={item.note} className="rounded-[1.3rem] border border-border p-4">
                 <div className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${item.tone}`}>{item.brand}</div>
-                <div className="mt-3 text-sm leading-6 text-[#4f4a67]">{item.note}</div>
+                <div className="mt-3 text-sm leading-6 text-muted-foreground">{item.note}</div>
               </div>
             ))}
           </div>
@@ -106,7 +106,7 @@ export default function SubmissionsPage() {
               "Confirm whether the review is for structure, visual edits, or compliance.",
               "Ask for consolidated comments before starting another pass.",
             ].map((item) => (
-              <div key={item} className="rounded-[1.2rem] bg-[#fbfaff] px-4 py-3 text-sm leading-6 text-[#4f4a67]">
+              <div key={item} className="rounded-[1.2rem] bg-surface px-4 py-3 text-sm leading-6 text-foreground">
                 {item}
               </div>
             ))}

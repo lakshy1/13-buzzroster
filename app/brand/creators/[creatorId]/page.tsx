@@ -35,7 +35,7 @@ export default async function BrandCreatorProfilePage({
           <PanelTitle eyebrow="Brand actions" title="Decision shortcuts" description="Quick next steps if this creator fits your campaign." />
           <div className="mt-5 space-y-3">
             {["Send invite", "Save creator", "Compare rates", "Open message thread"].map((item) => (
-              <button key={item} type="button" className="w-full rounded-[1rem] border border-[#dfd2fb] px-4 py-3 text-left text-sm font-semibold text-[#6d44ec]">
+              <button key={item} type="button" className="w-full rounded-[1rem] border border-border px-4 py-3 text-left text-sm font-semibold text-accent">
                 {item}
               </button>
             ))}

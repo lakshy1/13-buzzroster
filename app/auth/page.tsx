@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { BrandLogo } from "../components/BrandLogo";
+import { ThemeToggle } from "../components/theme-toggle";
 
 type Role = "creator" | "brand";
 type Mode = "login" | "register";
@@ -18,11 +19,11 @@ type FieldConfig = {
 const roleCopy = {
   creator: {
     title: {
-      login: "Welcome back, creator",
+      login: "Welcome back 👋🏻",
       register: "Create your creator account",
     },
     description: {
-      login: "Manage invites, campaigns, approvals, and payments from one calm workspace.",
+      login: "Buzz louder. Get hired.",
       register: "Set up your profile, showcase your niche, and start receiving brand opportunities.",
     },
     submit: {
@@ -52,11 +53,11 @@ const roleCopy = {
   },
   brand: {
     title: {
-      login: "Welcome back, brand",
+      login: "Welcome back 👋🏻",
       register: "Build your brand workspace",
     },
     description: {
-      login: "Review creators, track campaigns, and keep collaboration moving without messy threads.",
+      login: "Find creators from a roster.",
       register: "Launch a clean outreach and review flow for your next creator campaign.",
     },
     submit: {
@@ -91,17 +92,6 @@ const providerLabels: Record<Provider, string> = {
   apple: "Apple",
   linkedin: "LinkedIn",
 };
-
-function SparkIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className={className}>
-      <path
-        d="M12 2.5L13.76 8.24L19.5 10L13.76 11.76L12 17.5L10.24 11.76L4.5 10L10.24 8.24L12 2.5Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
 
 function GoogleIcon() {
   return (
@@ -168,7 +158,7 @@ function RoleToggle({
   onChange: (role: Role) => void;
 }) {
   return (
-    <div className="grid grid-cols-2 rounded-[1.2rem] border border-[#e5dcfb] bg-white/70 p-1 shadow-[0_10px_24px_rgba(125,96,207,0.06)]">
+    <div className="grid grid-cols-2 rounded-[1.2rem] border border-border bg-surface p-1 shadow-[0_10px_24px_rgba(125,96,207,0.06)]">
       {(["creator", "brand"] as Role[]).map((item) => {
         const active = item === role;
 
@@ -179,8 +169,8 @@ function RoleToggle({
             onClick={() => onChange(item)}
             className={`rounded-[1rem] px-4 py-3 text-sm font-semibold capitalize transition-all duration-200 ${
               active
-                ? "bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] text-white shadow-[0_14px_30px_rgba(91,61,215,0.24)]"
-                : "text-[#625f77] hover:text-[#2f2d45]"
+                ? "bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] text-accent-foreground shadow-[0_14px_30px_rgba(91,61,215,0.24)]"
+                : "text-muted-foreground hover:text-foreground"
             }`}
           >
             {item}
@@ -198,7 +188,7 @@ function SocialButton({ provider }: { provider: Provider }) {
   return (
     <button
       type="button"
-      className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e5dcfb] bg-white text-[#2f2d45] shadow-[0_10px_24px_rgba(125,96,207,0.05)] transition-transform duration-200 hover:-translate-y-0.5 hover:border-[#d2c4fb]"
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-foreground shadow-[0_10px_24px_rgba(125,96,207,0.05)] transition-transform duration-200 hover:-translate-y-0.5 hover:border-accent/30"
       aria-label={`Continue with ${providerLabels[provider]}`}
     >
       <span
@@ -219,12 +209,12 @@ function SocialButton({ provider }: { provider: Provider }) {
 function AuthInput({ field }: { field: FieldConfig }) {
   return (
     <label className="block space-y-2">
-      <span className="text-[0.92rem] font-medium text-[#4d4963]">{field.label}</span>
+      <span className="text-[0.92rem] font-medium text-muted-foreground">{field.label}</span>
       <input
         name={field.name}
         type={field.type ?? "text"}
         autoComplete={field.autoComplete}
-        className="h-11 w-full rounded-2xl border border-[#e7e0f8] bg-white/92 px-4 text-sm text-[#1f1d31] shadow-[0_8px_24px_rgba(125,96,207,0.04)] outline-none transition-[border-color,box-shadow,transform] duration-200 placeholder:text-[#9a96b2] focus:border-[#b8a1ff] focus:ring-4 focus:ring-[#6d44ec]/10"
+        className="h-11 w-full rounded-2xl border border-border bg-surface px-4 text-sm text-foreground shadow-[0_8px_24px_rgba(125,96,207,0.04)] outline-none transition-[border-color,box-shadow,transform] duration-200 placeholder:text-muted-foreground focus:border-accent/40 focus:ring-4 focus:ring-[rgba(139,92,246,0.12)]"
       />
     </label>
   );
@@ -247,22 +237,19 @@ function AuthPanel({
   return (
     <div className="flex flex-col">
       <div className="space-y-5">
-        <div className="space-y-4 text-center">
-          <BrandLogo />
-          <div className="mx-auto h-px w-full max-w-[34rem] bg-[#ece6fa]" />
+      <div className="space-y-4 text-center">
+          <div className="flex items-center justify-between gap-4">
+            <BrandLogo />
+            <ThemeToggle compact />
+          </div>
+          <div className="mx-auto h-px w-full max-w-[34rem] bg-border" />
           <div>
-            <h1 className="font-[family-name:var(--font-serif)] text-[clamp(2rem,3vw,3.1rem)] font-medium leading-[0.95] tracking-[-0.05em] text-[#17162b]">
-              {mode === "login" ? (
-                <>
-                  <span>{copy.title[mode]}</span>
-                  <span className="wave-hand ml-3 inline-block align-[0.08em] text-[0.86em]">👋</span>
-                </>
-              ) : (
-                copy.title[mode]
-              )}
+            <h1 className="font-[family-name:var(--font-serif)] text-[clamp(2rem,3vw,3.1rem)] font-medium leading-[0.95] tracking-[-0.05em] text-foreground">
+              <span>{copy.title[mode].replace(" 👋🏻", "")}</span>
+              <span className="wave-hand ml-3 inline-block align-[0.08em] text-[0.86em]">👋</span>
             </h1>
             {mode !== "login" ? (
-              <p className="mx-auto mt-4 max-w-xl text-[0.98rem] leading-[1.6] text-[#625f77]">
+              <p className="mx-auto mt-4 max-w-xl text-[0.98rem] leading-[1.6] text-muted-foreground">
                 {copy.description[mode]}
               </p>
             ) : null}
@@ -270,7 +257,7 @@ function AuthPanel({
         </div>
 
         <div>
-          <div className="text-center text-[0.96rem] font-semibold text-[#3f3b58]">Continue with</div>
+          <div className="text-center text-[0.96rem] font-semibold text-foreground">Continue with</div>
           <div className="mt-3 flex items-center justify-center gap-3.5">
             {(["google", "apple", "linkedin"] as Provider[]).map((provider) => (
               <SocialButton key={provider} provider={provider} />
@@ -280,10 +267,10 @@ function AuthPanel({
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-[#ebe5f8]" />
+            <div className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center">
-            <span className="bg-white px-3 text-xs font-medium uppercase tracking-[0.24em] text-[#9893ac]">
+            <span className="bg-background px-3 text-xs font-medium uppercase tracking-[0.24em] text-muted-foreground">
               Continue with email
             </span>
           </div>
@@ -302,7 +289,7 @@ function AuthPanel({
 
           {mode === "login" ? (
             <div className="flex justify-end">
-              <button type="button" className="text-[0.92rem] font-medium text-[#6d44ec] transition-colors hover:text-[#5129cf]">
+              <button type="button" className="text-[0.92rem] font-medium text-accent transition-colors hover:text-accent-strong">
                 Forgot password?
               </button>
             </div>
@@ -310,20 +297,20 @@ function AuthPanel({
 
           <button
             type="submit"
-            className="flex min-h-11 w-full items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_58%,#f0b44b_140%)] px-4 text-sm font-semibold text-white shadow-[0_18px_36px_rgba(91,61,215,0.28)] transition duration-200 hover:-translate-y-0.5 hover:brightness-105"
+            className="flex min-h-11 w-full items-center justify-center rounded-2xl bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_58%,#f0b44b_140%)] px-4 text-sm font-semibold text-accent-foreground shadow-glow transition duration-200 hover:-translate-y-0.5 hover:brightness-105"
           >
             {copy.submit[mode]}
           </button>
         </form>
       </div>
 
-      <div className="mt-4 border-t border-[#ece6fa] pt-4 text-sm text-[#706c86]">
+      <div className="mt-4 border-t border-border pt-4 text-sm text-muted-foreground">
         <div className="flex flex-wrap items-center gap-2">
           <span>{copy.switchPrompt[mode]}</span>
           <button
             type="button"
             onClick={() => onModeChange(mode === "login" ? "register" : "login")}
-            className="font-semibold text-[#17162b] transition-colors hover:text-[#6d44ec]"
+            className="font-semibold text-foreground transition-colors hover:text-accent"
           >
             {copy.switchAction[mode]}
           </button>
@@ -341,16 +328,16 @@ function SlidingOverlay({
   onRoleChange: (role: Role) => void;
 }) {
   const brandActive = role === "brand";
-  const heading = brandActive ? "Building your creator roster?" : "Ready to create and grow?";
+  const heading = brandActive ? "Welcome back 👋🏻" : "Welcome back 👋🏻";
   const body = brandActive
-    ? "Switch to the creator portal to manage your profile, approvals, and paid collaborations."
-    : "Switch to the brand portal to discover creators, send invites, and track submissions in one place.";
+    ? "Find creators from a roster."
+    : "Buzz louder. Get hired.";
   const actionLabel = brandActive ? "Continue as Creator" : "Continue as Brand";
   const nextRole: Role = brandActive ? "creator" : "brand";
 
   return (
     <div
-      className={`absolute inset-y-0 hidden w-1/2 overflow-hidden rounded-[2rem] bg-[linear-gradient(155deg,#6d44ec_0%,#5b3dd7_42%,#2a2456_100%)] text-white shadow-[0_30px_80px_rgba(91,61,215,0.26)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] xl:block ${
+      className={`absolute inset-y-0 hidden w-1/2 overflow-hidden rounded-[2rem] bg-[linear-gradient(155deg,var(--accent)_0%,var(--accent-strong)_42%,#2a2456_100%)] text-accent-foreground shadow-[0_30px_80px_rgba(91,61,215,0.26)] transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] xl:block ${
         brandActive ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -375,7 +362,7 @@ function SlidingOverlay({
 
         <Link
           href="/"
-          className="inline-flex min-h-11 w-fit items-center justify-center rounded-2xl border border-white/18 bg-white/8 px-4 text-sm font-medium text-white/88 shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition duration-200 hover:-translate-y-0.5 hover:bg-white/14"
+          className="inline-flex min-h-11 w-fit items-center justify-center rounded-2xl border border-border bg-surface px-4 text-sm font-medium text-foreground shadow-[0_10px_24px_rgba(15,23,42,0.12)] transition duration-200 hover:-translate-y-0.5 hover:bg-surface-muted"
         >
           Back to site
         </Link>
@@ -390,15 +377,15 @@ export default function AuthPage() {
   const [brandMode, setBrandMode] = useState<Mode>("login");
 
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[linear-gradient(180deg,#fcf7f0_0%,#faf3eb_24%,#f8f0fa_58%,#f7efe8_100%)] px-4 py-6 text-[#17162b] sm:px-6 xl:px-8 xl:py-5">
+    <main className="relative min-h-screen overflow-x-hidden bg-background px-4 py-6 text-foreground sm:px-6 xl:px-8 xl:py-5">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute left-[-8rem] top-[-6rem] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(109,68,236,0.2),transparent_68%)] blur-3xl" />
-        <div className="absolute right-[-10rem] top-[16%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(240,180,75,0.16),transparent_68%)] blur-3xl" />
-        <div className="absolute bottom-[-6rem] left-1/2 h-72 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(184,161,255,0.22),transparent_70%)] blur-3xl" />
+        <div className="absolute left-[-8rem] top-[-6rem] h-72 w-72 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.16),transparent_68%)] blur-3xl" />
+        <div className="absolute right-[-10rem] top-[16%] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(240,180,75,0.10),transparent_68%)] blur-3xl" />
+        <div className="absolute bottom-[-6rem] left-1/2 h-72 w-[36rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(139,92,246,0.14),transparent_70%)] blur-3xl" />
       </div>
 
       <div className="relative mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-7xl items-center justify-center xl:max-w-[min(1180px,calc(100vw-4rem))]">
-        <section className="relative w-full overflow-hidden rounded-[2rem] border border-white/60 bg-white/88 shadow-[0_40px_100px_rgba(15,23,42,0.12)] backdrop-blur-xl">
+        <section className="glass-panel relative w-full overflow-hidden rounded-[2rem]">
           <div className="grid grid-cols-1 xl:min-h-[640px] xl:grid-cols-2">
             <div className="px-5 pt-6 sm:px-8 xl:hidden">
               <RoleToggle role={role} onChange={setRole} />

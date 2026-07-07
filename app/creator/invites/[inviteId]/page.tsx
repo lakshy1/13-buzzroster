@@ -29,26 +29,26 @@ export default async function CreatorInviteDetailsPage({
             description="A detailed creator-facing breakdown of the collaboration scope."
           />
 
-          <div className="mt-5 space-y-4 text-sm leading-7 text-[#5f5977]">
-            <div className="rounded-[1.35rem] bg-[#fbfaff] p-4">
+          <div className="mt-5 space-y-4 text-sm leading-7 text-muted-foreground">
+            <div className="rounded-[1.35rem] bg-surface p-4">
               Create a short-form campaign showcasing a summer skincare routine with a strong product-first hook and a clean, educational tone.
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-[1.35rem] border border-[#f0ebfa] p-4">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-[#8f88a8]">Deliverables</div>
-                <div className="mt-2 font-semibold text-[#1d1b32]">1 Instagram reel, 3 story frames</div>
+              <div className="rounded-[1.35rem] border border-border p-4">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Deliverables</div>
+                <div className="mt-2 font-semibold text-foreground">1 Instagram reel, 3 story frames</div>
               </div>
-              <div className="rounded-[1.35rem] border border-[#f0ebfa] p-4">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-[#8f88a8]">Budget</div>
-                <div className="mt-2 font-semibold text-[#1d1b32]">INR 35,000 fixed</div>
+              <div className="rounded-[1.35rem] border border-border p-4">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Budget</div>
+                <div className="mt-2 font-semibold text-foreground">INR 35,000 fixed</div>
               </div>
-              <div className="rounded-[1.35rem] border border-[#f0ebfa] p-4">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-[#8f88a8]">Deadline</div>
-                <div className="mt-2 font-semibold text-[#1d1b32]">Draft by May 16, publish by May 20</div>
+              <div className="rounded-[1.35rem] border border-border p-4">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Deadline</div>
+                <div className="mt-2 font-semibold text-foreground">Draft by May 16, publish by May 20</div>
               </div>
-              <div className="rounded-[1.35rem] border border-[#f0ebfa] p-4">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-[#8f88a8]">Usage rights</div>
-                <div className="mt-2 font-semibold text-[#1d1b32]">Organic repost for 30 days</div>
+              <div className="rounded-[1.35rem] border border-border p-4">
+                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">Usage rights</div>
+                <div className="mt-2 font-semibold text-foreground">Organic repost for 30 days</div>
               </div>
             </div>
           </div>
@@ -59,11 +59,11 @@ export default async function CreatorInviteDetailsPage({
           <div className="mt-5 space-y-3">
             <button
               type="button"
-              className="w-full rounded-[1rem] bg-[linear-gradient(135deg,#6d44ec_0%,#5b3dd7_100%)] px-4 py-3 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(91,61,215,0.18)]"
-            >
-              Accept invite
-            </button>
-            <button type="button" className="w-full rounded-[1rem] border border-[#dfd2fb] px-4 py-3 text-sm font-semibold text-[#6d44ec]">
+            className="w-full rounded-[1rem] bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] px-4 py-3 text-sm font-semibold text-accent-foreground shadow-glow"
+          >
+            Accept invite
+          </button>
+            <button type="button" className="w-full rounded-[1rem] border border-border px-4 py-3 text-sm font-semibold text-accent">
               Decline invite
             </button>
           </div>

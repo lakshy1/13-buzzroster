@@ -117,12 +117,12 @@ export default function CreatorDashboardPage() {
             <Link
               key={destination.title}
               href={destination.href}
-              className="rounded-[1.65rem] border border-[#f0ebfa] bg-[linear-gradient(180deg,#ffffff_0%,#fbf9ff_100%)] p-5 shadow-[0_14px_32px_rgba(114,84,242,0.06)] transition-transform duration-200 hover:-translate-y-1"
+              className="rounded-[1.65rem] border border-border bg-surface p-5 shadow-[0_14px_32px_rgba(114,84,242,0.06)] transition-transform duration-200 hover:-translate-y-1"
             >
-              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-[#7a51f4]">Open page</div>
-              <div className="mt-3 text-[1.35rem] font-semibold tracking-[-0.05em] text-[#1d1b32]">{destination.title}</div>
-              <p className="mt-3 text-sm leading-6 text-[#6f6985]">{destination.description}</p>
-              <div className="mt-5 text-sm font-semibold text-[#6d44ec]">Go to page</div>
+              <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">Open page</div>
+              <div className="mt-3 text-[1.35rem] font-semibold tracking-[-0.05em] text-foreground">{destination.title}</div>
+              <p className="mt-3 text-sm leading-6 text-muted-foreground">{destination.description}</p>
+              <div className="mt-5 text-sm font-semibold text-accent">Go to page</div>
             </Link>
           ))}
         </div>
@@ -134,12 +134,12 @@ export default function CreatorDashboardPage() {
 
           <div className="mt-5 space-y-3">
             {calendarItems.map((item) => (
-              <div key={item.label} className="flex items-center justify-between gap-4 rounded-[1.2rem] bg-[#fbfaff] px-4 py-3">
+              <div key={item.label} className="flex items-center justify-between gap-4 rounded-[1.2rem] bg-surface px-4 py-3">
                 <div className="flex items-center gap-3">
                   <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: item.dot }} />
-                  <span className="text-sm font-medium text-[#4f4a67]">{item.label}</span>
+                  <span className="text-sm font-medium text-foreground">{item.label}</span>
                 </div>
-                <span className="text-sm font-semibold text-[#221f38]">{item.date}</span>
+                <span className="text-sm font-semibold text-foreground">{item.date}</span>
               </div>
             ))}
           </div>
@@ -152,9 +152,9 @@ export default function CreatorDashboardPage() {
             description="Improve your creator profile to unlock better discovery and stronger collaboration quality."
           />
 
-          <div className="mt-5 rounded-[1.6rem] border border-[#efe4fb] bg-[linear-gradient(135deg,rgba(243,237,255,0.94),rgba(255,246,239,0.98))] p-5">
-            <div className="text-lg font-semibold tracking-[-0.04em] text-[#1d1b32]">Add your social links and featured results</div>
-            <p className="mt-2 text-sm leading-6 text-[#66617c]">
+          <div className="mt-5 rounded-[1.6rem] border border-border bg-surface p-5">
+            <div className="text-lg font-semibold tracking-[-0.04em] text-foreground">Add your social links and featured results</div>
+            <p className="mt-2 text-sm leading-6 text-muted-foreground">
               This improves audience proof, campaign fit, and your overall worth estimate.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
