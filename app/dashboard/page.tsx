@@ -1,5 +1,1 @@
-import { redirect } from "next/navigation";
-
-export default function LegacyDashboardPage() {
-  redirect("/creator/dashboard");
-}
+export { default } from "./DashboardOverview";

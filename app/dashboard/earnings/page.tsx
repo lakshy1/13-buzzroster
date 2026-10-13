@@ -1,21 +1,9 @@
 import { payments } from "../dashboard-data";
-import { DashboardHeader, Panel, PanelTitle, PrimaryButton, SecondaryButton } from "../dashboard-ui";
+import { Panel, PanelTitle } from "../dashboard-ui";
 
 export default function EarningsPage() {
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        eyebrow="Earnings"
-        title="Understand payouts, pending cash flow, and revenue rhythm."
-        description="Your earnings page keeps money visibility simple so you can see what is paid, what is queued, and what is still outstanding."
-        action={
-          <>
-            <SecondaryButton href="/creator/messages">Follow up with brands</SecondaryButton>
-            <PrimaryButton href="/creator/settings">Manage payout settings</PrimaryButton>
-          </>
-        }
-      />
-
       <div className="grid gap-4 md:grid-cols-4">
         {[
           { label: "Total earned", value: "INR 1,42,500", note: "Across current cycle" },

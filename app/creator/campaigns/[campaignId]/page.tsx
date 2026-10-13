@@ -1,4 +1,4 @@
-import { DashboardHeader, Panel, PanelTitle, PrimaryButton, SecondaryButton } from "../../creator-ui";
+import { Panel, PanelTitle } from "../../creator-ui";
 
 export default async function CreatorCampaignWorkspacePage({
   params,
@@ -9,21 +9,9 @@ export default async function CreatorCampaignWorkspacePage({
 
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        eyebrow="Campaign workspace"
-        title="Collaborate, submit, and track feedback."
-        description={`Campaign reference: ${campaignId}. This page works as the creator delivery workspace for one live collaboration.`}
-        action={
-          <>
-            <SecondaryButton href="/creator/campaigns">Back to campaigns</SecondaryButton>
-            <PrimaryButton href="/creator/messages">Open chat</PrimaryButton>
-          </>
-        }
-      />
-
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.3fr)_minmax(320px,0.85fr)]">
         <Panel>
-          <PanelTitle eyebrow="Brief" title="Monsoon Skincare Picks" description="Everything needed to execute the collaboration cleanly." />
+          <PanelTitle eyebrow="Brief" title={`Campaign ${campaignId}`} />
           <div className="mt-5 grid gap-4">
             {[
               "Campaign brief and positioning",
@@ -40,7 +28,7 @@ export default async function CreatorCampaignWorkspacePage({
         </Panel>
 
         <Panel>
-          <PanelTitle eyebrow="Actions" title="Progress and payments" description="Quick visibility into the operational state of the campaign." />
+          <PanelTitle eyebrow="Actions" title="Progress and payments" />
           <div className="mt-5 space-y-3">
             {[
               { label: "Stage", value: "Review in progress" },

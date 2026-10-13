@@ -1,27 +1,11 @@
 import { creatorShowcase } from "../creator-data";
-import { DashboardHeader, Panel, PanelTitle, PrimaryButton, SecondaryButton } from "../creator-ui";
+import { Panel, PanelTitle } from "../creator-ui";
 
 export default function CreatorPortfolioPage() {
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        eyebrow="Creator portfolio"
-        title="Show your best work like a premium media kit."
-        description="This page helps creators present content samples, campaign case studies, testimonials, and proof that improves invite conversion."
-        action={
-          <>
-            <SecondaryButton href="/creator/profile">View profile</SecondaryButton>
-            <PrimaryButton href="/creator/invites">See opportunities</PrimaryButton>
-          </>
-        }
-      />
-
       <Panel>
-        <PanelTitle
-          eyebrow="Featured work"
-          title="Content and case studies"
-          description="Use this space to surface your strongest work across platforms and collaboration types."
-        />
+        <PanelTitle eyebrow="Featured work" title="Content and case studies" />
 
         <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {creatorShowcase.map((item) => (

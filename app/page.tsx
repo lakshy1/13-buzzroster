@@ -77,13 +77,13 @@ const howItWorksSteps = [
   {
     number: "6",
     title: "Get approved",
-    description: "Content approved? You’re good to go!",
+    description: "Content approved? You're good to go!",
     color: "#5d7cf2",
     icon: "gear",
   },
   {
     number: "7",
-    title: "Pay paid & grow",
+    title: "Get paid & grow",
     description: "Track earnings and build long-term collabs.",
     color: "#7358f5",
     icon: "dollar",
@@ -817,9 +817,9 @@ export default function Home() {
   return (
     <main className="theme-shell relative min-h-screen overflow-hidden">
       <div
-        className={`absolute inset-0 opacity-90 ${isDark ? "[background:radial-gradient(circle_at_14%_18%,rgba(139,92,246,0.26),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(168,85,247,0.16),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(139,92,246,0.12),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(124,58,237,0.12),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(168,85,247,0.12),transparent_24%)]" : "[background:radial-gradient(circle_at_14%_18%,rgba(180,154,255,0.42),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(245,219,187,0.75),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(209,191,255,0.38),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(255,220,170,0.45),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(193,171,255,0.3),transparent_24%)]"}`}
+        className={`absolute inset-0 ${isDark ? "bg-transparent" : "[background:radial-gradient(circle_at_14%_18%,rgba(180,154,255,0.42),transparent_18%),radial-gradient(circle_at_78%_18%,rgba(245,219,187,0.75),transparent_20%),radial-gradient(circle_at_52%_56%,rgba(209,191,255,0.38),transparent_26%),radial-gradient(circle_at_18%_82%,rgba(255,220,170,0.45),transparent_22%),radial-gradient(circle_at_84%_82%,rgba(193,171,255,0.3),transparent_24%)]"}`}
       />
-      <div className={`absolute inset-0 ${isDark ? "bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.04)_100%)]" : "bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.22)_100%)]"}`} />
+      <div className={`absolute inset-0 ${isDark ? "bg-transparent" : "bg-[radial-gradient(circle_at_center,transparent_42%,rgba(255,255,255,0.22)_100%)]"}`} />
 
       <div className="relative mx-auto flex min-h-screen w-full flex-col px-4 pb-0 pt-5 sm:px-6 md:px-8">
         <header className="glass-panel fixed left-1/2 top-4 z-50 w-[calc(100vw-2rem)] -translate-x-1/2 rounded-[1.75rem] px-4 py-3 sm:w-[calc(100vw-3rem)] sm:px-6 md:w-[calc(100vw-4rem)] md:px-8">
@@ -1017,7 +1017,7 @@ export default function Home() {
           </p>
 
           <div className="relative mt-5 w-full flex-1 pb-2 md:mt-7">
-            <div className={`absolute left-1/2 top-0 h-28 w-[76%] -translate-x-1/2 rounded-full blur-3xl ${isDark ? "bg-[rgba(139,92,246,0.18)]" : "bg-white/35"}`} />
+            <div className={`absolute left-1/2 top-0 h-28 w-[76%] -translate-x-1/2 rounded-full blur-3xl ${isDark ? "bg-transparent" : "bg-white/35"}`} />
             <div className="relative mx-auto flex w-full items-end justify-center">
               <HeroImage />
             </div>
@@ -1307,8 +1307,8 @@ export default function Home() {
                           : plan.border,
                       background: isDark
                         ? plan.badge
-                          ? "linear-gradient(180deg, rgba(31,22,50,0.98) 0%, rgba(16,13,24,0.96) 26%, rgba(12,11,18,0.98) 100%)"
-                          : "linear-gradient(180deg, rgba(23,17,33,0.98) 0%, rgba(12,11,18,0.96) 100%)"
+                          ? "linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(8,8,8,0.96) 26%, rgba(4,4,4,0.98) 100%)"
+                          : "linear-gradient(180deg, rgba(8,8,8,0.98) 0%, rgba(4,4,4,0.96) 100%)"
                         : plan.badge
                           ? "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
                           : "rgba(255,255,255,0.70)",
@@ -1317,7 +1317,7 @@ export default function Home() {
                     {isDark ? (
                       <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.26),transparent_72%)]"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-transparent"
                       />
                     ) : null}
                     <div className="flex items-start justify-between gap-4">
@@ -1328,7 +1328,7 @@ export default function Home() {
                         <div
                           className={`rounded-full border px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] shadow-glow ${
                             isDark
-                              ? "border-white/10 bg-[rgba(139,92,246,0.14)] text-[#cdbbff]"
+                        ? "border-white/10 bg-white/[0.08] text-white"
                               : "border-border bg-accent-soft text-accent"
                           }`}
                         >
@@ -1383,14 +1383,16 @@ export default function Home() {
                         href="#"
                         className={`flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 ${
                           isDark
-                            ? "shadow-[0_18px_35px_rgba(91,61,215,0.42)]"
+                            ? "shadow-[0_18px_35px_rgba(124,58,237,0.34)]"
                             : "shadow-[0_18px_35px_rgba(109,68,236,0.28)]"
                         }`}
                         style={{
                           background:
                             plan.name === "Agency"
-                              ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
-                              : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
+                              ? "linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 58%, #d38cff 100%)"
+                              : isDark
+                                ? "linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%)"
+                                : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
                         }}
                       >
                         {plan.cta}
@@ -1441,17 +1443,17 @@ export default function Home() {
                           : plan.border,
                       background: plan.badge
                         ? isDark
-                          ? "linear-gradient(180deg, rgba(31,22,50,0.98) 0%, rgba(16,13,24,0.96) 26%, rgba(12,11,18,0.98) 100%)"
+                          ? "linear-gradient(180deg, rgba(10,10,10,0.98) 0%, rgba(8,8,8,0.96) 26%, rgba(4,4,4,0.98) 100%)"
                           : "linear-gradient(180deg, rgba(141,121,246,0.10) 0%, rgba(255,255,255,0.95) 26%, rgba(111,195,161,0.05) 100%)"
                         : isDark
-                          ? "linear-gradient(180deg, rgba(23,17,33,0.98) 0%, rgba(12,11,18,0.96) 100%)"
+                          ? "linear-gradient(180deg, rgba(8,8,8,0.98) 0%, rgba(4,4,4,0.96) 100%)"
                           : "rgba(255,255,255,0.70)",
                     }}
                   >
                     {isDark ? (
                       <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top,rgba(139,92,246,0.24),transparent_72%)]"
+                        className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-transparent"
                       />
                     ) : null}
                     <div className="flex items-start justify-between gap-4">
@@ -1462,7 +1464,7 @@ export default function Home() {
                         <div
                           className={`rounded-full border px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.22em] shadow-glow ${
                             isDark
-                              ? "border-white/10 bg-[rgba(139,92,246,0.14)] text-[#cdbbff]"
+                        ? "border-white/10 bg-white/[0.08] text-white"
                               : "border-border bg-accent-soft text-accent"
                           }`}
                         >
@@ -1517,14 +1519,16 @@ export default function Home() {
                       href="#"
                       className={`flex w-full items-center justify-center rounded-2xl px-5 py-4 text-[1.05rem] font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5 ${
                         isDark
-                          ? "shadow-[0_18px_35px_rgba(91,61,215,0.42)]"
+                          ? "shadow-[0_18px_35px_rgba(124,58,237,0.34)]"
                           : "shadow-[0_18px_35px_rgba(109,68,236,0.28)]"
                       }`}
                       style={{
                         background:
                           plan.name === "Agency"
-                            ? "linear-gradient(135deg, #7d68f4 0%, #5b3dd7 55%, #6fc3a1 100%)"
-                            : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
+                            ? "linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 58%, #d38cff 100%)"
+                            : isDark
+                              ? "linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%)"
+                              : `linear-gradient(135deg, ${plan.accent} 0%, #5b3dd7 100%)`,
                       }}
                     >
                       {plan.cta}
@@ -1726,7 +1730,7 @@ export default function Home() {
           className="relative left-1/2 w-screen -translate-x-1/2 scroll-mt-64 pb-0"
         >
           <div className="relative w-full overflow-hidden rounded-none border-t border-border bg-surface px-8 py-10 shadow-[0_-10px_40px_rgba(125,96,207,0.06)] backdrop-blur-sm sm:px-12 sm:py-12 lg:px-24 xl:px-28">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.12),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(139,92,246,0.16),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(240,180,75,0.08),transparent_26%)]" />
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.03),transparent_28%),radial-gradient(circle_at_80%_0%,rgba(255,255,255,0.02),transparent_20%),radial-gradient(circle_at_50%_100%,rgba(255,255,255,0.015),transparent_26%)]" />
             <div className="relative z-10 grid gap-10 text-left lg:grid-cols-[0.95fr_minmax(0,1.55fr)_0.75fr] lg:items-start lg:gap-8">
               <div className="flex flex-col items-start border-b border-border pb-8 text-left lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
                 <BrandLogo />

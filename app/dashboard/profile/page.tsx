@@ -1,21 +1,9 @@
 import { audienceBreakdown, collaborationWins, creatorPlatforms, creatorShowcase, profileChecklist } from "../dashboard-data";
-import { DashboardHeader, Panel, PanelTitle, PrimaryButton, ProfileRing, SecondaryButton } from "../dashboard-ui";
+import { Panel, PanelTitle, ProfileRing } from "../dashboard-ui";
 
 export default function ProfilePage() {
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        eyebrow="Creator profile"
-        title="A complete social-style profile for brands to trust fast."
-        description="This page behaves like your creator identity hub: audience proof, social accounts, showcase content, collaboration results, and the signals brands care about before they invite you."
-        action={
-          <>
-            <SecondaryButton href="/creator/settings">Edit settings</SecondaryButton>
-            <PrimaryButton href="/creator/invites">See invites</PrimaryButton>
-          </>
-        }
-      />
-
       <Panel className="overflow-hidden p-0">
         <div className="h-44 bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_38%,#ffd7b8_100%)]" />
         <div className="relative px-5 pb-6 pt-0 sm:px-6">
@@ -54,20 +42,6 @@ export default function ProfilePage() {
                 Edit media kit
               </button>
             </div>
-          </div>
-
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {[
-              { label: "Followers", value: "573.4K" },
-              { label: "Average views", value: "127.1K" },
-              { label: "Engagement rate", value: "5.4%" },
-              { label: "Campaign completion", value: "96%" },
-            ].map((item) => (
-              <div key={item.label} className="rounded-[1.35rem] bg-surface p-4">
-                <div className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">{item.label}</div>
-                <div className="mt-2 text-[1.9rem] font-semibold tracking-[-0.05em] text-foreground">{item.value}</div>
-              </div>
-            ))}
           </div>
         </div>
       </Panel>

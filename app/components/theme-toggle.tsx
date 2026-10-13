@@ -50,12 +50,12 @@ export function ThemeToggle({ compact = false }: { compact?: boolean }) {
         aria-label="Toggle dark mode"
         aria-pressed={isDark}
         onClick={handleToggle}
-        className={`relative inline-flex shrink-0 items-center overflow-hidden rounded-full border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] shadow-[0_10px_24px_rgba(91,61,215,0.08)] backdrop-blur-xl transition-colors duration-200 hover:border-[var(--accent)]/30 focus:outline-none focus:ring-4 focus:ring-[var(--accent)]/15 ${
+        className={`relative inline-flex shrink-0 items-center overflow-hidden rounded-full border border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--text-primary)] shadow-[0_10px_24px_rgba(var(--accent-rgb),0.12)] backdrop-blur-xl transition-colors duration-200 hover:border-[var(--accent)]/30 focus:outline-none focus:ring-4 focus:ring-[var(--accent)]/15 ${
           compact ? "h-10 w-[4.25rem] p-1" : "h-11 w-[4.75rem] p-1.25"
         }`}
       >
         <motion.span
-          className="absolute top-1/2 grid h-[1.8rem] w-[1.8rem] -translate-y-1/2 place-items-center rounded-full bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] text-white shadow-[0_10px_20px_rgba(91,61,215,0.35)]"
+          className="absolute top-1/2 grid h-[1.8rem] w-[1.8rem] -translate-y-1/2 place-items-center rounded-full bg-[linear-gradient(135deg,var(--accent)_0%,var(--accent-strong)_100%)] text-white shadow-[0_10px_20px_rgba(var(--accent-rgb),0.35)]"
           animate={{ x: isDark ? (compact ? 28 : 33) : 0, scale: pulse ? 1.08 : 1 }}
           transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 500, damping: 30 }}
         >
@@ -92,7 +92,7 @@ export function ThemeToggle({ compact = false }: { compact?: boolean }) {
         {pulse ? (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none fixed inset-0 z-[60] bg-[radial-gradient(circle_at_center,rgba(139,92,246,0.16)_0%,rgba(10,10,15,0.04)_30%,transparent_70%)]"
+            className="pointer-events-none fixed inset-0 z-[60] bg-[radial-gradient(circle_at_center,rgba(var(--accent-rgb),0.18)_0%,rgba(10,10,15,0.04)_30%,transparent_70%)]"
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: [0, 0.16, 0], scale: [0.96, 1.02, 1.05] }}
             exit={{ opacity: 0 }}

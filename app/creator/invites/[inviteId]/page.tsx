@@ -1,4 +1,4 @@
-import { DashboardHeader, Panel, PanelTitle, PrimaryButton, SecondaryButton } from "../../creator-ui";
+import { Panel, PanelTitle } from "../../creator-ui";
 
 export default async function CreatorInviteDetailsPage({
   params,
@@ -9,25 +9,9 @@ export default async function CreatorInviteDetailsPage({
 
   return (
     <div className="space-y-6">
-      <DashboardHeader
-        eyebrow="Invite details"
-        title="Review the full campaign before you commit."
-        description={`Invite reference: ${inviteId}. This page gives creators the campaign brief, payout terms, deliverables, and usage expectations in one place.`}
-        action={
-          <>
-            <SecondaryButton href="/creator/invites">Back to invites</SecondaryButton>
-            <PrimaryButton href="/creator/messages">Message brand</PrimaryButton>
-          </>
-        }
-      />
-
       <div className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,0.85fr)]">
         <Panel>
-          <PanelTitle
-            eyebrow="Campaign brief"
-            title="Summer Glow Campaign"
-            description="A detailed creator-facing breakdown of the collaboration scope."
-          />
+          <PanelTitle eyebrow="Campaign brief" title={`Invite ${inviteId}`} />
 
           <div className="mt-5 space-y-4 text-sm leading-7 text-muted-foreground">
             <div className="rounded-[1.35rem] bg-surface p-4">
@@ -55,7 +39,7 @@ export default async function CreatorInviteDetailsPage({
         </Panel>
 
         <Panel>
-          <PanelTitle eyebrow="Actions" title="Respond to this invite" description="Accept if the scope, rate, and timeline are right for you." />
+          <PanelTitle eyebrow="Actions" title="Respond to this invite" />
           <div className="mt-5 space-y-3">
             <button
               type="button"

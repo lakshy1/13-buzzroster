@@ -1,7 +1,17 @@
 export type SidebarItem = {
   label: string;
   href: string;
-  icon: "dashboard" | "invites" | "campaigns" | "submissions" | "earnings" | "messages" | "profile" | "calculator" | "settings";
+  icon:
+    | "dashboard"
+    | "invites"
+    | "campaigns"
+    | "submissions"
+    | "earnings"
+    | "messages"
+    | "profile"
+    | "calculator"
+    | "settings"
+    | "insights";
 };
 
 export type MetricCard = {
@@ -52,12 +62,12 @@ export type MessageRow = {
 };
 
 export const sidebarItems: SidebarItem[] = [
-  { label: "Dashboard", href: "/dashboard", icon: "dashboard" },
-  { label: "Brand Invites", href: "/dashboard/brand-invites", icon: "invites" },
-  { label: "Active Campaigns", href: "/dashboard/active-campaigns", icon: "campaigns" },
-  { label: "Submissions", href: "/dashboard/submissions", icon: "submissions" },
+  { label: "Overview", href: "/dashboard", icon: "dashboard" },
+  { label: "Opportunities", href: "/dashboard/brand-invites", icon: "invites" },
+  { label: "Applications", href: "/dashboard/submissions", icon: "submissions" },
   { label: "Earnings", href: "/dashboard/earnings", icon: "earnings" },
   { label: "Messages", href: "/dashboard/messages", icon: "messages" },
+  { label: "Insights", href: "/dashboard/active-campaigns", icon: "insights" },
   { label: "Profile", href: "/dashboard/profile", icon: "profile" },
   { label: "Worth Calculator", href: "/tools/creator-worth-calculator", icon: "calculator" },
   { label: "Settings", href: "/dashboard/settings", icon: "settings" },

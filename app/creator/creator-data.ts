@@ -53,13 +53,12 @@ export type MessageRow = {
 
 export const sidebarItems: SidebarItem[] = [
   { label: "Dashboard", href: "/creator/dashboard", icon: "dashboard" },
-  { label: "Invites", href: "/creator/invites", icon: "invites" },
+  { label: "Opportunities", href: "/creator/invites", icon: "invites" },
   { label: "Campaigns", href: "/creator/campaigns", icon: "campaigns" },
   { label: "Profile", href: "/creator/profile", icon: "profile" },
   { label: "Portfolio", href: "/creator/portfolio", icon: "portfolio" },
   { label: "Earnings", href: "/creator/earnings", icon: "earnings" },
   { label: "Messages", href: "/creator/messages", icon: "messages" },
-  { label: "Worth Calculator", href: "/tools/creator-worth-calculator", icon: "calculator" },
   { label: "Settings", href: "/creator/settings", icon: "settings" },
 ];
 

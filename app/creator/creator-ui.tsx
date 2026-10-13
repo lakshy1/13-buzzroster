@@ -1,6 +1,7 @@
 export {
   BrandAvatar,
   DashboardHeader,
+  ContributionHeatmap,
   LogoMark,
   MiniTrend,
   MetricGlyph,

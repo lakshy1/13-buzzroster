@@ -1,8 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
 
 import type { AttentionItem, CampaignRow, MetricCard } from "./dashboard-data";
 import { BrandLogo } from "../components/BrandLogo";
+import { useResponsiveSidebar } from "../components/responsive-sidebar-context";
+
+const contributionMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+const contributionWeekdays = ["Mon", "Wed", "Fri"];
+
+function buildContributionCells(weeks: number, rows: number) {
+  return Array.from({ length: rows }, (_, row) =>
+    Array.from({ length: weeks }, (_, week) => ((row * 5 + week * 3 + (row % 2 ? 1 : 0)) % 4) as 0 | 1 | 2 | 3),
+  );
+}
 
 type SidebarIconName =
   | "dashboard"
@@ -14,7 +26,8 @@ type SidebarIconName =
   | "profile"
   | "portfolio"
   | "calculator"
-  | "settings";
+  | "settings"
+  | "insights";
 
 export function SparkIcon({ className = "" }: { className?: string }) {
   return (
@@ -95,6 +108,13 @@ export function SidebarIcon({ icon, className = "" }: { icon: SidebarIconName; c
         <svg {...common}>
           <rect x="5" y="3.75" width="14" height="16.5" rx="2.2" stroke="currentColor" strokeWidth="1.8" />
           <path d="M8.5 8h7M8.5 12h2M13.5 12h2M8.5 16h2M13.5 16h2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      );
+    case "insights":
+      return (
+        <svg {...common}>
+          <path d="M5.5 18.5h13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M7.5 18.5V12.5M12 18.5V9M16.5 18.5V6.75" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
         </svg>
       );
     default:
@@ -246,17 +266,31 @@ export function DashboardHeader({
 }: {
   eyebrow: string;
   title: string;
-  description: string;
+  description?: string;
   action?: ReactNode;
 }) {
+  const responsiveSidebar = useResponsiveSidebar();
+
   return (
     <div className="flex flex-col gap-5 border-b border-border pb-5 lg:flex-row lg:items-start lg:justify-between">
       <div>
-        <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">{eyebrow}</div>
-        <h1 className="mt-3 max-w-3xl text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1.03] tracking-[-0.06em] text-foreground">
-          {title}
-        </h1>
-        <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">{description}</p>
+        <div className="flex items-center gap-3">
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">{eyebrow}</div>
+          {responsiveSidebar ? (
+            <button
+              type="button"
+              onClick={responsiveSidebar.toggleSidebar}
+              className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface text-muted-foreground transition-colors hover:border-accent/30 hover:text-foreground lg:hidden"
+              aria-label={responsiveSidebar.isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+            >
+              <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5" aria-hidden="true">
+                <path d="M4.5 7h15M4.5 12h15M4.5 17h15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+          ) : null}
+        </div>
+        <h1 className="mt-3 max-w-3xl text-[clamp(2rem,4vw,3.2rem)] font-semibold leading-[1.03] tracking-[-0.06em] text-foreground">{title}</h1>
+        {description ? <p className="mt-3 max-w-2xl text-[0.98rem] leading-7 text-muted-foreground">{description}</p> : null}
       </div>
       {action ? <div className="flex shrink-0 items-center gap-3">{action}</div> : null}
     </div>
@@ -335,5 +369,96 @@ export function PrimaryButton({ href, children }: { href: string; children: Reac
     >
       {children}
     </Link>
+  );
+}
+
+export function ContributionHeatmap({
+  title,
+  description,
+  streakLabel = "14 day streak",
+  className = "",
+}: {
+  title: string;
+  description: string;
+  streakLabel?: string;
+  className?: string;
+}) {
+  const cells = buildContributionCells(18, 7);
+
+  const intensityClasses = [
+    "bg-[rgba(109,68,236,0.08)] dark:bg-[rgba(255,255,255,0.05)]",
+    "bg-[rgba(109,68,236,0.18)] dark:bg-[rgba(139,92,246,0.20)]",
+    "bg-[rgba(109,68,236,0.34)] dark:bg-[rgba(139,92,246,0.36)]",
+    "bg-[rgba(109,68,236,0.58)] dark:bg-[rgba(139,92,246,0.58)]",
+  ] as const;
+
+  return (
+    <div className={`rounded-[1.85rem] border border-border/90 bg-surface p-4 shadow-[0_18px_40px_rgba(20,20,35,0.06)] backdrop-blur-xl ${className}`}>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="text-[0.72rem] font-semibold uppercase tracking-[0.24em] text-accent">Activity heatmap</div>
+          <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.05em] text-foreground">{title}</h2>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">{description}</p>
+        </div>
+
+        <div className="inline-flex items-center gap-2 rounded-full bg-[rgba(109,68,236,0.08)] px-3 py-1 text-sm font-semibold text-accent">
+          {streakLabel}
+          <span aria-hidden="true" className="text-warning">
+            <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+              <path
+                d="M12.6 3.75c1.45 2.15.9 3.83-.32 5.16-.96 1.05-1.82 1.55-1.82 2.98 0 1.08.7 2.13 2.08 2.13 1.95 0 3.4-1.73 3.4-4.1 1.6 1.36 2.9 3.24 2.9 5.58 0 3.6-2.72 5.98-6.83 5.98-4.4 0-7.38-2.78-7.38-6.84 0-2.65 1.45-5.14 3.95-7.2.08 1.44.76 2.46 1.9 3.11.36-2.35 1.77-4.1 4.12-6.7Z"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <div className="mt-5 grid gap-4 md:grid-cols-[48px_minmax(0,1fr)]">
+        <div className="pt-8 text-sm font-medium leading-[2.2rem] text-muted-foreground">
+          {contributionWeekdays.map((day) => (
+            <div key={day}>{day}</div>
+          ))}
+        </div>
+
+        <div className="overflow-x-auto pb-1">
+          <div className="min-w-[620px]">
+            <div className="mb-3 grid grid-cols-[repeat(6,minmax(0,1fr))] text-xs font-semibold uppercase tracking-[0.22em] text-muted-foreground/80">
+              {contributionMonths.map((month) => (
+                <div key={month}>{month}</div>
+              ))}
+            </div>
+
+            <div className="grid grid-rows-[repeat(7,minmax(0,1fr))] gap-[6px]">
+              {cells.map((row, rowIndex) => (
+                <div key={rowIndex} className="grid grid-cols-[repeat(18,minmax(0,1fr))] gap-[6px]">
+                  {row.map((cell, cellIndex) => (
+                    <span
+                      key={`${rowIndex}-${cellIndex}`}
+                      title={`${cell + 1} activity level, week ${cellIndex + 1}`}
+                      className={`h-3.5 rounded-[4px] ring-1 ring-inset ring-black/5 dark:ring-white/5 ${intensityClasses[cell]}`}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-sm">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span className={`h-3 w-3 rounded-[4px] ${intensityClasses[0]}`} />
+                Less activity
+              </div>
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <span className={`h-3 w-3 rounded-[4px] ${intensityClasses[2]}`} />
+                <span className={`h-3 w-3 rounded-[4px] ${intensityClasses[3]}`} />
+                More activity
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
